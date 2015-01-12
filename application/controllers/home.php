@@ -1,0 +1,34 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class Home extends CI_Controller {
+
+    public function __construct() {
+        parent::__construct();
+        $this->load->model('m_home','record');
+    }
+    
+    function index()
+    {        
+        $auth       = new Auth();
+         // mencegah user yang belum login untuk mengakses halaman ini
+        $auth->restrict();
+        
+        if (isset($_GET['grid'])) 
+            echo $this->record->index();        
+         else 
+            $this->load->view('v_home');                
+    }
+    
+    function willindex()
+    {        
+        $auth       = new Auth();
+         // mencegah user yang belum login untuk mengakses halaman ini
+        $auth->restrict();
+        
+        if (isset($_GET['grid'])) 
+            echo $this->record->willindex();        
+         else 
+            $this->load->view('v_home');                
+    }
+
+}

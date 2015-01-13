@@ -51,14 +51,14 @@ class M_wire extends CI_Model
                 }
             }
 	}
-		$this->db->select('a.Id AS Id, Kode_Supp, Grade, Min_dia, Max_dia, Name, Jenis, Price, Currency, Tgl_update');
+        $this->db->select('a.Id AS Id, Kode_Supp, Grade, Min_dia, Max_dia, Name, Jenis, Price, Currency, Tgl_update, Active');
         $this->db->join(self::$typewire, 'a.Type = '.self::$typewire.'.Id','left');
         $this->db->where($cond, NULL, FALSE);
         $this->db->from(self::$table.' a');
         $total  = $this->db->count_all_results();
         
-		$this->db->select('a.Id AS Id, Kode_Supp, Grade, Min_dia, Max_dia, Name, Jenis, Price, Currency, Tgl_update');
-		$this->db->join(self::$typewire, 'a.Type = '.self::$typewire.'.Id','left');
+        $this->db->select('a.Id AS Id, Kode_Supp, Grade, Min_dia, Max_dia, Name, Jenis, Price, Currency, Tgl_update, Active');
+        $this->db->join(self::$typewire, 'a.Type = '.self::$typewire.'.Id','left');
         $this->db->where($cond, NULL, FALSE);
         $this->db->order_by($sort, $order);
         $this->db->limit($rows, $offset);
@@ -79,99 +79,99 @@ class M_wire extends CI_Model
         
     function create()
     {
-		$Kode_Supp	= $this->input->post('Kode_Supp',true);
-		$Grade 		= $this->input->post('Grade',true);
-		$Min_dia 	= $this->input->post('Min_dia',true);
-		$Max_dia 	= $this->input->post('Max_dia',true);
-		$Type 		= $this->input->post('Type',true);
-		$Jenis 		= $this->input->post('Jenis',true);
-		$Currency 	= $this->input->post('Currency',true);
-		$Price 		= $this->input->post('Price',true);
-		$Tgl_update	= $this->input->post('Tgl_update',true);
+        $Kode_Supp	= $this->input->post('Kode_Supp',true);
+        $Grade 		= $this->input->post('Grade',true);
+        $Min_dia 	= $this->input->post('Min_dia',true);
+        $Max_dia 	= $this->input->post('Max_dia',true);
+        $Type 		= $this->input->post('Type',true);
+        $Jenis 		= $this->input->post('Jenis',true);
+        $Currency 	= $this->input->post('Currency',true);
+        $Price 		= $this->input->post('Price',true);
+        $Tgl_update	= $this->input->post('Tgl_update',true);
 		
         $this->db->where('Kode_Supp', $Kode_Supp)
-				 ->where('Grade', $Grade)
-				 ->where('Min_dia', $Min_dia)
-				 ->where('Max_dia', $Max_dia)
-				 ->where('Type', $Type)
-				 ->where('Jenis', $Jenis)
-				 ->where('Currency', $Currency)
-				 ->where('Price', $Price)
-				 ->where('Tgl_update', $Tgl_update);
+                 ->where('Grade', $Grade)
+                 ->where('Min_dia', $Min_dia)
+                 ->where('Max_dia', $Max_dia)
+                 ->where('Type', $Type)
+                 ->where('Jenis', $Jenis)
+                 ->where('Currency', $Currency)
+                 ->where('Price', $Price)
+                 ->where('Tgl_update', $Tgl_update);
         $resA = $this->db->get(self::$table);
 		
-		$this->db->where('Kode_Supp', $Kode_Supp)
-				 ->where('Grade', $Grade)
-				 ->where('Min_dia', $Min_dia)
-				 ->where('Max_dia', $Max_dia)
-				 ->where('Type', $Type)
-				 ->where('Jenis', $Jenis)
-				 ->where('Currency', $Currency);
+        $this->db->where('Kode_Supp', $Kode_Supp)
+                 ->where('Grade', $Grade)
+                 ->where('Min_dia', $Min_dia)
+                 ->where('Max_dia', $Max_dia)
+                 ->where('Type', $Type)
+                 ->where('Jenis', $Jenis)
+                 ->where('Currency', $Currency);
         $res = $this->db->get(self::$table);
 		
-		if($resA->num_rows == 0)
-		{
-			if($res->num_rows == 0)
-			{			
-				return $this->db->insert(self::$table,array(
-					'Id'		=> $this->input->post('Id',true),
-					'Kode_Supp'	=> $this->input->post('Kode_Supp',true),
-					'Grade'		=> $this->input->post('Grade',true),
-					'Min_dia'	=> $this->input->post('Min_dia',true),
-					'Max_dia'	=> $this->input->post('Max_dia',true),
-					'Type'		=> $this->input->post('Type',true),
-					'Jenis'		=> $this->input->post('Jenis',true),
-					'Price'		=> $this->input->post('Price',true),
-					'Currency'	=> $this->input->post('Currency',true),
-					'Tgl_update'=> $this->input->post('Tgl_update',true)       
-				));
-			}
-			else
-			{
-				$this->db->where('Kode_Supp', $Kode_Supp)
-						 ->where('Grade', $Grade)
-						 ->where('Min_dia', $Min_dia)
-						 ->where('Max_dia', $Max_dia)
-						 ->where('Type', $Type)
-						 ->where('Jenis', $Jenis)
-						 ->where('Currency', $Currency);
-				$this->db->update(self::$table,array(
-					'Active'	=> 'NO'    
-				));
-				
-				return $this->db->insert(self::$table,array(
-					'Id'		=> $this->input->post('Id',true),
-					'Kode_Supp'	=> $this->input->post('Kode_Supp',true),
-					'Grade'		=> $this->input->post('Grade',true),
-					'Min_dia'	=> $this->input->post('Min_dia',true),
-					'Max_dia'	=> $this->input->post('Max_dia',true),
-					'Type'		=> $this->input->post('Type',true),
-					'Jenis'		=> $this->input->post('Jenis',true),
-					'Price'		=> $this->input->post('Price',true),
-					'Currency'	=> $this->input->post('Currency',true),
-					'Tgl_update'=> $this->input->post('Tgl_update',true)       
-				));
-			}
-		}
-		else
-		{
-			return false;
-		}        
+        if($resA->num_rows == 0)
+        {
+            if($res->num_rows == 0)
+            {			
+                return $this->db->insert(self::$table,array(
+                    'Id'        => $this->input->post('Id',true),
+                    'Kode_Supp'	=> $this->input->post('Kode_Supp',true),
+                    'Grade'	=> $this->input->post('Grade',true),
+                    'Min_dia'	=> $this->input->post('Min_dia',true),
+                    'Max_dia'	=> $this->input->post('Max_dia',true),
+                    'Type'	=> $this->input->post('Type',true),
+                    'Jenis'	=> $this->input->post('Jenis',true),
+                    'Price'	=> $this->input->post('Price',true),
+                    'Currency'	=> $this->input->post('Currency',true),
+                    'Tgl_update'=> $this->input->post('Tgl_update',true)       
+                ));
+            }
+            else
+            {
+                $this->db->where('Kode_Supp', $Kode_Supp)
+                         ->where('Grade', $Grade)
+                         ->where('Min_dia', $Min_dia)
+                         ->where('Max_dia', $Max_dia)
+                         ->where('Type', $Type)
+                         ->where('Jenis', $Jenis)
+                         ->where('Currency', $Currency);
+                $this->db->update(self::$table,array(
+                        'Active'	=> 'NO'    
+                ));
+
+                return $this->db->insert(self::$table,array(
+                        'Id'		=> $this->input->post('Id',true),
+                        'Kode_Supp'	=> $this->input->post('Kode_Supp',true),
+                        'Grade'		=> $this->input->post('Grade',true),
+                        'Min_dia'	=> $this->input->post('Min_dia',true),
+                        'Max_dia'	=> $this->input->post('Max_dia',true),
+                        'Type'		=> $this->input->post('Type',true),
+                        'Jenis'		=> $this->input->post('Jenis',true),
+                        'Price'		=> $this->input->post('Price',true),
+                        'Currency'	=> $this->input->post('Currency',true),
+                        'Tgl_update'    => $this->input->post('Tgl_update',true)       
+                ));
+            }
+        }
+        else
+        {
+            return false;
+        }        
     }
     
     function update($Id)
     {
         $this->db->where('Id', $Id);
         return $this->db->update(self::$table,array(
-            'Kode_Supp'=>$this->input->post('Kode_Supp',true),
-            'Grade'=>$this->input->post('Grade',true),
-            'Min_dia'=>$this->input->post('Min_dia',true),
-            'Max_dia'=>$this->input->post('Max_dia',true),
-			'Type'=>$this->input->post('Type',true),
-            'Jenis'=>$this->input->post('Jenis',true),
-			'Price'=>$this->input->post('Price',true),
-            'Currency'=>$this->input->post('Currency',true),
-            'Tgl_update'=>$this->input->post('Tgl_update',true)     
+            'Kode_Supp' => $this->input->post('Kode_Supp',true),
+            'Grade'     => $this->input->post('Grade',true),
+            'Min_dia'   => $this->input->post('Min_dia',true),
+            'Max_dia'   => $this->input->post('Max_dia',true),
+            'Type'      => $this->input->post('Type',true),
+            'Jenis'     => $this->input->post('Jenis',true),
+            'Price'     => $this->input->post('Price',true),
+            'Currency'  => $this->input->post('Currency',true),
+            'Tgl_update'=> $this->input->post('Tgl_update',true)     
         ));
     }
     

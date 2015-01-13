@@ -160,6 +160,13 @@ class Calculation extends CI_Controller {
         echo $this->record->getWasher1();
     }
 	
+     function getWasher2()
+    {
+        $auth   = new Auth();
+        $auth->restrict();
+        
+        echo $this->record->getWasher2();
+    }
 }
 /* End of file calculation.php */
 /* Location: ./application/controllers/transaksi/calculation.php */

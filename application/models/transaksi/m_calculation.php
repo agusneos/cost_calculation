@@ -159,7 +159,7 @@ class M_calculation extends CI_Model
         $this->db->join(self::$typewire, self::$wire.'.Type = '.self::$typewire.'.Id','left');
         $this->db->where($dia.'>= Min_dia', NULL, FALSE)
                  ->where($dia.'<= Max_dia', NULL, FALSE)
-                 ->where('Active != "NO"') ;
+                 ->where('Active', 'YES');
         $this->db->order_by('Kode_Supp', 'ASC')
                  ->order_by('Grade', 'ASC');
         $query  = $this->db->get(self::$wire);
@@ -188,8 +188,24 @@ class M_calculation extends CI_Model
 
     function getWasher1()
     {
-        $this->db->select('Id, Name, Weight, Price, Currency');        
-        $this->db->order_by('Id', 'ASC');
+        $this->db->select('Id, Name, Weight, Price, Currency');   
+        $this->db->where('Active', 'YES');
+        $this->db->order_by('Name', 'ASC');
+        $query  = $this->db->get(self::$washer);
+                   
+        $data = array();
+        foreach ( $query->result() as $row )
+        {
+            array_push($data, $row); 
+        }       
+        return json_encode($data);
+    }
+    
+    function getWasher2()
+    {
+        $this->db->select('Id, Name, Weight, Price, Currency');   
+        $this->db->where('Active', 'YES');     
+        $this->db->order_by('Name', 'ASC');
         $query  = $this->db->get(self::$washer);
                    
         $data = array();

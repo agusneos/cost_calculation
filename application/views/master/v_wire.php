@@ -40,7 +40,7 @@
             <th data-options="field:'Price'"                  width="100" align="center" sortable="true" >Price</th>
             <th data-options="field:'Currency'"              width="100" align="center" sortable="true">Currency</th>
             <th data-options="field:'Tgl_update'"            width="100" align="center" sortable="true" >Tanggal Update </th>
-            
+            <th data-options="field:'Active'"            width="50" align="center" sortable="true" >Active</th>
         </tr>
     </thead>
 </table>

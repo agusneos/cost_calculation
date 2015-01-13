@@ -123,6 +123,10 @@
             }
         });
         
+        $('#Washer2_weight').numberbox('setValue', '0');
+        $('#Washer2_cost').numberbox('setValue', '0');
+        
+                
     }
     
     function transaksicalculationUpdate() {
@@ -278,12 +282,24 @@
 	
  </script>
 
-
+<style type="text/css">
+    .fitem{
+        margin-bottom:5px;
+    }
+    .fitem label{
+        display:inline-block;
+        width:100px;
+    }
+    .fitem input{
+        display:inline-block;
+        width:150px;
+    }
+</style>
 
 <!-- ----------- -->
-<div id="dlg-transaksi_calculation" class="easyui-dialog" style="width:500px; height:400px;" closed="true" buttons="#dlg-buttons-transaksi_calculation">
+<div id="dlg-transaksi_calculation" class="easyui-dialog" style="width:500px; height:500px;" closed="true" buttons="#dlg-buttons-transaksi_calculation">
     <form id="fm-transaksi_calculation" method="post" novalidate>        
-        <div class="easyui-tabs" style="width:485px;height:325px">
+        <div class="easyui-tabs" style="width:485px;height:425px">
             <div title="About" style="padding:10px">
                 <div class="fitem">
                     <label for="type">Tanggal</label>
@@ -319,7 +335,7 @@
                 </div>                                
                 <div class="fitem">
                     <label for="type">Kode Wire</label>
-                    <input id="Kode_wire" name="Kode_wire" class="easyui-combogrid" />                    
+                    <input id="Kode_wire" name="Kode_wire" class="easyui-combogrid" required="true"/>                    
                 </div>
                 <div class="fitem">
                     <label for="type">Net Weight</label>
@@ -352,8 +368,8 @@
             </div>
             
             
-           <div title="Purchased" style="padding:10px">
-             <div class="fitem">
+            <div title="Purchased" style="padding:10px">
+                <div class="fitem">
                     <label for="type">Washer1</label>
                     <input id="Washer1" name="Washer1" class="easyui-combobox"  data-options="
                         url:'<?php echo site_url('transaksi/calculation/getWasher1'); ?>',
@@ -362,21 +378,100 @@
                             $('#Washer1_weight').numberbox('setValue', r.Weight);
                             $('#Washer1_currency').textbox('setValue', r.Currency);
                             $('#Washer1_price').numberbox('setValue', r.Price);
-                        }" style="width:300px;"/> 
-             </div>
-             <div class="fitem">
+                            
+                            var nw1 = $('#Net_weight').numberbox('getValue');
+                            var ww2 = $('#Washer2_weight').numberbox('getValue');
+                            var fw1 = eval(nw1) + eval(ww2) + eval(r.Weight);
+                            $('#Finish_weight').numberbox('setValue', fw1);
+                            
+                            var exc1 = $('#Exch_rate').numberbox('getValue');
+                            if (r.Currency == 'USD')
+                            {
+                                var wc1 = eval(exc1) * eval(r.Price);
+                            }
+                            else
+                            {
+                                var wc1 = eval(r.Price);
+                            }
+                            $('#Washer1_cost').numberbox('setValue', wc1);
+                            var wc2 = $('#Washer2_cost').numberbox('getValue');
+                            var wtc = eval(wc1) + eval(wc2);
+                            $('#Washer_total_cost').numberbox('setValue', wtc);
+                        }" style="width:300px;"/>    
+                </div>
+                <div class="fitem">
                     <label for="type">Washer1 Weight</label>
                     <input id="Washer1_weight" name="Washer1_weight" class="easyui-numberbox" data-options="precision:2, groupSeparator:'.', decimalSeparator:',', readonly: true"/>
-             </div>
-              <div class="fitem">
+                </div>
+                <div class="fitem">
                     <label for="type">Washer1 Curr. </label>
                     <input id="Washer1_currency" name="Washer1_currency" class="easyui-textbox" data-options="readonly: true"/>
-             </div> 
-              <div class="fitem">
+                </div> 
+                <div class="fitem">
                     <label for="type">Washer1 Price</label>
                     <input id="Washer1_price" name="Washer1_price" class="easyui-numberbox" data-options="precision:5, groupSeparator:'.', decimalSeparator:',', readonly: true"/>
-             </div>
+                </div>
+                <div class="fitem">
+                    <label for="type">Washer1 Cost</label>
+                    <input id="Washer1_cost" name="Washer1_cost" class="easyui-numberbox" data-options="precision:0, groupSeparator:'.', decimalSeparator:',', readonly: true"/>
+                </div>
+                <div class="fitem">
+                    <label for="type">Washer2</label>
+                    <input id="Washer2" name="Washer2" class="easyui-combobox"  data-options="
+                        url:'<?php echo site_url('transaksi/calculation/getWasher2'); ?>',
+                        method:'get', valueField:'Id', textField:'Name', panelHeight:200,
+                        onSelect: function(r){
+                            $('#Washer2_weight').numberbox('setValue', r.Weight);
+                            $('#Washer2_currency').textbox('setValue', r.Currency);
+                            $('#Washer2_price').numberbox('setValue', r.Price);
+                            
+                            var nw1 = $('#Net_weight').numberbox('getValue');
+                            var ww1 = $('#Washer1_weight').numberbox('getValue');
+                            var fw2 = eval(nw1) + eval(ww1) + eval(r.Weight);
+                            $('#Finish_weight').numberbox('setValue', fw2);
+                            
+                            var exc2 = $('#Exch_rate').numberbox('getValue');
+                            if (r.Currency == 'USD')
+                            {
+                                var wc2 = eval(exc2) * eval(r.Price);
+                            }
+                            else
+                            {
+                                var wc2 = eval(r.Price);
+                            }
+                            $('#Washer2_cost').numberbox('setValue', wc2);
+                            var wc1 = $('#Washer1_cost').numberbox('getValue');
+                            var wtc = eval(wc1) + eval(wc2);
+                            $('#Washer_total_cost').numberbox('setValue', wtc);
+                        }" style="width:300px;"/> 
+                </div>
+                <div class="fitem">
+                    <label for="type">Washer2 Weight</label>
+                    <input id="Washer2_weight" name="Washer2_weight" class="easyui-numberbox" data-options="precision:2, groupSeparator:'.', decimalSeparator:',', readonly: true"/>
+                </div>
+                <div class="fitem">
+                    <label for="type">Washer2 Curr. </label>
+                    <input id="Washer2_currency" name="Washer2_currency" class="easyui-textbox" data-options="readonly: true"/>
+                </div> 
+                <div class="fitem">
+                    <label for="type">Washer2 Price</label>
+                    <input id="Washer2_price" name="Washer2_price" class="easyui-numberbox" data-options="precision:5, groupSeparator:'.', decimalSeparator:',', readonly: true"/>
+                </div>
+                <div class="fitem">
+                    <label for="type">Washer2 Cost</label>
+                    <input id="Washer2_cost" name="Washer2_cost" class="easyui-numberbox" data-options="precision:0, groupSeparator:'.', decimalSeparator:',', readonly: true"/>
+                </div>
+                <div class="fitem">
+                    <label for="type">Finish Weight</label>
+                    <input id="Finish_weight" name="Finish_weight" class="easyui-numberbox" data-options="precision:2, groupSeparator:'.', decimalSeparator:',', readonly: true"/>
+                </div>  
+                <div class="fitem">
+                    <label for="type">Washer Cost Total</label>
+                    <input id="Washer_total_cost" name="Washer_total_cost" class="easyui-numberbox" data-options="precision:0, groupSeparator:'.', decimalSeparator:',', readonly: true"/>
+                </div>  
             </div>
+            
+            
             <div title="Processing" style="padding:10px">
                    
             </div>

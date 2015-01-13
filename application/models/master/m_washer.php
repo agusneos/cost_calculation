@@ -75,27 +75,76 @@ class M_washer extends CI_Model
         
     function create()
     {
-        return $this->db->insert(self::$table,array(
-            'Id'=>$this->input->post('Id',true),
-			'Kode_Supp'=>$this->input->post('Kode_Supp',true),
-            'Name'=>$this->input->post('Name',true),
-            'Weight'=>$this->input->post('Weight',true),
-            'Price'=>$this->input->post('Price',true),
-			'Currency'=>$this->input->post('Currency',true),
-            'Tgl_update'=>$this->input->post('Tgl_update',true)
-        ));
+        $Kode_Supp  = $this->input->post('Kode_Supp',true);
+        $Name       = $this->input->post('Name',true);
+        $Weight     = $this->input->post('Weight',true);
+        $Price      = $this->input->post('Price',true);
+        $Currency   = $this->input->post('Currency',true);
+        $Tgl_update = $this->input->post('Tgl_update',true);
+        
+        $this->db->where('Kode_Supp', $Kode_Supp)
+                 ->where('Name', $Name)
+                 ->where('Weight', $Weight)                 
+                 ->where('Currency', $Currency)
+                 ->where('Price', $Price)
+                 ->where('Tgl_update', $Tgl_update);
+        $resA = $this->db->get(self::$table);
+        
+        $this->db->where('Kode_Supp', $Kode_Supp)
+                 ->where('Name', $Name)
+                 ->where('Weight', $Weight)
+                 ->where('Currency', $Currency);
+        $res = $this->db->get(self::$table);
+        
+        if($resA->num_rows == 0)
+        {
+            if($res->num_rows == 0)
+            {			
+                return $this->db->insert(self::$table,array(
+                    'Kode_Supp'	=> $Kode_Supp,
+                    'Name'	=> $Name,
+                    'Weight'	=> $Weight,
+                    'Currency'	=> $Currency,
+                    'Price'	=> $Price,
+                    'Tgl_update'=> $Tgl_update      
+                ));
+            }
+            else
+            {
+                $this->db->where('Kode_Supp', $Kode_Supp)
+                         ->where('Name', $Name)
+                         ->where('Weight', $Weight)
+                         ->where('Currency', $Currency);
+                $this->db->update(self::$table,array(
+                        'Active'	=> 'NO'    
+                ));
+
+                return $this->db->insert(self::$table,array(
+                    'Kode_Supp'	=> $Kode_Supp,
+                    'Name'	=> $Name,
+                    'Weight'	=> $Weight,
+                    'Currency'	=> $Currency,
+                    'Price'	=> $Price,
+                    'Tgl_update'=> $Tgl_update      
+                ));
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
     
     function update($Id)
     {
         $this->db->where('Id', $Id);
         return $this->db->update(self::$table,array(
-			'Kode_Supp'=>$this->input->post('Kode_Supp',true),
-            'Name'=>$this->input->post('Name',true),
-			'Weight'=>$this->input->post('Weight',true),
-            'Price'=>$this->input->post('Price',true),
-			'Currency'=>$this->input->post('Currency',true),
-            'Tgl_update'=>$this->input->post('Tgl_update',true)
+            'Kode_Supp' => $this->input->post('Kode_Supp',true),
+            'Name'      => $this->input->post('Name',true),
+            'Weight'    => $this->input->post('Weight',true),
+            'Price'     => $this->input->post('Price',true),
+            'Currency'  => $this->input->post('Currency',true),
+            'Tgl_update'=> $this->input->post('Tgl_update',true)
         ));
     }
     
@@ -104,7 +153,7 @@ class M_washer extends CI_Model
         return $this->db->delete(self::$table, array('Id' => $Id)); 
     }
     
-	function getSupplier()
+    function getSupplier()
     {
         $this->db->select('Id, Name');        
         $this->db->order_by('Id', 'ASC');

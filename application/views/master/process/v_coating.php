@@ -37,6 +37,7 @@
             <th data-options="field:'Price'"            width="100" align="center" sortable="true" formatter="price">Price</th>
             <th data-options="field:'Currency'"              width="100" align="center" sortable="true">Currency</th>
             <th data-options="field:'Tgl_update'"            width="100" align="center" sortable="true" >Tanggal Update </th>
+            <th data-options="field:'Active'"              width="50" align="center" sortable="true" >Active</th>
         </tr>
     </thead>
 </table>
@@ -61,7 +62,7 @@
     }];
     
     $('#grid-master_coating').datagrid({view:scrollview,remoteFilter:true,
-        url:'<?php echo site_url('master/coating/index'); ?>?grid=true'})
+        url:'<?php echo site_url('master/process/coating/index'); ?>?grid=true'})
         .datagrid('enableFilter');
     
 	function price(value,row,index)
@@ -72,7 +73,7 @@
     function mastercoatingCreate() {
         $('#dlg-master_coating').dialog({modal: true}).dialog('open').dialog('setTitle','Tambah Data');
         $('#fm-master_coating').form('clear');
-        url = '<?php echo site_url('master/coating/create'); ?>';
+        url = '<?php echo site_url('master/process/coating/create'); ?>';
     }
     
     function mastercoatingUpdate() {
@@ -80,7 +81,7 @@
         if(row){
             $('#dlg-master_coating-edit').dialog({modal: true}).dialog('open').dialog('setTitle','Edit Data');
             $('#fm-master_coating-edit').form('load',row);
-            url = '<?php echo site_url('master/coating/update'); ?>/' + row.Id;            
+            url = '<?php echo site_url('master/process/coating/update'); ?>/' + row.Id;            
         }
         else
         {
@@ -143,7 +144,7 @@
         if (row){
             $.messager.confirm('Konfirmasi','Anda yakin ingin menghapus coating '+row.Name+' ?',function(r){
                 if (r){
-                    $.post('<?php echo site_url('master/coating/delete'); ?>',{Id:row.Id},function(result){
+                    $.post('<?php echo site_url('master/process/coating/delete'); ?>',{Id:row.Id},function(result){
                         if (result.success){
                             $('#grid-master_coating').datagrid('reload');
                             $.messager.show({
@@ -198,7 +199,7 @@
         <div class="fitem">
             <label for="type">Supplier</label>
             <input id="Kode_Supp" name="Kode_Supp" class="easyui-combobox"  data-options="
-                url:'<?php echo site_url('master/coating/getSupplier'); ?>',
+                url:'<?php echo site_url('master/process/coating/getSupplier'); ?>',
                 method:'get', valueField:'Id', textField:'Name', panelHeight:200" style="width:300px;" required="true"/> 
         </div>
         <div class="fitem">
@@ -212,7 +213,7 @@
         <div class="fitem">
             <label for="type">Currency</label>
             <input id="Currency" name="Currency" class="easyui-combobox" data-options=" 
-            url:'<?php echo site_url('master/coating/enumCurrency'); ?>',
+            url:'<?php echo site_url('master/process/coating/enumCurrency'); ?>',
                 method:'get', valueField:'data', textField:'data', panelHeight:'auto'" required="true"/>
            
         </div>
@@ -234,7 +235,7 @@
         <div class="fitem">
             <label for="type">Supplier</label>
             <input id="Kode_Supp" name="Kode_Supp" class="easyui-combobox"  data-options="
-                url:'<?php echo site_url('master/coating/getSupplier'); ?>',
+                url:'<?php echo site_url('master/process/coating/getSupplier'); ?>',
                 method:'get', valueField:'Id', textField:'Name', panelHeight:200" style="width:300px;" required="true"/> 
         </div>
         <div class="fitem">
@@ -248,7 +249,7 @@
         <div class="fitem">
             <label for="type">Currency</label>
             <input id="Currency" name="Currency" class="easyui-combobox" data-options=" 
-            url:'<?php echo site_url('master/coating/enumCurrency'); ?>',
+            url:'<?php echo site_url('master/process/coating/enumCurrency'); ?>',
                 method:'get', valueField:'data', textField:'data', panelHeight:'auto'" required="true"/>
            
         </div>
@@ -265,4 +266,4 @@
     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-master_coating-edit').dialog('close')">Batal</a>
 </div>
 <!-- End of file v_coating.php -->
-<!-- Location: ./application/views/master/v_coating.php -->
+<!-- Location: ./application/views/master/process/v_coating.php -->

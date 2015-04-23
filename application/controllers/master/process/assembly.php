@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Washer extends CI_Controller {
+class Assembly extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('master/m_washer','record');
+        $this->load->model('master/process/m_assembly','record');
     }
     
     function index()
@@ -16,7 +16,7 @@ class Washer extends CI_Controller {
         if (isset($_GET['grid'])) 
             echo $this->record->index();        
          else 
-            $this->load->view('master/v_washer');        
+            $this->load->view('master/process/v_assembly');        
     } 
     
     function create()
@@ -82,8 +82,8 @@ class Washer extends CI_Controller {
         echo $this->record->getSupplier();
 	}
 	
-        function enumCurrency()
-    {
+    function enumCurrency()
+	    {
         $auth   = new Auth();
         $auth->restrict();
         
@@ -92,5 +92,5 @@ class Washer extends CI_Controller {
                 
 }
 
-/* End of file washer.php */
-/* Location: ./application/controllers/master/washer.php */
+/* End of file assembly.php */
+/* Location: ./application/controllers/master/process/assembly.php */

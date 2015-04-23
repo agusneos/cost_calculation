@@ -9,7 +9,7 @@
         <tr>
             <th data-options="field:'ck',checkbox:true" ></th>
             <th data-options="field:'Id'"                   width="100" align="center" sortable="true">Kode Type Wire</th>
-            <th data-options="field:'Name'"                 width="300" halign="center" align="left" sortable="true">Nama Type Wire</th>
+            <th data-options="field:'Type'"                 width="300" align="center" sortable="true">Nama Type Wire</th>
         </tr>
     </thead>
 </table>
@@ -173,7 +173,7 @@
     <form id="fm-master_typewire" method="post" novalidate>        
         <div class="fitem">
             <label for="type">Nama Type Wire</label>
-            <input type="text" id="Name" name="Name" class="easyui-textbox" required="true"/>
+            <input type="text" id="Type" name="Type" class="easyui-textbox" required="true"/>
         </div>
     </form>
 </div>

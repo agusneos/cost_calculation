@@ -38,6 +38,7 @@
             <th data-options="field:'Price'"            width="100" align="center" formatter="price" sortable="true" >Price</th>
             <th data-options="field:'Currency'"              width="100" align="center" sortable="true">Currency</th>
             <th data-options="field:'Tgl_update'"            width="100" align="center" sortable="true" >Tanggal Update </th>
+            <th data-options="field:'Active'"              width="50" align="center" sortable="true" >Active</th>
         </tr>
     </thead>
 </table>
@@ -62,7 +63,7 @@
     }];
     
     $('#grid-master_assembly').datagrid({view:scrollview,remoteFilter:true,
-        url:'<?php echo site_url('master/assembly/index'); ?>?grid=true'})
+        url:'<?php echo site_url('master/process/assembly/index'); ?>?grid=true'})
         .datagrid('enableFilter');
 	
 	function price(value,row,index)
@@ -73,7 +74,7 @@
     function masterassemblyCreate() {
         $('#dlg-master_assembly').dialog({modal: true}).dialog('open').dialog('setTitle','Tambah Data');
         $('#fm-master_assembly').form('clear');
-        url = '<?php echo site_url('master/assembly/create'); ?>';
+        url = '<?php echo site_url('master/process/assembly/create'); ?>';
     }
     
     function masterassemblyUpdate() {
@@ -81,7 +82,7 @@
         if(row){
             $('#dlg-master_assembly-edit').dialog({modal: true}).dialog('open').dialog('setTitle','Edit Data');
             $('#fm-master_assembly-edit').form('load',row);
-            url = '<?php echo site_url('master/assembly/update'); ?>/' + row.Id;            
+            url = '<?php echo site_url('master/process/assembly/update'); ?>/' + row.Id;            
         }
         else
         {
@@ -144,7 +145,7 @@
         if (row){
             $.messager.confirm('Konfirmasi','Anda yakin ingin menghapus assembly '+row.Name+' ?',function(r){
                 if (r){
-                    $.post('<?php echo site_url('master/assembly/delete'); ?>',{Id:row.Id},function(result){
+                    $.post('<?php echo site_url('master/process/assembly/delete'); ?>',{Id:row.Id},function(result){
                         if (result.success){
                             $('#grid-master_assembly').datagrid('reload');
                             $.messager.show({
@@ -199,7 +200,7 @@
         <div class="fitem">
             <label for="type">Supplier</label>
             <input id="Kode_Supp" name="Kode_Supp" class="easyui-combobox"  data-options="
-                url:'<?php echo site_url('master/assembly/getSupplier'); ?>',
+                url:'<?php echo site_url('master/process/assembly/getSupplier'); ?>',
                 method:'get', valueField:'Id', textField:'Name', panelHeight:200" style="width:300px;" required="true"/> 
         </div>
         <div class="fitem">
@@ -213,7 +214,7 @@
         <div class="fitem">
             <label for="type">Currency</label>
             <input id="Currency" name="Currency" class="easyui-combobox" data-options=" 
-            url:'<?php echo site_url('master/assembly/enumCurrency'); ?>',
+            url:'<?php echo site_url('master/process/assembly/enumCurrency'); ?>',
                 method:'get', valueField:'data', textField:'data', panelHeight:'auto'" required="true"/>
            
         </div>
@@ -235,7 +236,7 @@
         <div class="fitem">
             <label for="type">Supplier</label>
             <input id="Kode_Supp" name="Kode_Supp" class="easyui-combobox"  data-options="
-                url:'<?php echo site_url('master/assembly/getSupplier'); ?>',
+                url:'<?php echo site_url('master/process/assembly/getSupplier'); ?>',
                 method:'get', valueField:'Id', textField:'Name', panelHeight:200" style="width:300px;" required="true"/> 
         </div>
         <div class="fitem">
@@ -249,7 +250,7 @@
         <div class="fitem">
             <label for="type">Currency</label>
             <input id="Currency" name="Currency" class="easyui-combobox" data-options=" 
-            url:'<?php echo site_url('master/assembly/enumCurrency'); ?>',
+            url:'<?php echo site_url('master/process/assembly/enumCurrency'); ?>',
                 method:'get', valueField:'data', textField:'data', panelHeight:'auto'" required="true"/>
            
         </div>
@@ -266,4 +267,4 @@
     <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-master_assembly-edit').dialog('close')">Batal</a>
 </div>
 <!-- End of file v_assembly.php -->
-<!-- Location: ./application/views/master/v_assembly.php -->
+<!-- Location: ./application/views/master/process/v_assembly.php -->

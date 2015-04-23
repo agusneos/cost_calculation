@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  
-class M_assembly extends CI_Model
+class M_straightening_mchn extends CI_Model
 {    
-    static $table = 'assembly';
+    static $table = 'machine_straightening';
      
     public function __construct() {
         parent::__construct();
@@ -14,7 +14,7 @@ class M_assembly extends CI_Model
         $page   = isset($_POST['page']) ? intval($_POST['page']) : 1;
         $rows   = isset($_POST['rows']) ? intval($_POST['rows']) : 30;
         $offset = ($page-1)*$rows;      
-        $sort   = isset($_POST['sort']) ? strval($_POST['sort']) : 'id';
+        $sort   = isset($_POST['sort']) ? strval($_POST['sort']) : 'Kode_mchnstraighten';
         $order  = isset($_POST['order']) ? strval($_POST['order']) : 'asc';
         
         $filterRules = isset($_POST['filterRules']) ? ($_POST['filterRules']) : '';
@@ -76,46 +76,52 @@ class M_assembly extends CI_Model
     function create()
     {
         return $this->db->insert(self::$table,array(
-            'Id'=>$this->input->post('Id',true),
-			'Kode_Supp'=>$this->input->post('Kode_Supp',true),
-            'Name'=>$this->input->post('Name',true),
-            'Price'=>$this->input->post('Price',true),
-			'Currency'=>$this->input->post('Currency',true),
-            'Tgl_update'=>$this->input->post('Tgl_update',true)
+            'Kode_mchnstraighten'=>$this->input->post('Kode_mchnstraighten',true),
+            'Dia_nominal'=>$this->input->post('Dia_nominal',true),
+            'Length_range'=>$this->input->post('Length_range',true),
+            'Mchn_straightening'=>$this->input->post('Mchn_straightening',true),
+            'Mchn_price'=>$this->input->post('Mchn_price',true),
+            'Depr_per_month'=>$this->input->post('Depr_per_month',true),
+            'Output_per_min'=>$this->input->post('Output_per_min',true),
+            'Working_time'=>$this->input->post('Working_time',true),
+            'Working_time_sec'=>$this->input->post('Working_time_sec',true),
+            'Output_per_day'=>$this->input->post('Output_per_day',true),
+            'Output_per_month'=>$this->input->post('Output_per_month',true),
+            'Productivity_ratio'=>$this->input->post('Productivity_ratio',true),
+            'Prod_plan_month'=>$this->input->post('Prod_plan_month',true),
+            'Cycle_time'=>$this->input->post('Cycle_time',true),
+            'Dandori_time'=>$this->input->post('Dandori_time',true),
+            'Straightening_depr_cost'=>$this->input->post('Straightening_depr_cost',true)
         ));
     }
     
-    function update($Id)
+    function update($Kode_mchnstraighten)
     {
-        $this->db->where('Id', $Id);
+        $this->db->where('Kode_mchnstraighten', $Kode_mchnstraighten);
         return $this->db->update(self::$table,array(
-			'Kode_Supp'=>$this->input->post('Kode_Supp',true),
-            'Name'=>$this->input->post('Name',true),
-			'Price'=>$this->input->post('Price',true),
-			'Currency'=>$this->input->post('Currency',true),
-            'Tgl_update'=>$this->input->post('Tgl_update',true)
+            'Dia_nominal'=>$this->input->post('Dia_nominal',true),
+            'Length_range'=>$this->input->post('Length_range',true),
+            'Mchn_straightening'=>$this->input->post('Mchn_straightening',true),
+            'Mchn_price'=>$this->input->post('Mchn_price',true),
+            'Depr_per_month'=>$this->input->post('Depr_per_month',true),
+            'Output_per_min'=>$this->input->post('Output_per_min',true),
+            'Working_time'=>$this->input->post('Working_time',true),
+            'Working_time_sec'=>$this->input->post('Working_time_sec',true),
+            'Output_per_day'=>$this->input->post('Output_per_day',true),
+            'Output_per_month'=>$this->input->post('Output_per_month',true),
+            'Productivity_ratio'=>$this->input->post('Productivity_ratio',true),
+            'Prod_plan_month'=>$this->input->post('Prod_plan_month',true),
+            'Cycle_time'=>$this->input->post('Cycle_time',true),
+            'Dandori_time'=>$this->input->post('Dandori_time',true),
+            'Straightening_depr_cost'=>$this->input->post('Straightening_depr_cost',true)
         ));
     }
     
-    function delete($Id)
+    function delete($Kode_mchnstraighten)
     {
-        return $this->db->delete(self::$table, array('Id' => $Id)); 
+        return $this->db->delete(self::$table, array('Kode_mchnstraighten' => $Kode_mchnstraighten)); 
     }
     
-	function getSupplier()
-    {
-        $this->db->select('Id, Name');        
-        $this->db->order_by('Id', 'ASC');
-        $query  = $this->db->get('supplier');
-                   
-        $data = array();
-        foreach ( $query->result() as $row )
-        {
-            array_push($data, $row); 
-        }       
-        return json_encode($data);
-    }
-	
     function enumField($field)
     {
         $enums = field_enums(self::$table, $field);
@@ -124,5 +130,5 @@ class M_assembly extends CI_Model
     
 }
 
-/* End of file m_assembly.php */
-/* Location: ./application/models/master/m_assembly.php */
+/* End of file m_straightening_mchn.php */
+/* Location: ./application/models/master/machine/m_straightening_mchn.php */

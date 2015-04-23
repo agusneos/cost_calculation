@@ -4,38 +4,38 @@
 <script type="text/javascript" src="<?=base_url('assets/accounting/accounting.js')?>"></script>
 
 <!-- Data Grid -->
-<table id="grid-master_heading1"
+<table id="grid-master_rolling"
     data-options="pageSize:50, multiSort:true, remoteSort:false, rownumbers:true, singleSelect:true, 
-                showFooter:false, fit:true, fitColumns:true, toolbar:toolbar_master_heading1">
+                showFooter:false, fit:true, fitColumns:true, toolbar:toolbar_master_rolling">
     <thead>
         <tr>           
             <th data-options="field:'Id'"           width="80"  align="center" sortable="true">Id</th>
-            <th data-options="field:'Category'"     width="150" align="center" sortable="true" >Category</th>            
+            <th data-options="field:'Category2'"    width="150" align="center" sortable="true" >Category</th>            
             <th data-options="field:'Diameter'"     width="80"  align="center" sortable="true" >Diameter</th>
             <th data-options="field:'Min_panjang'"  width="80"  align="center" sortable="true"> Min Panjang</th>
             <th data-options="field:'Max_panjang'"  width="80"  align="center" sortable="true"> Max Panjang</th>  
             <th data-options="field:'Cost'"         width="80"  align="center" sortable="true" >Cost</th>   
             <th data-options="field:'Currency'"     width="80"  align="center" sortable="true" >Currency</th>   
             <th data-options="field:'Tgl_update'"   width="100" align="center" sortable="true" >Tanggal Update </th>
-            <th data-options="field:'Active'"       width="50" align="center" sortable="true" >Active</th>
+            <th data-options="field:'Active'"       width="50"  align="center" sortable="true" >Active</th>
         </tr> 
     </thead>
 </table>
 
 <script type="text/javascript">
     
-    var toolbar_master_heading1 = [{
+    var toolbar_master_rolling = [{
         text:'Upload',
         iconCls:'icon-upload',
         handler:function(){upload();}
     },{
         text:'Refresh',
         iconCls:'icon-reload',
-        handler:function(){$('#grid-master_heading1').datagrid('reload');}
+        handler:function(){$('#grid-master_rolling').datagrid('reload');}
     }];
     
-    $('#grid-master_heading1').datagrid({view:scrollview,remoteFilter:true,
-        url:'<?php echo site_url('master/tools/heading1/index'); ?>?grid=true'}).datagrid('enableFilter');
+    $('#grid-master_rolling').datagrid({view:scrollview,remoteFilter:true,
+        url:'<?php echo site_url('master/tools/rolling/index'); ?>?grid=true'}).datagrid('enableFilter');
             
    function thousandSep(value,row,index)
     {
@@ -90,7 +90,7 @@
     {
         $('#dlg-upload').dialog({modal: true}).dialog('open').dialog('setTitle','Upload File');
         $('#fm-upload').form('reset');
-        urls = '<?php echo site_url('master/tools/heading1/upload'); ?>/';
+        urls = '<?php echo site_url('master/tools/rolling/upload'); ?>/';
     }
     
     function uploadSave()
@@ -106,7 +106,7 @@
                 {
                     
                     $('#dlg-upload').dialog('close');
-                    $('#grid-master_heading1').datagrid('reload');
+                    $('#grid-master_rolling').datagrid('reload');
                     $.messager.show({
                             title: 'Info',
                             msg: result.total + ' ' +result.ok + ' ' + result.ng
@@ -175,5 +175,5 @@
 
 <!-- Dialog Button -->
 
-<!-- End of file v_heading1.php -->
-<!-- Location: ./application/views/master/tools/v_heading1.php -->
+<!-- End of file v_rolling.php -->
+<!-- Location: ./application/views/master/tools/v_rolling.php -->

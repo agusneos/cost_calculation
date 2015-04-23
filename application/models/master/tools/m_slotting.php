@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  
-class M_headingcat extends CI_Model
+class M_slotting extends CI_Model
 {    
-    static $table = 'tools_headingcat';
+    static $table = 'tools_slotting';
      
     public function __construct() {
         parent::__construct();
@@ -72,22 +72,86 @@ class M_headingcat extends CI_Model
         
         return json_encode($result);          
     }   
-        
+      
+    function enumField($field)
+    {
+        $enums = field_enums(self::$table, $field);
+        return json_encode($enums);
+    }
+    
     function create()
     {
-        return $this->db->insert(self::$table,array(
-            'Id'=>$this->input->post('Id',true),
-	    'Category'=>$this->input->post('Category',true),
-            'Type_screw'=>$this->input->post('Type_screw',true)     
-        ));
+        $Diameter   = $this->input->post('Diameter',true);
+        $Min_panjang = $this->input->post('Min_panjang',true);
+        $Max_panjang = $this->input->post('Max_panjang',true);
+        $Cost       = $this->input->post('Cost',true);
+        $Currency   = $this->input->post('Currency',true);
+        $Tgl_Update = $this->input->post('Tgl_Update',true);
+        
+       
+        $this->db->where('Diameter', $Diameter)
+                 ->where('Min_panjang', $Min_panjang)
+                 ->where('Max_panjang', $Max_panjang)
+                 ->where('Cost', $Cost)
+                 ->where('Currency', $Currency)
+                 ->where('Tgl_update', $Tgl_Update);
+        $resA = $this->db->get(self::$table);
+        
+        $this->db->where('Diameter', $Diameter)
+                 ->where('Min_panjang', $Min_panjang)
+                 ->where('Max_panjang', $Max_panjang)
+                 ->where('Currency', $Currency);
+        $res = $this->db->get(self::$table);
+        
+         if($resA->num_rows == 0)
+        {
+            if($res->num_rows == 0)
+            {			
+                return $this->db->insert(self::$table,array(
+                    'Diameter'	 => $Diameter,
+                    'Min_panjang'=> $Min_panjang,
+                    'Max_panjang'=> $Max_panjang,
+                    'Currency'	 => $Currency,
+                    'Cost'	 => $Cost,
+                    'Tgl_Update' => $Tgl_Update      
+                ));
+            }
+            else
+            {
+                $this->db->where('Diameter', $Diameter)
+                        ->where('Min_panjang', $Min_panjang)
+                        ->where('Max_panjang', $Max_panjang)
+                        ->where('Currency', $Currency);
+                $this->db->update(self::$table,array(
+                        'Active'	=> 'NO'    
+                ));
+
+                return $this->db->insert(self::$table,array(
+                    'Diameter'	 => $Diameter,
+                    'Min_panjang'=> $Min_panjang,
+                    'Max_panjang'=> $Max_panjang,
+                    'Cost'	=> $Cost,
+                    'Currency'	=> $Currency,
+                    'Tgl_update'=> $Tgl_Update      
+                ));
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
     
     function update($Id)
     {
         $this->db->where('Id', $Id);
         return $this->db->update(self::$table,array(
-            'Category'=>$this->input->post('Category',true),
-            'Type_screw'=>$this->input->post('Type_screw',true)     
+            'Diameter'   =>$this->input->post('Diameter',true),
+            'Min_panjang'=>$this->input->post('Min_panjang',true),
+            'Max_panjang'=>$this->input->post('Max_panjang',true),
+            'Cost'       =>$this->input->post('Cost',true),
+            'Currency'   =>$this->input->post('Currency',true),
+            'Tgl_Update' =>$this->input->post('Tgl_Update',true)        
         ));
     }
     
@@ -100,5 +164,5 @@ class M_headingcat extends CI_Model
     
 }
 
-/* End of file m_headingcat.php */
-/* Location: ./application/models/master/m_headingcat.php */
+/* End of file m_slotting.php */
+/* Location: ./application/models/master/m_slotting.php */

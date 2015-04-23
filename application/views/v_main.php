@@ -165,7 +165,7 @@
         <!-- bottom -->
         <div data-options="region:'south',split:false" style="height:100px;">
             <h1 align="center">Aplikasi Cost Calculation Ver. 1.0</h1>
-            <center>©2014 PT. Hikari Metalindo Pratama. All Rights Reserved.</center>
+            <center>©2015 PT. Hikari Metalindo Pratama. All Rights Reserved.</center>
         </div>
         
         <!-- left -->

@@ -27,42 +27,43 @@
 	</script>
     
 <!-- Data Grid -->
-<table id="grid-master_plating"
-    data-options="pageSize:30, rownumbers:true, singleSelect:true, fit:true, fitColumns:false, toolbar:toolbar_master_plating">
+<table id="grid-master_furnace"
+    data-options="pageSize:30, rownumbers:true, singleSelect:true, fit:true, fitColumns:false, toolbar:toolbar_master_furnace">
     <thead>
         <tr>
             <th data-options="field:'ck',checkbox:true" ></th>
-            <th data-options="field:'Id'"                   width="100" align="center" sortable="true">Kode plating</th>
+            <th data-options="field:'Id'"                   width="100" align="center" sortable="true">Kode furnace</th>
             <th data-options="field:'Kode_Supp'"                 width="100" halign="center" align="left" sortable="true">Supplier</th>
-            <th data-options="field:'Name'"                 width="200" halign="center" align="left" sortable="true">Nama plating</th>
+            <th data-options="field:'Name'"                 width="200" halign="center" align="left" sortable="true">Nama furnace</th>
             <th data-options="field:'Price'"            width="100" align="center" formatter="price" sortable="true" >Price</th>
             <th data-options="field:'Currency'"              width="100" align="center" sortable="true">Currency</th>
             <th data-options="field:'Tgl_update'"            width="100" align="center" sortable="true" >Tanggal Update </th>
+            <th data-options="field:'Active'"              width="50" align="center" sortable="true" >Active</th>
         </tr>
     </thead>
 </table>
 
 <script type="text/javascript">
-    var toolbar_master_plating = [{
+    var toolbar_master_furnace = [{
         text:'New',
         iconCls:'icon-new_file',
-        handler:function(){masterplatingCreate();}
+        handler:function(){masterfurnaceCreate();}
     },{
         text:'Edit',
         iconCls:'icon-edit',
-        handler:function(){masterplatingUpdate();}
+        handler:function(){masterfurnaceUpdate();}
     },{
         text:'Delete',
         iconCls:'icon-cancel',
-        handler:function(){masterplatingHapus();}
+        handler:function(){masterfurnaceHapus();}
     },{
         text:'Refresh',
         iconCls:'icon-reload',
-        handler:function(){$('#grid-master_plating').datagrid('reload');}
+        handler:function(){$('#grid-master_furnace').datagrid('reload');}
     }];
     
-    $('#grid-master_plating').datagrid({view:scrollview,remoteFilter:true,
-        url:'<?php echo site_url('master/plating/index'); ?>?grid=true'})
+    $('#grid-master_furnace').datagrid({view:scrollview,remoteFilter:true,
+        url:'<?php echo site_url('master/process/furnace/index'); ?>?grid=true'})
         .datagrid('enableFilter');
 	
 	function price(value,row,index)
@@ -70,18 +71,18 @@
         return accounting.formatMoney(value, "", 6, ",", ".");
     }
     
-    function masterplatingCreate() {
-        $('#dlg-master_plating').dialog({modal: true}).dialog('open').dialog('setTitle','Tambah Data');
-        $('#fm-master_plating').form('clear');
-        url = '<?php echo site_url('master/plating/create'); ?>';
+    function masterfurnaceCreate() {
+        $('#dlg-master_furnace').dialog({modal: true}).dialog('open').dialog('setTitle','Tambah Data');
+        $('#fm-master_furnace').form('clear');
+        url = '<?php echo site_url('master/process/furnace/create'); ?>';
     }
     
-    function masterplatingUpdate() {
-        var row = $('#grid-master_plating').datagrid('getSelected');
+    function masterfurnaceUpdate() {
+        var row = $('#grid-master_furnace').datagrid('getSelected');
         if(row){
-            $('#dlg-master_plating-edit').dialog({modal: true}).dialog('open').dialog('setTitle','Edit Data');
-            $('#fm-master_plating-edit').form('load',row);
-            url = '<?php echo site_url('master/plating/update'); ?>/' + row.Id;            
+            $('#dlg-master_furnace-edit').dialog({modal: true}).dialog('open').dialog('setTitle','Edit Data');
+            $('#fm-master_furnace-edit').form('load',row);
+            url = '<?php echo site_url('master/process/furnace/update'); ?>/' + row.Id;            
         }
         else
         {
@@ -89,8 +90,8 @@
         }
     }
     
-    function masterplatingSave(){
-        $('#fm-master_plating').form('submit',{
+    function masterfurnaceSave(){
+        $('#fm-master_furnace').form('submit',{
             url: url,
             onSubmit: function(){
                 return $(this).form('validate');
@@ -98,8 +99,8 @@
             success: function(result){
                 var result = eval('('+result+')');
                 if(result.success){
-                    $('#dlg-master_plating').dialog('close');
-                    $('#grid-master_plating').datagrid('reload');
+                    $('#dlg-master_furnace').dialog('close');
+                    $('#grid-master_furnace').datagrid('reload');
                     $.messager.show({
                         title: 'Info',
                         msg: 'Input Data Berhasil'
@@ -114,8 +115,8 @@
         });
     }
     
-    function masterplatingSaveEdit(){
-        $('#fm-master_plating-edit').form('submit',{
+    function masterfurnaceSaveEdit(){
+        $('#fm-master_furnace-edit').form('submit',{
             url: url,
             onSubmit: function(){
                 return $(this).form('validate');
@@ -123,8 +124,8 @@
             success: function(result){
                 var result = eval('('+result+')');
                 if(result.success){
-                    $('#dlg-master_plating-edit').dialog('close');
-                    $('#grid-master_plating').datagrid('reload');
+                    $('#dlg-master_furnace-edit').dialog('close');
+                    $('#grid-master_furnace').datagrid('reload');
                     $.messager.show({
                         title: 'Info',
                         msg: 'Ubah Data Berhasil'
@@ -139,14 +140,14 @@
         });
     }
     
-    function masterplatingHapus(){
-        var row = $('#grid-master_plating').datagrid('getSelected');
+    function masterfurnaceHapus(){
+        var row = $('#grid-master_furnace').datagrid('getSelected');
         if (row){
-            $.messager.confirm('Konfirmasi','Anda yakin ingin menghapus plating '+row.Name+' ?',function(r){
+            $.messager.confirm('Konfirmasi','Anda yakin ingin menghapus furnace '+row.Name+' ?',function(r){
                 if (r){
-                    $.post('<?php echo site_url('master/plating/delete'); ?>',{Id:row.Id},function(result){
+                    $.post('<?php echo site_url('master/process/furnace/delete'); ?>',{Id:row.Id},function(result){
                         if (result.success){
-                            $('#grid-master_plating').datagrid('reload');
+                            $('#grid-master_furnace').datagrid('reload');
                             $.messager.show({
                                 title: 'Info',
                                 msg: 'Hapus Data Berhasil'
@@ -170,11 +171,11 @@
 </script>
 
 <style type="text/css">
-    #fm-master_plating{
+    #fm-master_furnace{
         margin:0;
         padding:10px 30px;
     }
-     #fm-master_plating-edit{
+     #fm-master_furnace-edit{
         margin:0;
         padding:10px 30px;
     }
@@ -194,16 +195,16 @@
     }
 </style>
 
-<div id="dlg-master_plating" class="easyui-dialog" style="width:500px; height:300px; padding: 10px 20px" closed="true" buttons="#dlg-buttons-master_plating">
-    <form id="fm-master_plating" method="post" novalidate>        
+<div id="dlg-master_furnace" class="easyui-dialog" style="width:500px; height:300px; padding: 10px 20px" closed="true" buttons="#dlg-buttons-master_furnace">
+    <form id="fm-master_furnace" method="post" novalidate>        
         <div class="fitem">
             <label for="type">Supplier</label>
             <input id="Kode_Supp" name="Kode_Supp" class="easyui-combobox"  data-options="
-                url:'<?php echo site_url('master/plating/getSupplier'); ?>',
+                url:'<?php echo site_url('master/process/furnace/getSupplier'); ?>',
                 method:'get', valueField:'Id', textField:'Name', panelHeight:200" style="width:300px;" required="true"/> 
         </div>
         <div class="fitem">
-            <label for="type">Nama plating</label>
+            <label for="type">Nama furnace</label>
             <input type="text" id="Name" name="Name" class="easyui-textbox" required="true"/>
         </div>
          <div class="fitem">
@@ -213,7 +214,7 @@
         <div class="fitem">
             <label for="type">Currency</label>
             <input id="Currency" name="Currency" class="easyui-combobox" data-options=" 
-            url:'<?php echo site_url('master/plating/enumCurrency'); ?>',
+            url:'<?php echo site_url('master/process/furnace/enumCurrency'); ?>',
                 method:'get', valueField:'data', textField:'data', panelHeight:'auto'" required="true"/>
            
         </div>
@@ -225,21 +226,21 @@
 </div>
 
 <!-- Dialog Button -->
-<div id="dlg-buttons-master_plating">
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-ok" onclick="masterplatingSave()">Simpan</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-master_plating').dialog('close')">Batal</a>
+<div id="dlg-buttons-master_furnace">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-ok" onclick="masterfurnaceSave()">Simpan</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-master_furnace').dialog('close')">Batal</a>
 </div>
 
-<div id="dlg-master_plating-edit" class="easyui-dialog" style="width:500px; height:300px; padding: 10px 20px" closed="true" buttons="#dlg-buttons-master_plating-edit">
-    <form id="fm-master_plating-edit" method="post" novalidate>        
+<div id="dlg-master_furnace-edit" class="easyui-dialog" style="width:500px; height:300px; padding: 10px 20px" closed="true" buttons="#dlg-buttons-master_furnace-edit">
+    <form id="fm-master_furnace-edit" method="post" novalidate>        
         <div class="fitem">
             <label for="type">Supplier</label>
             <input id="Kode_Supp" name="Kode_Supp" class="easyui-combobox"  data-options="
-                url:'<?php echo site_url('master/plating/getSupplier'); ?>',
+                url:'<?php echo site_url('master/process/furnace/getSupplier'); ?>',
                 method:'get', valueField:'Id', textField:'Name', panelHeight:200" style="width:300px;" required="true"/> 
         </div>
         <div class="fitem">
-            <label for="type">Nama plating</label>
+            <label for="type">Nama furnace</label>
             <input type="text" id="Name" name="Name" class="easyui-textbox" required="true"/>
         </div>
          <div class="fitem">
@@ -249,7 +250,7 @@
         <div class="fitem">
             <label for="type">Currency</label>
             <input id="Currency" name="Currency" class="easyui-combobox" data-options=" 
-            url:'<?php echo site_url('master/plating/enumCurrency'); ?>',
+            url:'<?php echo site_url('master/process/furnace/enumCurrency'); ?>',
                 method:'get', valueField:'data', textField:'data', panelHeight:'auto'" required="true"/>
            
         </div>
@@ -261,9 +262,9 @@
 </div>
 
 <!-- Dialog Button -->
-<div id="dlg-buttons-master_plating-edit">
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-ok" onclick="masterplatingSaveEdit()">Simpan</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-master_plating-edit').dialog('close')">Batal</a>
+<div id="dlg-buttons-master_furnace-edit">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-ok" onclick="masterfurnaceSaveEdit()">Simpan</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-master_furnace-edit').dialog('close')">Batal</a>
 </div>
-<!-- End of file v_plating.php -->
-<!-- Location: ./application/views/master/v_plating.php -->
+<!-- End of file v_furnace.php -->
+<!-- Location: ./application/views/master/process/v_furnace.php -->

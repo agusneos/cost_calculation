@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  
-class M_headingcat extends CI_Model
+class M_rollingcat extends CI_Model
 {    
-    static $table = 'tools_headingcat';
+    static $table = 'tools_rollingcat';
      
     public function __construct() {
         parent::__construct();
@@ -77,7 +77,7 @@ class M_headingcat extends CI_Model
     {
         return $this->db->insert(self::$table,array(
             'Id'=>$this->input->post('Id',true),
-	    'Category'=>$this->input->post('Category',true),
+			'Category2'=>$this->input->post('Category2',true),
             'Type_screw'=>$this->input->post('Type_screw',true)     
         ));
     }
@@ -86,7 +86,7 @@ class M_headingcat extends CI_Model
     {
         $this->db->where('Id', $Id);
         return $this->db->update(self::$table,array(
-            'Category'=>$this->input->post('Category',true),
+            'Category2'=>$this->input->post('Category2',true),
             'Type_screw'=>$this->input->post('Type_screw',true)     
         ));
     }
@@ -100,5 +100,5 @@ class M_headingcat extends CI_Model
     
 }
 
-/* End of file m_headingcat.php */
-/* Location: ./application/models/master/m_headingcat.php */
+/* End of file m_rollingcat.php */
+/* Location: ./application/models/master/m_rollingcat.php */

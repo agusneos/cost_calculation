@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Furnace extends CI_Controller {
+class Pressing_mchn extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('master/m_furnace','record');
+        $this->load->model('master/machine/m_pressing_mchn','record');
     }
     
     function index()
@@ -16,7 +16,7 @@ class Furnace extends CI_Controller {
         if (isset($_GET['grid'])) 
             echo $this->record->index();        
          else 
-            $this->load->view('master/v_furnace');        
+            $this->load->view('master/machine/v_pressing_mchn');        
     } 
     
     function create()
@@ -37,7 +37,7 @@ class Furnace extends CI_Controller {
         }
     }     
     
-    function update($Id=null)
+    function update($Kode_mchnpress=null)
     {
         $auth   = new Auth();
         $auth->restrict();
@@ -45,7 +45,7 @@ class Furnace extends CI_Controller {
         if(!isset($_POST))	
             show_404();
 
-        if($this->record->update($Id))
+        if($this->record->update($Kode_mchnpress))
         {
             echo json_encode(array('success'=>true));
         }
@@ -63,8 +63,8 @@ class Furnace extends CI_Controller {
         if(!isset($_POST))	
             show_404();
 
-        $Id = addslashes($_POST['Id']);
-        if($this->record->delete($Id))
+        $Kode_mchnpress = addslashes($_POST['Kode_mchnpress']);
+        if($this->record->delete($Kode_mchnpress))
         {
             echo json_encode(array('success'=>true));
         }
@@ -74,23 +74,7 @@ class Furnace extends CI_Controller {
         }
     }
     
-	function getSupplier()
-    {
-        $auth   = new Auth();
-        $auth->restrict();
-        
-        echo $this->record->getSupplier();
-	}
-	
-    function enumCurrency()
-	    {
-        $auth   = new Auth();
-        $auth->restrict();
-        
-        echo $this->record->enumField('Currency');
-    }
-                
 }
 
-/* End of file furnace.php */
-/* Location: ./application/controllers/master/furnace.php */
+/* End of file pressing_mchn.php */
+/* Location: ./application/controlers/master/machine/pressing_mchn.php */

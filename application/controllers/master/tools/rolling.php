@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Heading1 extends CI_Controller {
+class Rolling extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('master/tools/m_heading1','record');
+        $this->load->model('master/tools/m_rolling','record');
     }
     
     function index()
@@ -16,7 +16,7 @@ class Heading1 extends CI_Controller {
         if (isset($_GET['grid'])) 
             echo $this->record->index();        
          else 
-            $this->load->view('master/tools/v_heading1');        
+            $this->load->view('master/tools/v_rolling');        
     } 
     
     function upload()
@@ -41,14 +41,14 @@ class Heading1 extends CI_Controller {
         
         for ($i = 1; $i <= $baris; $i++)
         {
-           $Category       	= $data['cells'][$i][1];
+           $Category2       	= $data['cells'][$i][1];
            $Diameter	        = $data['cells'][$i][2];
            $Min_panjang         = $data['cells'][$i][3];
            $Max_panjang	        = $data['cells'][$i][4];
            $Cost		= $data['cells'][$i][5];
 	   $Currency		= $data['cells'][$i][6];
            $Tgl_update          = $data['cells'][$i][7];
-           $query = $this->record->upload($Category, $Diameter, $Min_panjang,
+           $query = $this->record->upload($Category2, $Diameter, $Min_panjang,
                                         $Max_panjang, $Cost, $Currency, $Tgl_update);
            if ($query)
            {
@@ -68,5 +68,5 @@ class Heading1 extends CI_Controller {
 
 }
 
-/* End of file heading1.php */
-/* Location: ./application/controllers/master/tools/heading1.php */
+/* End of file rolling.php */
+/* Location: ./application/controllers/master/tools/rolling.php */

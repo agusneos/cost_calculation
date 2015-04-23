@@ -2,8 +2,8 @@
  
 class M_wire extends CI_Model
 {    
-    static $table = 'wire';
-	static $typewire = 'typewire';
+    static $table       = 'wire';
+    static $typewire    = 'typewire';
      
     public function __construct() {
         parent::__construct();
@@ -15,7 +15,7 @@ class M_wire extends CI_Model
         $page   = isset($_POST['page']) ? intval($_POST['page']) : 1;
         $rows   = isset($_POST['rows']) ? intval($_POST['rows']) : 50;
         $offset = ($page-1)*$rows;      
-        $sort   = isset($_POST['sort']) ? strval($_POST['sort']) : 'a.id';
+        $sort   = isset($_POST['sort']) ? strval($_POST['sort']) : 'id';
         $order  = isset($_POST['order']) ? strval($_POST['order']) : 'asc';
         
         $filterRules = isset($_POST['filterRules']) ? ($_POST['filterRules']) : '';
@@ -51,18 +51,21 @@ class M_wire extends CI_Model
                 }
             }
 	}
-        $this->db->select('a.Id AS Id, Kode_Supp, Grade, Min_dia, Max_dia, Name, Jenis, Price, Currency, Tgl_update, Active');
-        $this->db->join(self::$typewire, 'a.Type = '.self::$typewire.'.Id','left');
+                
+        $this->db->select('a.*, b.Type AS Type');
+        $this->db->join(self::$typewire.' b', 'a.Type = b.Id','left');
         $this->db->where($cond, NULL, FALSE);
         $this->db->from(self::$table.' a');
         $total  = $this->db->count_all_results();
         
-        $this->db->select('a.Id AS Id, Kode_Supp, Grade, Min_dia, Max_dia, Name, Jenis, Price, Currency, Tgl_update, Active');
-        $this->db->join(self::$typewire, 'a.Type = '.self::$typewire.'.Id','left');
+        $this->db->select('a.*, b.Type AS Type');
+        $this->db->join(self::$typewire.' b', 'a.Type = b.Id','left');
         $this->db->where($cond, NULL, FALSE);
         $this->db->order_by($sort, $order);
         $this->db->limit($rows, $offset);
+        
         $query  = $this->db->get(self::$table.' a');
+        $total  = $this->db->count_all_results(self::$table.' a');
                    
         $data = array();
         foreach ( $query->result() as $row )
@@ -196,7 +199,7 @@ class M_wire extends CI_Model
 	
     function getTypeWire()
     {
-        $this->db->select('Id, Name');        
+        $this->db->select('Id, Type');        
         $this->db->order_by('Id', 'ASC');
         $query  = $this->db->get('typewire');
                    

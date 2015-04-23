@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  
-class M_furnace extends CI_Model
+class M_labor extends CI_Model
 {    
-    static $table = 'furnace';
+    static $table = 'labor';
      
     public function __construct() {
         parent::__construct();
@@ -75,13 +75,12 @@ class M_furnace extends CI_Model
         
     function create()
     {
-        return $this->db->insert(self::$table,array(
+    return $this->db->insert(self::$table,array(
             'Id'=>$this->input->post('Id',true),
-			'Kode_Supp'=>$this->input->post('Kode_Supp',true),
-            'Name'=>$this->input->post('Name',true),
-            'Price'=>$this->input->post('Price',true),
-			'Currency'=>$this->input->post('Currency',true),
-            'Tgl_update'=>$this->input->post('Tgl_update',true)
+            'Process'=>$this->input->post('Process',true),
+            'Gaji_per_year'=>$this->input->post('Gaji_per_year',true),
+            'Hasilprod_per_tahun'=>$this->input->post('Hasilprod_per_tahun',true),
+            'Jumlah_labor'=>$this->input->post('Jumlah_labor',true)
         ));
     }
     
@@ -89,11 +88,10 @@ class M_furnace extends CI_Model
     {
         $this->db->where('Id', $Id);
         return $this->db->update(self::$table,array(
-			'Kode_Supp'=>$this->input->post('Kode_Supp',true),
-            'Name'=>$this->input->post('Name',true),
-			'Price'=>$this->input->post('Price',true),
-			'Currency'=>$this->input->post('Currency',true),
-            'Tgl_update'=>$this->input->post('Tgl_update',true)
+	    'Process'=>$this->input->post('Process',true),
+            'Gaji_per_year'=>$this->input->post('Gaji_per_year',true),
+            'Hasilprod_per_tahun'=>$this->input->post('Hasilprod_per_tahun',true),
+            'Jumlah_labor'=>$this->input->post('Jumlah_labor',true)
         ));
     }
     
@@ -102,27 +100,9 @@ class M_furnace extends CI_Model
         return $this->db->delete(self::$table, array('Id' => $Id)); 
     }
     
-	function getSupplier()
-    {
-        $this->db->select('Id, Name');        
-        $this->db->order_by('Id', 'ASC');
-        $query  = $this->db->get('supplier');
-                   
-        $data = array();
-        foreach ( $query->result() as $row )
-        {
-            array_push($data, $row); 
-        }       
-        return json_encode($data);
-    }
 	
-    function enumField($field)
-    {
-        $enums = field_enums(self::$table, $field);
-        return json_encode($enums);
-    }
     
 }
 
-/* End of file m_furnace.php */
-/* Location: ./application/models/master/m_furnace.php */
+/* End of file m_labor.php */
+/* Location: ./application/models/master/process/m_labor.php */

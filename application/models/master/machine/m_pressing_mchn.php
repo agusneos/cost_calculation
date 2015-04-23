@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  
-class M_headingcat extends CI_Model
+class M_pressing_mchn extends CI_Model
 {    
-    static $table = 'tools_headingcat';
+    static $table = 'machine_pressing';
      
     public function __construct() {
         parent::__construct();
@@ -14,7 +14,7 @@ class M_headingcat extends CI_Model
         $page   = isset($_POST['page']) ? intval($_POST['page']) : 1;
         $rows   = isset($_POST['rows']) ? intval($_POST['rows']) : 30;
         $offset = ($page-1)*$rows;      
-        $sort   = isset($_POST['sort']) ? strval($_POST['sort']) : 'Id';
+        $sort   = isset($_POST['sort']) ? strval($_POST['sort']) : 'Kode_mchnpress';
         $order  = isset($_POST['order']) ? strval($_POST['order']) : 'asc';
         
         $filterRules = isset($_POST['filterRules']) ? ($_POST['filterRules']) : '';
@@ -76,29 +76,59 @@ class M_headingcat extends CI_Model
     function create()
     {
         return $this->db->insert(self::$table,array(
-            'Id'=>$this->input->post('Id',true),
-	    'Category'=>$this->input->post('Category',true),
-            'Type_screw'=>$this->input->post('Type_screw',true)     
+            'Kode_mchnpress'=>$this->input->post('Kode_mchnpress',true),
+            'Dia_nominal'=>$this->input->post('Dia_nominal',true),
+            'Length_range'=>$this->input->post('Length_range',true),
+            'Mchn_pressing'=>$this->input->post('Mchn_pressing',true),
+            'Mchn_price'=>$this->input->post('Mchn_price',true),
+            'Depr_per_month'=>$this->input->post('Depr_per_month',true),
+            'Output_per_min'=>$this->input->post('Output_per_min',true),
+            'Working_time'=>$this->input->post('Working_time',true),
+            'Working_time_sec'=>$this->input->post('Working_time_sec',true),
+            'Output_per_day'=>$this->input->post('Output_per_day',true),
+            'Output_per_month'=>$this->input->post('Output_per_month',true),
+            'Productivity_ratio'=>$this->input->post('Productivity_ratio',true),
+            'Prod_plan_month'=>$this->input->post('Prod_plan_month',true),
+            'Cycle_time'=>$this->input->post('Cycle_time',true),
+            'Dandori_time'=>$this->input->post('Dandori_time',true),
+            'Pressing_depr_cost'=>$this->input->post('Pressing_depr_cost',true)
         ));
     }
     
-    function update($Id)
+    function update($Kode_mchnpress)
     {
-        $this->db->where('Id', $Id);
+        $this->db->where('Kode_mchnpress', $Kode_mchnpress);
         return $this->db->update(self::$table,array(
-            'Category'=>$this->input->post('Category',true),
-            'Type_screw'=>$this->input->post('Type_screw',true)     
+            'Dia_nominal'=>$this->input->post('Dia_nominal',true),
+            'Length_range'=>$this->input->post('Length_range',true),
+            'Mchn_pressing'=>$this->input->post('Mchn_pressing',true),
+            'Mchn_price'=>$this->input->post('Mchn_price',true),
+            'Depr_per_month'=>$this->input->post('Depr_per_month',true),
+            'Output_per_min'=>$this->input->post('Output_per_min',true),
+            'Working_time'=>$this->input->post('Working_time',true),
+            'Working_time_sec'=>$this->input->post('Working_time_sec',true),
+            'Output_per_day'=>$this->input->post('Output_per_day',true),
+            'Output_per_month'=>$this->input->post('Output_per_month',true),
+            'Productivity_ratio'=>$this->input->post('Productivity_ratio',true),
+            'Prod_plan_month'=>$this->input->post('Prod_plan_month',true),
+            'Cycle_time'=>$this->input->post('Cycle_time',true),
+            'Dandori_time'=>$this->input->post('Dandori_time',true),
+            'Pressing_depr_cost'=>$this->input->post('Pressing_depr_cost',true)
         ));
     }
     
-    function delete($Id)
+    function delete($Kode_mchnpress)
     {
-        return $this->db->delete(self::$table, array('Id' => $Id)); 
+        return $this->db->delete(self::$table, array('Kode_mchnpress' => $Kode_mchnpress)); 
     }
     
-    
+    function enumField($field)
+    {
+        $enums = field_enums(self::$table, $field);
+        return json_encode($enums);
+    }
     
 }
 
-/* End of file m_headingcat.php */
-/* Location: ./application/models/master/m_headingcat.php */
+/* End of file m_pressing_mchn.php */
+/* Location: ./application/models/master/machine/m_pressing_mchn.php */

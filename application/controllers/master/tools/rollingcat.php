@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Coating extends CI_Controller {
+class Rollingcat extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('master/m_coating','record');
+        $this->load->model('master/tools/m_rollingcat','record');
     }
     
     function index()
@@ -16,7 +16,7 @@ class Coating extends CI_Controller {
         if (isset($_GET['grid'])) 
             echo $this->record->index();        
          else 
-            $this->load->view('master/v_coating');        
+            $this->load->view('master/tools/v_rollingcat');        
     } 
     
     function create()
@@ -74,23 +74,7 @@ class Coating extends CI_Controller {
         }
     }
     
-	function getSupplier()
-    {
-        $auth   = new Auth();
-        $auth->restrict();
-        
-        echo $this->record->getSupplier();
-	}
-	
-    function enumCurrency()
-	    {
-        $auth   = new Auth();
-        $auth->restrict();
-        
-        echo $this->record->enumField('Currency');
-    }
-                
 }
 
-/* End of file coating.php */
-/* Location: ./application/controllers/master/coating.php */
+/* End of file rollingcat.php */
+/* Location: ./application/controllers/master/tools/rollingcat.php */

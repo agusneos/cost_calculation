@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Washer extends CI_Controller {
+class Labor extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('master/m_washer','record');
+        $this->load->model('master/process/m_labor','record');
     }
     
     function index()
@@ -16,7 +16,7 @@ class Washer extends CI_Controller {
         if (isset($_GET['grid'])) 
             echo $this->record->index();        
          else 
-            $this->load->view('master/v_washer');        
+            $this->load->view('master/process/v_labor');        
     } 
     
     function create()
@@ -73,24 +73,8 @@ class Washer extends CI_Controller {
             echo json_encode(array('success'=>false));
         }
     }
-    
-	function getSupplier()
-    {
-        $auth   = new Auth();
-        $auth->restrict();
-        
-        echo $this->record->getSupplier();
-	}
-	
-        function enumCurrency()
-    {
-        $auth   = new Auth();
-        $auth->restrict();
-        
-        echo $this->record->enumField('Currency');
-    }
-                
+                    
 }
 
-/* End of file washer.php */
-/* Location: ./application/controllers/master/washer.php */
+/* End of file labor.php */
+/* Location: ./application/controllers/master/process/labor.php */

@@ -30,17 +30,17 @@
     <thead>
         <tr>
             <th data-options="field:'ck',checkbox:true" ></th>
-            <th data-options="field:'Id'"                   width="100" align="center" sortable="true">Kode Wire</th>
-            <th data-options="field:'Kode_Supp'"                 width="100" halign="center" align="left" sortable="true">Supplier</th>
+            <th data-options="field:'Id'"                 width="100" align="center" sortable="true">Kode Wire</th>
+            <th data-options="field:'Kode_Supp'"          width="100" halign="center" align="left" sortable="true">Supplier</th>
             <th data-options="field:'Grade'"              width="100" align="center" sortable="true">Grade</th>
             <th data-options="field:'Min_dia'"            width="100" align="center" sortable="true" >Minimum Diameter</th>
-            <th data-options="field:'Max_dia'"                  width="100" align="center" sortable="true" >Maximum Diameter</th>
-            <th data-options="field:'Name'"              width="100" align="center" sortable="true">Type</th>
-            <th data-options="field:'Jenis'"            width="100" align="center" sortable="true" >Jenis</th>
-            <th data-options="field:'Price'"                  width="100" align="center" sortable="true" >Price</th>
-            <th data-options="field:'Currency'"              width="100" align="center" sortable="true">Currency</th>
-            <th data-options="field:'Tgl_update'"            width="100" align="center" sortable="true" >Tanggal Update </th>
-            <th data-options="field:'Active'"            width="50" align="center" sortable="true" >Active</th>
+            <th data-options="field:'Max_dia'"            width="100" align="center" sortable="true" >Maximum Diameter</th>
+            <th data-options="field:'Type'"               width="100" align="center" sortable="true">Type</th>
+            <th data-options="field:'Jenis'"              width="100" align="center" sortable="true" >Jenis</th>
+            <th data-options="field:'Price'"              width="100" align="center" sortable="true" >Price</th>
+            <th data-options="field:'Currency'"           width="100" align="center" sortable="true">Currency</th>
+            <th data-options="field:'Tgl_update'"         width="100" align="center" sortable="true" >Tanggal Update </th>
+            <th data-options="field:'Active'"             width="50" align="center" sortable="true" >Active</th>
         </tr>
     </thead>
 </table>
@@ -58,8 +58,8 @@
         text:'Delete',
         iconCls:'icon-cancel',
         handler:function(){masterwireHapus();}
-	},{	
-		text:'Upload',
+    },{	
+	text:'Upload',
         iconCls:'icon-upload',
         handler:function(){upload();}
     },{
@@ -258,7 +258,7 @@
             <label for="type">Type Wire</label>
             <input id="Type" name="Type" class="easyui-combobox"  data-options="
                 url:'<?php echo site_url('master/wire/getTypeWire'); ?>',
-                method:'get', valueField:'Id', textField:'Name', panelHeight:200" style="width:152px;" required="true"/> 
+                method:'get', valueField:'Id', textField:'Type', panelHeight:200" style="width:152px;" required="true"/> 
         </div>
         <div class="fitem">
             <label for="type">Jenis</label>
@@ -285,8 +285,8 @@
 
 <!-- Dialog Button -->
 <div id="dlg-buttons-master_wire">
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-ok" onclick="masterwireSave()">Simpan</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-master_wire').dialog('close')">Batal</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-ok" onclick="masterwireSave();">Simpan</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-master_wire').dialog('close');">Batal</a>
 </div>
 
 <div id="dlg-master_wire-edit" class="easyui-dialog" style="width:500px; height:380px; padding: 10px 20px" closed="true" buttons="#dlg-buttons-master_wire-edit">
@@ -313,7 +313,7 @@
             <label for="type">Type Wire</label>
             <input id="Type" name="Type" class="easyui-combobox"  data-options="
                 url:'<?php echo site_url('master/wire/getTypeWire'); ?>',
-                method:'get', valueField:'Id', textField:'Name', panelHeight:200" style="width:152px;" required="true"/> 
+                method:'get', valueField:'Id', textField:'Type', panelHeight:200" style="width:152px;" required="true"/> 
         </div>
         <div class="fitem">
             <label for="type">Jenis</label>
@@ -339,8 +339,8 @@
 
 <!-- Dialog Button -->
 <div id="dlg-buttons-master_wire-edit">
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-ok" onclick="masterwireSaveEdit()">Simpan</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-master_wire-edit').dialog('close')">Batal</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-ok" onclick="masterwireSaveEdit();">Simpan</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-master_wire-edit').dialog('close');">Batal</a>
 </div>
 
 <div id="dlg-upload" class="easyui-dialog" style="width:400px; height:150px; padding: 10px 20px" closed="true" buttons="#dlg_buttons-upload">
@@ -354,8 +354,8 @@
 
 <!-- Dialog Button -->
 <div id="dlg_buttons-upload">
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-ok" onclick="uploadSave()">Simpan</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-upload').dialog('close')">Batal</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-ok" onclick="uploadSave();">Simpan</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-upload').dialog('close');">Batal</a>
 </div>
 <!-- End of file v_wire.php -->
 <!-- Location: ./application/views/master/v_wire.php -->

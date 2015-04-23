@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Washer extends CI_Controller {
+class Heading_mchn extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('master/m_washer','record');
+        $this->load->model('master/machine/m_heading_mchn','record');
     }
     
     function index()
@@ -16,7 +16,7 @@ class Washer extends CI_Controller {
         if (isset($_GET['grid'])) 
             echo $this->record->index();        
          else 
-            $this->load->view('master/v_washer');        
+            $this->load->view('master/machine/v_heading_mchn');        
     } 
     
     function create()
@@ -37,7 +37,7 @@ class Washer extends CI_Controller {
         }
     }     
     
-    function update($Id=null)
+    function update($Kode_mchnhead=null)
     {
         $auth   = new Auth();
         $auth->restrict();
@@ -45,7 +45,7 @@ class Washer extends CI_Controller {
         if(!isset($_POST))	
             show_404();
 
-        if($this->record->update($Id))
+        if($this->record->update($Kode_mchnhead))
         {
             echo json_encode(array('success'=>true));
         }
@@ -63,8 +63,8 @@ class Washer extends CI_Controller {
         if(!isset($_POST))	
             show_404();
 
-        $Id = addslashes($_POST['Id']);
-        if($this->record->delete($Id))
+        $Kode_mchnhead = addslashes($_POST['Kode_mchnhead']);
+        if($this->record->delete($Kode_mchnhead))
         {
             echo json_encode(array('success'=>true));
         }
@@ -73,24 +73,14 @@ class Washer extends CI_Controller {
             echo json_encode(array('success'=>false));
         }
     }
-    
-	function getSupplier()
+    function enumGolmesin()
     {
         $auth   = new Auth();
         $auth->restrict();
         
-        echo $this->record->getSupplier();
-	}
-	
-        function enumCurrency()
-    {
-        $auth   = new Auth();
-        $auth->restrict();
-        
-        echo $this->record->enumField('Currency');
+        echo $this->record->enumField('Gol_mchn_head');
     }
-                
 }
 
-/* End of file washer.php */
-/* Location: ./application/controllers/master/washer.php */
+/* End of file heading_mchn.php */
+/* Location: ./application/controllers/master/machine/heading_mchn.php */

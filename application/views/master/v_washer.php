@@ -33,12 +33,13 @@
         <tr>
             <th data-options="field:'ck',checkbox:true" ></th>
             <th data-options="field:'Id'"                   width="100" align="center" sortable="true">Kode Washer</th>
-            <th data-options="field:'Kode_Supp'"                 width="100" halign="center" align="left" sortable="true">Supplier</th>
+            <th data-options="field:'Kode_Supp'"            width="100" halign="center" align="center" sortable="true">Supplier</th>
             <th data-options="field:'Name'"                 width="200" halign="center" align="left" sortable="true">Nama washer</th>
-            <th data-options="field:'Weight'"              width="100" align="center" sortable="true" formatter="weight">Weight</th>
-            <th data-options="field:'Price'"            width="100" align="center" sortable="true" formatter="price">Price</th>
-            <th data-options="field:'Currency'"              width="100" align="center" sortable="true">Currency</th>
-            <th data-options="field:'Tgl_update'"            width="100" align="center" sortable="true" >Tanggal Update </th>
+            <th data-options="field:'Weight'"               width="100" align="center" sortable="true" formatter="weight">Weight</th>
+            <th data-options="field:'Price'"                width="100" align="center" sortable="true" formatter="price">Price</th>
+            <th data-options="field:'Currency'"             width="100" align="center" sortable="true">Currency</th>
+            <th data-options="field:'Tgl_update'"           width="100" align="center" sortable="true" >Tanggal Update </th>
+            <th data-options="field:'Active'"               width="50" align="center" sortable="true" >Active</th>
         </tr>
     </thead>
 </table>
@@ -224,8 +225,7 @@
             <label for="type">Currency</label>
             <input id="Currency" name="Currency" class="easyui-combobox" data-options=" 
             url:'<?php echo site_url('master/washer/enumCurrency'); ?>',
-                method:'get', valueField:'data', textField:'data', panelHeight:'auto'" required="true"/>
-           
+                method:'get', valueField:'data', textField:'data', panelHeight:'auto'" required="true"/>   
         </div>
         <div class="fitem">
             <label for="type">Tgl Update</label>
@@ -236,8 +236,8 @@
 
 <!-- Dialog Button -->
 <div id="dlg-buttons-master_washer">
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-ok" onclick="masterwasherSave()">Simpan</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-master_washer').dialog('close')">Batal</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-ok" onclick="masterwasherSave();">Simpan</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-master_washer').dialog('close');">Batal</a>
 </div>
 
 <div id="dlg-master_washer-edit" class="easyui-dialog" style="width:500px; height:300px; padding: 10px 20px" closed="true" buttons="#dlg-buttons-master_washer-edit">
@@ -277,8 +277,8 @@
 
 <!-- Dialog Button -->
 <div id="dlg-buttons-master_washer-edit">
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-ok" onclick="masterwasherSaveEdit()">Simpan</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-master_washer-edit').dialog('close')">Batal</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-ok" onclick="masterwasherSaveEdit();">Simpan</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-master_washer-edit').dialog('close');">Batal</a>
 </div>
 <!-- End of file v_washer.php -->
 <!-- Location: ./application/views/master/v_washer.php -->

@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Washer extends CI_Controller {
+class Trimming extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('master/m_washer','record');
+        $this->load->model('master/tools/m_trimming','record');
     }
     
     function index()
@@ -16,7 +16,7 @@ class Washer extends CI_Controller {
         if (isset($_GET['grid'])) 
             echo $this->record->index();        
          else 
-            $this->load->view('master/v_washer');        
+            $this->load->view('master/tools/v_trimming');        
     } 
     
     function create()
@@ -73,24 +73,14 @@ class Washer extends CI_Controller {
             echo json_encode(array('success'=>false));
         }
     }
-    
-	function getSupplier()
-    {
-        $auth   = new Auth();
-        $auth->restrict();
-        
-        echo $this->record->getSupplier();
-	}
-	
-        function enumCurrency()
-    {
+    function enumCurrency()
+	    {
         $auth   = new Auth();
         $auth->restrict();
         
         echo $this->record->enumField('Currency');
     }
-                
 }
 
-/* End of file washer.php */
-/* Location: ./application/controllers/master/washer.php */
+/* End of file trimming.php */
+/* Location: ./application/controllers/master/tools/trimming.php */

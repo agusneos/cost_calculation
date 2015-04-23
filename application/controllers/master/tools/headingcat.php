@@ -77,4 +77,4 @@ class Headingcat extends CI_Controller {
 }
 
 /* End of file headingcat.php */
-/* Location: ./application/controllers/master/headingcat.php */
+/* Location: ./application/controllers/master/tools/headingcat.php */

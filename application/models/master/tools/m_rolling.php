@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  
-class M_heading1 extends CI_Model
+class M_rolling extends CI_Model
 {    
-    static $table = 'tools_heading1';
+    static $table = 'tools_rolling';
      
     public function __construct() {
         parent::__construct();
@@ -49,12 +49,12 @@ class M_heading1 extends CI_Model
             }
 	}
        
-        $this->db->select('a.Id AS Id, Category, Diameter, Min_panjang, Max_panjang, Cost, Currency, Tgl_update, Active');
+        $this->db->select('a.Id AS Id, Category2, Diameter, Min_panjang, Max_panjang, Cost, Currency, Tgl_update, Active');
         $this->db->where($cond, NULL, FALSE);
         $this->db->from(self::$table.' a');
         $total  = $this->db->count_all_results();
         
-	$this->db->select('a.Id AS Id, Category, Diameter, Min_panjang, Max_panjang, Cost, Currency, Tgl_update, Active');
+	$this->db->select('a.Id AS Id, Category2, Diameter, Min_panjang, Max_panjang, Cost, Currency, Tgl_update, Active');
 	$this->db->where($cond, NULL, FALSE);
         $this->db->order_by($sort, $order);
         $this->db->limit($rows, $offset);
@@ -73,13 +73,13 @@ class M_heading1 extends CI_Model
         return json_encode($result);          
     }
         
-    function upload($Category, $Diameter, $Min_panjang,
+    function upload($Category2, $Diameter, $Min_panjang,
                     $Max_panjang, $Cost, $Currency, $Tgl_update)
     {
 		date_default_timezone_set('Asia/Jakarta');
         $Tgl_update = date("Y-m-d",($Tgl_update - 25569)*86400);
 		
-		$this->db->where('Category', $Category)
+		$this->db->where('Category2', $Category2)
 				 ->where('Diameter', $Diameter)
 				 ->where('Min_panjang', $Min_panjang)
 				 ->where('Max_panjang', $Max_panjang)
@@ -88,7 +88,7 @@ class M_heading1 extends CI_Model
 				 ->where('Tgl_update', $Tgl_update);
        $resA = $this->db->get(self::$table);
 		
-            $this->db->where('Category', $Category)
+            $this->db->where('Category2', $Category2)
 				 ->where('Diameter', $Diameter)
 				 ->where('Min_panjang', $Min_panjang)
 				 ->where('Max_panjang', $Max_panjang)
@@ -101,7 +101,7 @@ class M_heading1 extends CI_Model
                     {
 				
 			return $this->db->insert(self::$table,array(
-				'Category'=>$Category,
+				'Category2'=>$Category2,
 				'Diameter'=>$Diameter,
 				'Min_panjang'=>$Min_panjang,
 				'Max_panjang'=>$Max_panjang,
@@ -112,7 +112,7 @@ class M_heading1 extends CI_Model
                     }
                      else
                     {
-                        $this->db->where('Category', $Category)
+                        $this->db->where('Category2', $Category2)
 				 ->where('Diameter', $Diameter)
 				 ->where('Min_panjang', $Min_panjang)
 				 ->where('Max_panjang', $Max_panjang)
@@ -121,7 +121,7 @@ class M_heading1 extends CI_Model
                             'Active'	=> 'NO'    
                          ));
                         return $this->db->insert(self::$table,array(
-				'Category'=>$Category,
+				'Category2'=>$Category2,
 				'Diameter'=>$Diameter,
 				'Min_panjang'=>$Min_panjang,
 				'Max_panjang'=>$Max_panjang,
@@ -140,5 +140,5 @@ class M_heading1 extends CI_Model
     }
 }
 
-/* End of file m_heading1.php */
-/* Location: ./application/models/master/tools/m_heading1.php */
+/* End of file m_rolling.php */
+/* Location: ./application/models/master/tools/m_rolling.php */

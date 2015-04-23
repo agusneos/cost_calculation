@@ -4,7 +4,7 @@ class Plating extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('master/m_plating','record');
+        $this->load->model('master/process/m_plating','record');
     }
     
     function index()
@@ -16,7 +16,7 @@ class Plating extends CI_Controller {
         if (isset($_GET['grid'])) 
             echo $this->record->index();        
          else 
-            $this->load->view('master/v_plating');        
+            $this->load->view('master/process/v_plating');        
     } 
     
     function create()
@@ -93,4 +93,4 @@ class Plating extends CI_Controller {
 }
 
 /* End of file plating.php */
-/* Location: ./application/controllers/master/plating.php */
+/* Location: ./application/controllers/master/process/plating.php */

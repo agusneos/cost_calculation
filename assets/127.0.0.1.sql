@@ -1,0 +1,2281 @@
+-- phpMyAdmin SQL Dump
+-- version 3.5.2.2
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: Apr 24, 2015 at 03:47 AM
+-- Server version: 5.5.27
+-- PHP Version: 5.4.7
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `cost_calculation`
+--
+CREATE DATABASE `cost_calculation` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `cost_calculation`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `assembly`
+--
+
+CREATE TABLE IF NOT EXISTS `assembly` (
+  `Id` int(1) NOT NULL AUTO_INCREMENT,
+  `Kode_Supp` varchar(20) NOT NULL,
+  `Name` varchar(50) NOT NULL,
+  `Price` double NOT NULL,
+  `Currency` enum('USD','IDR') NOT NULL,
+  `Tgl_update` date NOT NULL,
+  `Active` enum('YES','NO') NOT NULL DEFAULT 'YES',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `assembly`
+--
+
+INSERT INTO `assembly` (`Id`, `Kode_Supp`, `Name`, `Price`, `Currency`, `Tgl_update`, `Active`) VALUES
+(1, 'HJP-CBT', 'Pemasangan Gasket', 21, 'IDR', '2014-09-09', 'YES'),
+(2, 'HJP-CBT', 'Pemasangan Rubber', 100, 'IDR', '2014-09-09', 'YES');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `calculation`
+--
+
+CREATE TABLE IF NOT EXISTS `calculation` (
+  `Id` int(1) NOT NULL AUTO_INCREMENT,
+  `Tanggal` date NOT NULL,
+  `Customer` varchar(10) NOT NULL,
+  `Customer_code` varchar(30) NOT NULL,
+  `Dia_nominal` double NOT NULL,
+  `Length_nominal` varchar(10) NOT NULL,
+  `Quantity` int(1) NOT NULL,
+  `Saga_code` varchar(40) NOT NULL,
+  `Dia_wire` double NOT NULL,
+  `Kode_wire` varchar(20) NOT NULL,
+  `Net_weight` double NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+
+--
+-- Dumping data for table `calculation`
+--
+
+INSERT INTO `calculation` (`Id`, `Tanggal`, `Customer`, `Customer_code`, `Dia_nominal`, `Length_nominal`, `Quantity`, `Saga_code`, `Dia_wire`, `Kode_wire`, `Net_weight`) VALUES
+(1, '2014-12-19', '123', 'GE90110100', 8, '20', 0, '(A)HSMH 8X20 MC3', 7.85, '109', 10),
+(2, '2014-12-19', '101', 'jasdlfli', 0, '', 0, 'SMP 5 X 6 GR', 0, '', 0),
+(3, '2014-12-26', '100', '1232', 0, '', 0, 'SNP 5X8 KZ', 0, '0', 0),
+(4, '2015-01-05', '102', '1234454', 0, '', 0, 'smp 5 x 7 zk', 0, '0', 0),
+(5, '2015-01-05', '1', 'sdsd', 0, '', 0, 'sdfds', 2, '', 0),
+(6, '2015-01-20', '100', 'safs', 0, '', 30000, 'sdfsd', 0, '62', 0),
+(7, '2015-01-09', '100', '12312', 0, '', 25000, '12321', 3.48, '57', 0),
+(8, '2015-01-09', '121', '323323', 0, '', 50000, '1231', 3.5, '58', 0),
+(9, '2015-01-20', '121', '12312', 0, '', 60000, '443t', 5.7, '60', 0),
+(10, '2015-01-25', '122', '5545reg', 0, '', 5000, 'eratet2', 9, '60', 8.4),
+(11, '2015-01-15', '102', '12212', 5, '12', 100000, 'HSMH 5 X 12 CF', 4.89, '57', 3.65);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `coating`
+--
+
+CREATE TABLE IF NOT EXISTS `coating` (
+  `Id` int(1) NOT NULL AUTO_INCREMENT,
+  `Kode_Supp` varchar(20) NOT NULL,
+  `Name` varchar(50) NOT NULL,
+  `Price` double NOT NULL,
+  `Currency` enum('USD','IDR') NOT NULL,
+  `Tgl_update` date NOT NULL,
+  `Active` enum('YES','NO') NOT NULL DEFAULT 'YES',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=48 ;
+
+--
+-- Dumping data for table `coating`
+--
+
+INSERT INTO `coating` (`Id`, `Kode_Supp`, `Name`, `Price`, `Currency`, `Tgl_update`, `Active`) VALUES
+(1, 'TBM', '(F)SMP 6 X 35 - 30 EB D11.5 T0.8 / TB 2468', 0.0254, 'USD', '2014-10-29', 'YES'),
+(2, 'TBM', 'PIN BOLT M5 X 16 NI-C SOCK UT 10.9 / TB 2448B', 0.0198, 'USD', '2014-10-20', 'YES'),
+(3, 'TBM', 'SMK 3 X 3.2 MC3 / TB2365 (GREEN)', 0.008008, 'USD', '2014-10-03', 'YES'),
+(4, 'TBM', 'HSMK 10 X M6 X 16.8 - 9 NI UT 7T TORX T40 / TB2430', 0.02813, 'USD', '2014-08-20', 'YES'),
+(5, 'TBM', 'HSMK 8 X M8 X 25 - 20 CF 9.8T UT SOCK / TB2471', 520, 'IDR', '2014-08-11', 'YES'),
+(6, 'TBM', '(W)SMP X 18 MC3', 0.01275, 'USD', '2014-07-03', 'YES'),
+(7, 'TBM', 'SMP M4 X 14 EB / TB 2361 (BLUE)', 0.0168, 'USD', '2014-06-19', 'YES'),
+(8, 'TBM', 'HSMH 4 X 3 X 35 MC3 7T UT / TB 2430', 0.01425, 'USD', '2014-06-19', 'YES'),
+(9, 'TBM', 'FB M6 X 12 CF 6.8T K8 / TB2446B', 0.0286, 'USD', '2014-06-18', 'YES'),
+(10, 'TBM', 'HSMS 6 X 25 CF 11.9 UT / TB 2415', 0.025, 'USD', '2014-06-03', 'YES'),
+(11, 'TBM', 'HSMH 4 X 3 X 35 MC3 7T UT / TB 2471', 0.0154, 'USD', '2014-05-13', 'YES'),
+(12, 'TBM', 'HSMW 10 X M8 X 191 - 15 MC3 G7S UT K14 / TB 2471', 500, 'IDR', '2014-04-10', 'YES'),
+(13, 'TBM', 'HSMR 5 X 10 CF UT T01 / TB2440B', 0.0186, 'USD', '2014-03-21', 'YES'),
+(14, 'TBM', 'SMF 3 X 20 CF 20K / TB 2415 (YELLOW), TB 2418', 0.0135, 'USD', '2014-01-09', 'YES'),
+(15, 'TBM', 'HSMS 6 X 25 CF 11.9 / TB 2415 (YELLOW)', 0.021, 'USD', '2014-01-03', 'YES'),
+(16, 'STEP', 'FB 8 X M8 X 20-16.25 GM K12 UT G8', 572, 'IDR', '2014-11-24', 'YES'),
+(17, 'STEP', '(F)TSAH 6 X 25 GM + D16T1', 385, 'IDR', '2014-11-04', 'YES'),
+(18, 'STEP', 'FLANGE NUT M16 X 34.5 GM 12N', 600, 'IDR', '2014-10-15', 'YES'),
+(19, 'STEP', 'TSBIP 5 X 12 GM', 321, 'IDR', '2014-09-30', 'YES'),
+(20, 'STEP', 'SMK SQ 5 X M5 X 18.5-11.45 GM 12A UT TR DP', 281, 'IDR', '2014-08-13', 'YES'),
+(21, 'STEP', '(D)SMH 5 X M5 X 52-34 GM G4 12A UT DT D24T5.5', 743, 'IDR', '2014-08-11', 'YES'),
+(22, 'STEP', '(D)SMH 5 X M5 X 60-30 GM  12A UT DT D24T5.5', 746, 'IDR', '2014-07-21', 'YES'),
+(23, 'STEP', 'TSB1N 4 X 14 GM D11T0.8', 288, 'IDR', '2014-07-03', 'YES'),
+(24, 'STEP', 'TSB1P 4 X 12 GM', 231, 'IDR', '2014-07-03', 'YES'),
+(25, 'STEP', 'TSAT 4 X 10 GM', 230, 'IDR', '2014-07-03', 'YES'),
+(26, 'STEP', 'PW 6 X 13 X 1 GM', 262, 'IDR', '2014-07-03', 'YES'),
+(27, 'STEP', 'FB 8 X 110-18 GM G7', 1748, 'IDR', '2014-07-03', 'YES'),
+(28, 'STEP', 'FB 8 X 25-18 GM G7', 695, 'IDR', '2014-12-03', 'YES'),
+(29, 'STEP', 'FB 8 X 16 - 18 GM G7', 572, 'IDR', '2014-07-03', 'YES'),
+(30, 'STEP', '(F)SMK SQ 5 X M5 X18.5-11.45A GM DP 12A D14T1.6', 284, 'IDR', '2014-06-17', 'YES'),
+(31, 'STEP', '(D)SMW 8 X M5 X 62-41.8 GM 10A DT ROUND G65 D27T5.', 961, 'IDR', '2014-05-22', 'YES'),
+(32, 'STEP', '(D)SMW 6 X M5 X 65-40 GM 12A DT ROUND G65 D24T5.5', 803, 'IDR', '2014-05-22', 'YES'),
+(33, 'STEP', '(F)SMK SQ 5 X M5 X 18.5-11.45A GM DP D16T1.6', 256, 'IDR', '2014-04-07', 'YES'),
+(34, 'STEP', 'FB 14 X M14 X 50-34 GM UT K19 P1.5 G11', 2174, 'IDR', '2014-03-17', 'YES'),
+(35, 'STEP', 'SQ 8.5 X M8 X 16-13 GM 8 SPOT', 503, 'IDR', '2014-03-14', 'YES'),
+(36, 'STEP', 'TSBN 3 X 14-11.1 GM D11T0.8', 294, 'IDR', '2014-03-11', 'YES'),
+(37, 'STEP', 'TSBN 4 X 14 GM D12T0.8', 309, 'IDR', '2014-01-06', 'YES'),
+(38, 'STEP', 'TSBN 4 X 20-7 GM D12T0.8', 358, 'IDR', '2014-01-06', 'YES'),
+(39, 'STEP', 'FB 14 X M14 X 45-34 GM UT K19 P1.5 G11', 1911, 'IDR', '2014-01-06', 'YES'),
+(40, 'STEP', 'FB 14 X M14 X 60-34 GM UT K19 P1.5 G11', 2217, 'IDR', '2014-01-06', 'YES'),
+(41, 'STEP', 'FB 14 X M14 X 55-34 GM UT K19 P1.5 G11', 2196, 'IDR', '2014-01-06', 'YES'),
+(42, 'NIC', 'TSBP 4 X 8 NI-C', 403, 'IDR', '2014-11-07', 'YES'),
+(43, 'NIC', 'PIN BOLT 5 X 16 NI-C UTR SOCK 10.9 TB2440B', 480, 'IDR', '2014-10-14', 'YES'),
+(44, 'STEP', 'HSMK 10 X M6 X 16.8-9 NI-C UT 7T TORX 40', 460, 'IDR', '2014-09-03', 'YES'),
+(45, 'NIC', '(F)SMP 4 X 12 NI-C TORX-S T20 D8T0.8', 205, 'IDR', '2014-06-26', 'YES'),
+(46, 'BIMA', 'TSAP 4 X 20 CR', 188, 'IDR', '2014-10-31', 'YES'),
+(47, 'BIMA', 'BOLT KNURLING 8 X M5 X 28.5 NC', 219, 'IDR', '2014-02-26', 'YES');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer`
+--
+
+CREATE TABLE IF NOT EXISTS `customer` (
+  `Id` varchar(20) NOT NULL,
+  `Name` varchar(60) NOT NULL,
+  `PayTerm` int(1) NOT NULL,
+  `CustGroup` enum('LOKAL','IMPORT') NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`Id`, `Name`, `PayTerm`, `CustGroup`) VALUES
+('1', 'PT. KARYA MEKAR UTAMA', 0, ''),
+('10', 'PT. YASUNLI ABADI UTAMA PLASTIK (MM)', 0, ''),
+('100', 'PT. GARPAN TRI ASKINDO', 0, ''),
+('101', 'PT. DAYA KARSA WIGUNA', 0, ''),
+('102', 'PT. ASAHI DENSO INDONESIA', 0, ''),
+('103', 'PT. ARISA MANDIRI PRATAMA', 0, ''),
+('104', 'PT. KYORAKU BLOWMOLDING INDONESIA', 0, ''),
+('106', 'PT. MELCOINDA', 0, ''),
+('107', 'PT. SARI PEKAYON NUSANTARA', 0, ''),
+('108', 'PT. UTAMA KREASI', 0, ''),
+('109', 'PT. CITRA BANDUNG LAKSANA', 0, ''),
+('11', 'PT. HARTONO ISTANA TEKNOLOGI (KUDUS)', 0, ''),
+('110', 'PT. MING HORNG INDUSTRY', 0, ''),
+('111', 'PT. KRAMA YUDHA TIGA BERLIAN MOTORS', 0, ''),
+('112', 'PT. MOVING TECH', 0, ''),
+('113', 'PT. ISAK ELECTRO JAYA', 0, ''),
+('114', 'PT. FUJI MEIWA', 0, ''),
+('115', 'PT. ELECTRON  PARTS TECHNOLOGY INDONESIA', 0, ''),
+('116', 'PT. CHEMCO HARAPAN NUSANTARA', 0, ''),
+('117', 'PT. MORADON BERLIAN SAKTI', 0, ''),
+('118', 'PT. PRICOL SURYA', 0, ''),
+('12', 'PT. HARTONO ISTANA TEKNOLOGI (SAYUNG)', 0, ''),
+('120', 'PT. MIKUNI INDONESIA', 0, ''),
+('121', 'PT. USRA TAMPI INDONESIA', 0, ''),
+('122', 'PT. SANWA PRESSWORK INDONESIA', 0, ''),
+('123', 'PT. TRI MENTARI NIAGA', 0, ''),
+('124', 'PT. HINO MOTOR MANUFACTURING INDONESIA', 0, ''),
+('125', 'PT. FUJI SEAT INDONESIA', 0, ''),
+('126', 'PT. LESTARI TEKNIK PLASTIKATAMA', 0, ''),
+('127', 'PT. CHANDRA NUGERAH CIPTA', 0, ''),
+('128', 'PT. PADMA SOODE INDONESIA', 0, ''),
+('129', 'PT. TOA GALVA INDUSTRIES', 0, ''),
+('13', 'PT. ICHIKOH INDONESIA', 0, ''),
+('130', 'PT. PAMINDO TIGA T (JKT)', 0, ''),
+('131', 'PT. EXEDY MANUFACTURING INDONESIA', 0, ''),
+('132', 'PT. TAKAGI SARI MULTI UTAMA', 0, ''),
+('133', 'PT. TOYOTA BOSHOKU INDONESIA', 0, ''),
+('134', 'PT. RACHMAT PERDANA ADHIMETAL', 0, ''),
+('135', 'PT. KUBOTA INDONESIA', 0, ''),
+('136', 'PT. SETIA GUNA SEJATI', 0, ''),
+('137', 'PT. MEKAR ARMADA JAYA', 0, ''),
+('138', 'PT. PERMA PLASINDO', 0, ''),
+('139', 'PT. MUSASHI AUTO PARTS INDONESIA', 0, ''),
+('14', 'PT. IHARA MANUFACTURING INDONESIA', 0, ''),
+('140', 'PT. SUZUKI INDOMOBIL MOTOR (4W)', 0, ''),
+('141', 'PT. EAGLE INDUSTRI INDONESIA', 0, ''),
+('142', 'PT. YAMAHA MUSIC MFG. ASIA', 0, ''),
+('143', 'PT. KATOLEC INDONESIA', 0, ''),
+('144', 'PT. TAIYO TOSHIN INDONESIA', 0, ''),
+('146', 'PT. CIPTA SAKSAMA INDONESIA', 0, ''),
+('147', 'PT. NANDYA KARYA PERKASA', 0, ''),
+('148', 'PT. SANGIL INDONESIA', 0, ''),
+('149', 'PT. SHARP ELECTRONICS INDONESIA (WM)', 0, ''),
+('15', 'PT. INDONESIA NIPPON SEIKI', 0, ''),
+('150', 'PT. TOYOPLAS MANUFACTURING INDONESIA', 0, ''),
+('151', 'PT. YAMAHA INDONESIA MOTOR MFG (POD)', 0, ''),
+('152', 'PT. GLOBAL DIMENSI METALINDO', 0, ''),
+('153', 'PT. MITSUBISHI KRAMAYUDHA MOTORS II', 0, ''),
+('154', 'PT. TOA GALVA INDUSTRIES SP 1', 0, ''),
+('155', 'PT. TOA GALVA INDUSTRIES AMP', 0, ''),
+('156', 'PT. SETIA GUNA SELARAS', 0, ''),
+('157', 'PT. ASTRA OTOPARTS TBK', 0, ''),
+('158', 'PT. YANMAR AGRICULTURAL MFG', 0, ''),
+('159', 'PT. ASIA AUTOKOM INDUSTRI', 0, ''),
+('16', 'PT. INTI POLYMETAL', 0, ''),
+('160', 'PT. ADYAWINSA DINAMIKA KARAWANG', 0, ''),
+('161', 'PT. ALDA HENKO INTERNUSA', 0, ''),
+('162', 'PT. METRO KINKI METALS', 0, ''),
+('163', 'PT. ARTHA UTAMA PLASINDO', 0, ''),
+('164', 'PT. BAHAGIA SEJAHTERA METALINDO', 0, ''),
+('165', 'PT. CONEX INTI MAKMUR', 0, ''),
+('166', 'PT. CITRA NUGERAH KARYA', 0, ''),
+('167', 'PT. DHARMA POLIMETAL', 0, ''),
+('168', 'PT. DJAYINDO PERKASA', 0, ''),
+('169', 'PT. ESKA CAHYADI BERSAUDARA', 0, ''),
+('17', 'PT. HANYUNG FUJISEI', 0, ''),
+('170', 'PT. FAJAR CAHAYA CEMERLANG', 0, ''),
+('171', 'PT. FCC INDONESIA', 0, ''),
+('172', 'PT. GEUM CHEON INDO', 0, ''),
+('173', 'PT. GEMAPLAST', 0, ''),
+('174', 'PT. GALINDRA MULTI CIPTA', 0, ''),
+('175', 'PT. INTI PANTJA PRESS INDUSTRI', 0, ''),
+('176', 'PT. HANSUNG ELECTRONICS INDONESIA', 0, ''),
+('177', 'PT. INDOSAFETY SENTOSA INDUSTRY', 0, ''),
+('178', 'PT. INTI PLASTIK ANEKA KARET', 0, ''),
+('179', 'PT. KEPSONIC INDONESIA', 0, ''),
+('18', 'PT. SUZUKI INDOMOBIL MOTOR', 0, ''),
+('180', 'PT. KREASI PRESISI METALINDO', 0, ''),
+('181', 'PT. KTB Spare Part Center', 0, ''),
+('182', 'PT. LIKINDO FURASTRACO PERKASA', 0, ''),
+('183', 'PT. MINDA ASEAN AUTOMOTIVE', 0, ''),
+('184', 'PT. MULTINUGRAHA KENCANA', 0, ''),
+('185', 'CV. MITRA PENSI PRATAMA', 0, ''),
+('186', 'PT. OLGASARANA PEKAYON', 0, ''),
+('187', 'PT. ISUZU ASTRA MOTOR INDONESIA (SUNTER)', 0, ''),
+('188', 'PT. PROFESSINDO JAYA INTI', 0, ''),
+('189', 'PT. PANCAMEKAR LESTARI', 0, ''),
+('19', 'PT. WIJAYA KARYA INDUSTRI & KONSTRUKSI', 0, ''),
+('190', 'PT. PANGGUNG ELECTRIC CITRABUANA. (D)', 0, ''),
+('191', 'PT. STAR MUSTIKA PLASTMETAL', 0, ''),
+('192', 'PT. SINARLAUT ABADI', 0, ''),
+('193', 'PT. ASIA HODA INDONESIA', 0, ''),
+('194', 'PT. KYODA MAS MULIA', 0, ''),
+('195', 'PT. NUSANTARA BUANA SAKTI', 0, ''),
+('196', 'PT. ANEKA KOMKAR UTAMA', 0, ''),
+('197', 'PT. SIERA NUT INDONESIA', 0, ''),
+('198', 'PT. KIYOKUNI TECHNOLOGIES', 0, ''),
+('199', 'PT. HASURA MITRA GEMILANG', 0, ''),
+('2', 'PT. TIGA BERLIAN ELECTRIC', 0, ''),
+('20', 'PT. SUZUKI INDOMOBIL MOTOR  (2W) CAKUNG', 0, ''),
+('200', 'PT. SUBUR DJAJA TEGUH', 0, ''),
+('201', 'PT. JAYA PANDU NUSANTARA', 0, ''),
+('202', 'PT. SUJI TECHNO', 0, ''),
+('203', 'PT. TS. TECH INDONESIA', 0, ''),
+('204', 'PT. CENTRADO PRIMA INTERNATIONAL', 0, ''),
+('205', 'PT. SLUMBERLAND INDONESIA', 0, ''),
+('206', 'PT. HONTO INTI SUKSES', 0, ''),
+('207', 'PT. METALINDO MULTIDINAMIKA MANDIRI', 0, ''),
+('208', 'PT. MAKOTO JAYA ABADI', 0, ''),
+('209', 'PT. VARIA DIMENSI', 0, ''),
+('21', 'PT. INDONESIA STANLEY ELECTRIC', 0, ''),
+('210', 'PT. INDONESIA THAI SUMMIT AUTO', 0, ''),
+('211', 'PT. JERLIN KENCANA SAKTI', 0, ''),
+('212', 'PT. INTER CITRA NUSANTARA', 0, ''),
+('213', 'PT. SANOH INDONESIA', 0, ''),
+('214', 'PT. OSTEC INDONESIA', 0, ''),
+('215', 'PT. GALIH SEKAR SAKTI', 0, ''),
+('216', 'PT. PEMBINA GALINDRA ELECTRIC', 0, ''),
+('217', 'PT. FUJI TECHNICA INDONESIA', 0, ''),
+('218', 'PT. PRIMA KOMPONINDO', 0, ''),
+('22', 'PT. JAYA VICTORI CEMERLANG', 0, ''),
+('220', 'PT. YASUNLI ABADI UTAMA PLASTIK', 0, ''),
+('221', 'PT. TANINDO NOBEL PLAST', 0, ''),
+('222', 'PT. SARANA UNGGUL PRATAMA', 0, ''),
+('223', 'PT. YI SHEN INDUSTRIAL', 0, ''),
+('224', 'PT. YQ TEK INDONESIA', 0, ''),
+('225', 'PT. YOUNG INDUSTRY INDONESIA', 0, ''),
+('226', 'PT. SAMWON COPPER TUBE INDONESIA', 0, ''),
+('227', 'PT. PROGRESS TOYO (INDONESIA)', 0, ''),
+('228', 'PT. APM ARMADA AUTOPARTS', 0, ''),
+('229', 'PT. ADHI WIJAYA CITRA', 0, ''),
+('23', 'CV. GADING PRATAMA', 0, ''),
+('230', 'PT. ARMADA JOHNSON CONTROL', 0, ''),
+('231', 'PT. ALPINDO MITRA BAJA', 0, ''),
+('232', 'PT. CITRA PLASTIK MAKMUR', 0, ''),
+('234', 'PT. FARIQINDO MULIA TEKNIK', 0, ''),
+('235', 'PT. GINSA INTI PRATAMA', 0, ''),
+('236', 'PT. HIKARI METALINDO PRATAMA', 0, ''),
+('237', 'PT. JUAHN INDONESIA', 0, ''),
+('238', 'PT. JAYA RAYA MANDIRI', 0, ''),
+('239', 'PT. KOSTEC INDONESIA', 0, ''),
+('24', 'PT. MITRAINDO SELARAS INDUSTRI', 0, ''),
+('240', 'PT. MEGA PRATAMA TEKNINDO', 0, ''),
+('241', 'PT. NIRMALA TIRTA PUTRA', 0, ''),
+('242', 'PT. ISUZU ASTRA MOTOR INDONESIA (P. UNGU)', 0, ''),
+('243', 'EXEDY VIETNAM CO, LTD', 0, ''),
+('244', 'PT. MEIWA INDONESIA (III)', 0, ''),
+('245', 'PT. PRO TEC INDONESIA', 0, ''),
+('246', 'PT. SORAYA INTERINDO', 0, ''),
+('247', 'PT. TECHNO INDONESIA', 0, ''),
+('248', 'PT. TOMADA JAYA SEMPURNA', 0, ''),
+('249', 'PT. WIJAYA METALINDO PRIMA', 0, ''),
+('25', 'PT. SANYO ELECTRONICS INDONESIA', 0, ''),
+('251', 'PT. SINAR PRIMA PLASTISINDO', 0, ''),
+('253', 'PT. TRI SAUDARA SENTOSA INDUSTRI', 0, ''),
+('254', 'PT. SUZUKI SPARE PART CENTER', 0, ''),
+('256', 'PT. TENMA CIKARANG INDONESIA', 0, ''),
+('259', 'PT. SARANA KENCANA MULYA', 0, ''),
+('26', 'PT. KAWASAKI MOTOR INDONESIA', 0, ''),
+('262', 'PT. SINAR AGUNG PEMUDA', 0, ''),
+('266', 'PT. BERDIKARI METAL ENGINEERING', 0, ''),
+('268', 'PT. MULTI PRATAMA INTERBUANA INDONESIA', 0, ''),
+('269', 'PT. PANGGUNG ELECTRIC CITRABUANA (AUDIO)', 0, ''),
+('27', 'PT. CATURINDO AGUNG JAYA RUBBER', 0, ''),
+('270', 'PT. NEOHYOLIM PLATECH INDONESIA', 0, ''),
+('271', 'PT. SANGWAN DINASINDO', 0, ''),
+('272', 'BPK. IRWAN', 0, ''),
+('273', 'PT. SUZUKI INDOMOBIL MOTOR (2W TBN) MANUAL', 0, ''),
+('274', 'PT. SUZUKI INDOMOBIL MOTOR (2W TBN) TRIAL', 0, ''),
+('275', 'PT. SUZUKI INDOMOBIL MOTOR (2W TBN) ASCP', 0, ''),
+('276', 'PT. SUZUKI INDOMOBIL MOTOR (2W TBN) EXPORT', 0, ''),
+('277', 'PT. SUZUKI INDOMOBIL MOTOR (2W TBN) PPK', 0, ''),
+('278', 'PT. SUZUKI INDOMOBIL MOTOR (2W CKG) MANUAL', 0, ''),
+('279', 'PT. SUZUKI INDOMOBIL MOTOR (2W CKG) TRIAL', 0, ''),
+('28', 'PT. LG ELECTRONIC IND (REF)', 0, ''),
+('280', 'PT. SUZUKI INDOMOBIL MOTOR (2W CKG) ASCP', 0, ''),
+('281', 'PT. SUZUKI INDOMOBIL MOTOR (2W CKG) EXPORT', 0, ''),
+('282', 'PT. SUZUKI INDOMOBIL MOTOR (2W CKG) PPK', 0, ''),
+('283', 'PT. SUZUKI INDOMOBIL MOTOR (4W TBN) EXPORT', 0, ''),
+('284', 'PT. SUZUKI INDOMOBIL MOTOR (4W TBN) PULOGADUNG', 0, ''),
+('285', 'PT. KAWASAKI MOTOR INDONESIA (PA)', 0, ''),
+('286', 'PT. KAWASAKI MOTOR INDONESIA (AE)', 0, ''),
+('287', 'PT. KAWASAKI MOTOR INDONESIA (CA)', 0, ''),
+('288', 'PT. KAWASAKI MOTOR INDONESIA (LA)', 0, ''),
+('289', 'PT. KAWASAKI MOTOR INDONESIA (RA)', 0, ''),
+('29', 'PT. LG ELECTRONICS IND (DISPLAY)', 0, ''),
+('290', 'PT. KAWASAKI MOTOR INDONESIA (TA)', 0, ''),
+('293', 'PT. TOPLA HYMOLD INDONESIA', 0, ''),
+('295', 'PT. YAMAHA INDONESIA MOTOR MFG 5902', 0, ''),
+('296', 'PT. YAMAHA INDONESIA MOTOR MFG 5903', 0, ''),
+('297', 'PT. YAMAHA INDONESIA MOTOR MFG 5904', 0, ''),
+('298', 'PT. YAMAHA INDONESIA MOTOR MFG 590A', 0, ''),
+('299', 'PT. YAMAHA INDONESIA MOTOR MFG 5909', 0, ''),
+('3', 'PT. ASTRA OTOPART Tbk (ADIWIRA PLASTIK)', 0, ''),
+('30', 'PT. ADYAWINSA STAMPING INDUSTRIES', 0, ''),
+('300', 'PT. YAMAHA INDONESIA MOTOR MFG MANUAL', 0, ''),
+('301', 'PT. YAMAHA INDONESIA MOTOR MFG KARAWANG 6101', 0, ''),
+('302', 'PT. YAMAHA INDONESIA MOTOR MFG KARAWANG 6102', 0, ''),
+('303', 'PT. YAMAHA INDONESIA MOTOR MFG KARAWANG 6111', 0, ''),
+('304', 'PT. YAMAHA INDONESIA MOTOR MFG KARAWANG 6112', 0, ''),
+('305', 'PT. YAMAHA INDONESIA MOTOR MFG KARAWANG 6301', 0, ''),
+('306', 'PT. YAMAHA INDONESIA MOTOR MFG KARAWANG 6302', 0, ''),
+('307', 'PT. YAMAHA INDONESIA MOTOR MFG KARAWANG 6311', 0, ''),
+('308', 'PT. YAMAHA INDONESIA MOTOR MFG KARAWANG 6312', 0, ''),
+('309', 'PT. YAMAHA INDONESIA MOTOR MFG KARAWANG 6502', 0, ''),
+('31', 'PT. PANASONIC GOBEL ECO SOLUTIONS MFG INDONESIA (WD)', 0, ''),
+('310', 'PT. YAMAHA INDONESIA MOTOR MFG KARAWANG 6512', 0, ''),
+('311', 'PT. TRADISI MANUFACTURING INDUSTRI', 0, ''),
+('313', 'PT. SINAR ALUM SARANA', 0, ''),
+('32', 'PT. CIKARANG PRESISI', 0, ''),
+('324', 'IBU ELI', 0, ''),
+('325', 'PT. TEKNOPLAST', 0, ''),
+('326', 'TOKO SINAR BAUT', 0, ''),
+('329', 'PT. GALUNGGUNG INDOSTEEL PERKASA', 0, ''),
+('33', 'PT. MECOINDO', 0, ''),
+('332', 'PT. YOSKA PRIMA INTI', 0, ''),
+('333', 'CV. ALAM BUMI MANUNGGAL', 0, ''),
+('335', 'PT. THASIMA DAYA SENTOSA', 0, ''),
+('337', 'PT. SEOUL PRESS INDONESIA', 0, ''),
+('338', 'CV. YOUNG METAL INDONESIA', 0, ''),
+('339', 'PT. SHARP SEMICONDUCTOR INDONESIA', 0, ''),
+('34', 'PT. MEIWA INDONESIA', 0, ''),
+('340', 'PT. AKEBONO BRAKE ASTRA INDONESIA', 0, ''),
+('341', 'PT. INDONESIA EPSON INDUSTRY', 0, ''),
+('342', 'PT. SELAMAT SEMPURNA Tbk', 0, ''),
+('343', 'PT. CAHAYA MANDALA', 0, ''),
+('346', 'PT. MEKAR ARMADA JAYA (MGL)', 0, ''),
+('347', 'PT. INDOWOODS', 0, ''),
+('348', 'PT. YAMAHA INDONESIA', 0, ''),
+('349', 'PT. KIYOKUNI INDONESIA', 0, ''),
+('35', 'PT. METBELOSA', 0, ''),
+('350', 'PT. SUPER SINAR ABADI', 0, ''),
+('351', 'PT. BONECOM TRICOM', 0, ''),
+('352', 'PT. INTRA PRESISI INDONESIA', 0, ''),
+('353', 'PT. PANACIPTA SEINAN COMPONENTS', 0, ''),
+('356', 'PT. MESINDO PUTRA PERKASA', 0, ''),
+('358', 'PT. PANASONIC GOBEL ECO SOLUTIONS MFG INDONESIA (LF)', 0, ''),
+('359', 'PT. INDAHVARIA EKASELARAS', 0, ''),
+('36', 'PT. YAMAHA MOTOR ELECTRONICS INDONESIA', 0, ''),
+('363', 'PT. ONAMBA INDONESIA', 0, ''),
+('364', 'CV. SEMESTA MANDIRI', 0, ''),
+('365', 'PT. MULTI RETAILINDO', 0, ''),
+('366', 'PT. YAMAHA INDONESIA MOTOR MFG 5201', 0, ''),
+('368', 'PT. INDONESIA MATSUYA', 0, ''),
+('37', 'PT. MITSUBA INDONESIA', 0, ''),
+('373', 'PT. YAMAHA INDONESIA MOTOR MFG 5202', 0, ''),
+('376', 'PT. YAMAHA INDONESIA MOTOR MFG 5907', 0, ''),
+('379', 'PT. EPS INDONESIA', 0, ''),
+('38', 'PT. MITSUBISHI KRAMAYUDHA MOTORS I', 0, ''),
+('380', 'PT. PATCO ELEKTRONIK TEKNOLOGI', 0, ''),
+('381', 'PT. TRIJAYA UNION', 0, ''),
+('384', 'PT. YAMAHA INDONESIA MOTOR MFG 5205', 0, ''),
+('385', 'PT. AGUNG SAMPURNA SUKSES SEJAHTERA', 0, ''),
+('386', 'PT. YKK AP INDONESIA', 0, ''),
+('389', 'PT. MIGOTO INDONESIA', 0, ''),
+('39', 'PT. MARGAJAYA', 0, ''),
+('390', 'PT. MURAMOTO ELEKTRONIKA INDONESIA', 0, ''),
+('391', 'PT. JUKEN TECHNOLOGY INDONESIA', 0, ''),
+('392', 'PT. SARI TAKAGI ELOK PRODUK', 0, ''),
+('393', 'PT. INDOTECH METAL NUSANTARA', 0, ''),
+('394', 'PT. FAJAR GEMILANG SENTOSA', 0, ''),
+('395', 'PT. BATARA INDAH', 0, ''),
+('396', 'PT. FRINA LESTARI NUSANTARA', 0, ''),
+('397', 'PT. DELA CEMARA INDAH', 0, ''),
+('398', 'PT. ARMSTRONG INDUSTRI INDONESIA', 0, ''),
+('4', 'PT. AST INDONESIA', 0, ''),
+('40', 'PT. KASAI TECK SEE INDONESIA', 0, ''),
+('400', 'BPK. USEP', 0, ''),
+('401', 'PT. TAKAGI SARI MULTI UTAMA', 0, ''),
+('402', 'PT. SEC INDONESIA', 0, ''),
+('403', 'Ibu TYAS', 0, ''),
+('404', 'PT. MULTIKARYA SINARDINAMIKA', 0, ''),
+('405', 'PT. SINARSAKTI ANEKASARANA', 0, ''),
+('406', 'PT. JTEKT INDONESIA', 0, ''),
+('407', 'PT. KARYANUSA TECHNINDO CEMERLANG', 0, ''),
+('409', 'PT. SANLY INDUSTRIES', 0, ''),
+('41', 'PT. PANASONIC MANUFACTURING INDONESIA (AC)', 0, ''),
+('410', 'EXEDY THAILAND CO,LTD', 0, ''),
+('411', 'MINDA KYORAKU LTD - BANGALORE', 0, ''),
+('412', 'PT. BANDATAMA DWIJAYA PUTRA', 0, ''),
+('414', 'PT. FAJAR SURYA LESTARI', 0, ''),
+('415', 'PT. YAMAHA INDONESIA MOTOR MFG 5911', 0, ''),
+('416', 'PT. BAJAJ AUTO INDONESIA', 0, ''),
+('417', 'PT. TOA GALVA INDUSTRIES PR-CAT', 0, ''),
+('418', 'PT. WIRA TEHNIK METALINDO', 0, ''),
+('419', 'PT. MEIWA KOGYO INDONESIA', 0, ''),
+('42', 'PT. PANASONIC MANUFACTURING INDONESIA (FAN)', 0, ''),
+('421', 'BPK. HENDRA SUHARLI', 0, ''),
+('422', 'PT. ADYAWINSA PLASTICS INDUSTRIES KARAWANG', 0, ''),
+('423', 'PT. BANGUN MULYA ABADI', 0, ''),
+('424', 'PT. PARKER METAL TREATMENT INDONESIA', 0, ''),
+('425', 'PT. INDONESIA HANSHIN ELECTRIC WIRE & CABLE', 0, ''),
+('426', 'PT. NIDEC SANKYO PRECISION INDONESIA', 0, ''),
+('427', 'PT. PANASONIC GOBEL ECO SOLUTIONS MFG INDONESIA (PESGMFID)', 0, ''),
+('428', 'PT. MOREEN INDONESIA', 0, ''),
+('429', 'PT. PRIMA KOMPONEN INDONESIA', 0, ''),
+('43', 'PT. SEBASTIAN JAYA METAL', 0, ''),
+('430', 'PT. PANASONIC HEALTHCARE INDONESIA', 0, ''),
+('431', 'PT. PANASONIC GOBEL ECO SOLUTIONS MFG INDONESIA (EB)', 0, ''),
+('436', 'CV. SURYA ABADI SEJAHTERA', 0, ''),
+('437', 'PT. PANASONIC MANUFACTURING INDONESIA (PC)', 0, ''),
+('438', 'VIETNAM SUZUKI CORP', 0, ''),
+('439', 'PT. K.M.K PLASTICS INDONESIA', 0, ''),
+('44', 'PT. PANASONIC MANUFACTURING INDONESIA (REF)', 0, ''),
+('440', 'PT. PRIMAREJEKI CIKUPA ABADI', 0, ''),
+('441', 'PT. DELLOYD', 0, ''),
+('442', 'PT. ALPHA INDUSTRIES INDONESIA', 0, ''),
+('443', 'PT. JIDECO INDONESIA', 0, ''),
+('444', 'NISSIN MANUFACTURING (THAILAND)CO.,LTD', 0, ''),
+('446', 'PT. SURYA CIPTA METAL MANDIRI', 0, ''),
+('447', 'PT. MIYUKI INDONESIA', 0, ''),
+('448', 'BPK. DONI', 0, ''),
+('449', 'PT. KEIHIN INDONESIA', 0, ''),
+('45', 'PT. PANASONIC MANUFACTURING INDONESIA (TV)', 0, ''),
+('450', 'PT. AFTECH MULTINDO PERKASA (STAMPING PLANT)', 0, ''),
+('451', 'PT. BANDRO ENGINEERING SEMESTA', 0, ''),
+('452', 'PT. KAYABA INDONESIA', 0, ''),
+('453', 'PT. MITSUBA INDONESIA PIPE PARTS', 0, ''),
+('454', 'PT. ASTRA KOMPONEN INDONESIA', 0, ''),
+('455', 'PT. DENSO INDONESIA', 0, ''),
+('456', 'PT. TASSHA MULTINDO KARSA', 0, ''),
+('457', 'PT. ANUGERAH BIMETALINDO', 0, ''),
+('458', 'PT. KAWASAKI MOTOR INDONESIA (EA)', 0, ''),
+('459', 'PT. SANKEIKID MANUTEC INDONESIA', 0, ''),
+('46', 'PT. PANASONIC MANUFACTURING INDONESIA (WM)', 0, ''),
+('460', 'PT. MINDA TRADING', 0, ''),
+('461', 'PT. TOA GALVA INDUSTRIES PR-INJ', 0, ''),
+('462', 'PT. RIZKI ASA BUANA', 0, ''),
+('463', 'PT. CIPTA PERDANA LANCAR', 0, ''),
+('464', 'PT. ASTRA DAIHATSU MOTOR - KAP', 0, ''),
+('468', 'PT. INDONESIA KOITO', 0, ''),
+('469', 'CONTINENTAL AUTOMOTIVE COMPONENTS MALAYSIA SDN. BHD.', 0, ''),
+('47', 'PT. PANASONIC MANUFACTURING INDONESIA (WP)', 0, ''),
+('470', 'PT. ASALTA SURYA MANDIRI', 0, ''),
+('471', 'PT. SPARTA GUNA SENTOSA', 0, ''),
+('472', 'PT. SUGITY CREATIVES', 0, ''),
+('474', 'CV. INTI TEKNIK SEJAHTERA', 0, ''),
+('478', 'PT. YUDISTIRA KOMPONEN', 0, ''),
+('479', 'PT. VEGA MANDIRI', 0, ''),
+('48', 'PT. OCHIAI MENARA INDONESIA', 0, ''),
+('480', 'PT. YKT GEAR INDONESIA', 0, ''),
+('482', 'PT. ARGATAMA MULTI AGUNG', 0, ''),
+('483', 'PT. EWINDO', 0, ''),
+('484', 'PT. MAH SING INDONESIA', 0, ''),
+('485', 'PT. BERTINDO JAYA RAYA', 0, ''),
+('486', 'PT. SMT INDONESIA', 0, ''),
+('487', 'PT. AMANAH BUDI LAKSANA', 0, ''),
+('488', 'PT. GLOBAL HANSTAMA JAYA', 0, ''),
+('489', 'PT. AISIN INDONESIA', 0, ''),
+('49', 'PT. PAMINDO TIGA T (TGR)', 0, ''),
+('490', 'PT. ASTRA JUOKU INDONESIA', 0, ''),
+('491', 'PT. LEOCO INDONESIA', 0, ''),
+('492', 'PT. MENARA CIPTA METALINDO', 0, ''),
+('493', 'PT. GLOBAL AUTO INTERNATIONAL', 0, ''),
+('496', 'PT. TOA GALVA INDUSTRIES GD-AS1', 0, ''),
+('498', 'PT. ADYAWINSA SEKISUI TECHNO MOLDING', 0, ''),
+('5', 'PT. CHITOSE INTERNASIONAL Tbk', 0, ''),
+('50', 'PT. PANGGUNG ELECTRIC CITRABUANA', 0, ''),
+('502', 'PT. UNGGULKREASI MANUNGGAL PERKASA', 0, ''),
+('503', 'PT. NISSEN CHEMITEC INDONESIA', 0, ''),
+('505', 'PT. SHARP ELECTRONICS INDONESIA (WM)', 0, ''),
+('506', 'CV. KARYA HIDUP SENTOSA', 0, ''),
+('507', 'PT. SHARP ELECTRONICS INDONESIA (HA)', 0, ''),
+('51', 'PT. ELECTRONIC TECHNOLOGY INDOPLAST', 0, ''),
+('513', 'PT. RODA NADA KARYA', 0, ''),
+('515', 'PT. NUSA INDAH JAYA UTAMA', 0, ''),
+('516', 'PT. HAMADEN INDONESIA MANUFACTURING', 0, ''),
+('52', 'CV. MULTI BAJA', 0, ''),
+('520', 'PT. JONAN INDONESIA', 0, ''),
+('521', 'PT. CIPTAJAYA KREASINDO UTAMA', 0, ''),
+('523', 'PT. KENCANA INDUSTRI PLASTIK INDONESIA', 0, ''),
+('524', 'PT. MORITA TJOKRO GEARINDO', 0, ''),
+('526', 'PT. YAMAHA INDONESIA MOTOR MFG 5203', 0, ''),
+('527', 'PT. SINARBERLIAN CHEMINDO', 0, ''),
+('529', 'PT. YAMAHA INDONESIA MOTOR MFG 590B', 0, ''),
+('53', 'PT. SANDEN INDONESIA', 0, ''),
+('532', 'PT. YAMAHA INDONESIA MOTOR MFG 590C', 0, ''),
+('533', 'PT. YAMAHA INDONESIA MOTOR MFG 590D', 0, ''),
+('536', 'PT. YAMAHA INDONESIA MOTOR MFG 590E', 0, ''),
+('539', 'PT. KAWASAKI MOTOR INDONESIA (PA)', 0, ''),
+('54', 'PT. SANYO INDONESIA (COMP)', 0, ''),
+('542', 'PT. KAWASAKI MOTOR INDONESIA (AE)', 0, ''),
+('546', 'PT. KAWASAKI MOTOR INDONESIA (CA)', 0, ''),
+('548', 'PT. KAWASAKI MOTOR INDONESIA (LA)', 0, ''),
+('549', 'PT. KAWASAKI MOTOR INDONESIA (RA)', 0, ''),
+('55', 'PT. SEJIN', 0, ''),
+('550', 'PT. KAWASAKI MOTOR INDONESIA (TA)', 0, ''),
+('551', 'PT. KAWASAKI MOTOR INDONESIA (EA)', 0, ''),
+('555', 'PT. MITSUBA INDONESIA (PLANT 2)', 0, ''),
+('558', 'PT. YAMAHA INDONESIA MOTOR MFG KARAWANG 6902', 0, ''),
+('56', 'PT. SHINDENGEN INDONESIA', 0, ''),
+('561', 'PT. DELTASINDO DWI DAYA', 0, ''),
+('563', 'PT. TERANG PARTS INDONESIA', 0, ''),
+('564', 'PT. SURYA GEMILANG PERKASA', 0, ''),
+('565', 'PT. ANUGERAH DAYA INDUSTRI KOMPONEN UTAMA', 0, ''),
+('566', 'PT. MEGA ANDALAN MOTOR INDUSTRI', 0, ''),
+('567', 'PT. TOA GALVA INDUSTRIES (COMPRT)', 0, ''),
+('568', 'PT. TOA GALVA INDUSTRIES (GDLC)', 0, ''),
+('569', 'PT. INDURO INTERNASIONAL', 0, ''),
+('57', 'PT. HAIER ELECTRICAL APPLIANCES INDONESIA', 0, ''),
+('570', 'PT. GEMASUARA ADHITAMA', 0, ''),
+('571', 'PT. OHKUMA INDUSTRIES INDONESIA', 0, ''),
+('573', 'PT. ISKW JAVA INDONESIA', 0, ''),
+('574', 'PT. MARUHACHI  INDONESIA', 0, ''),
+('576', 'CV. SAGA MULTI INDUSTRI', 0, ''),
+('578', 'PT. SHIN SEONG DELTA TECH INDONESIA', 0, ''),
+('58', 'PT. SHINTO KOGYO INDONESIA', 0, ''),
+('582', 'PT. JATI CIPTA INOVASI', 0, ''),
+('583', 'PT. KEIHIN INDONESIA (PLANT 2)', 0, ''),
+('584', 'PT. ICHIKOH (MALAYSIA) SBN.BHD', 0, ''),
+('585', 'PT. SUZUKI INDOMOBIL MOTOR R4 - CIKARANG', 0, ''),
+('59', 'PT. TENMA INDONESIA', 0, ''),
+('6', 'PT. DAE SOUNG ELECTRIC COMPONENTS', 0, ''),
+('61', 'PT. SANYO INDUSTRI INDONESIA (WM)', 0, ''),
+('62', 'PT. SANYO INDUSTRI INDONESIA (WP)', 0, ''),
+('63', 'PT. SHARP ELECTRONICS INDONESIA (HA)', 0, ''),
+('64', 'PT. YASONTA KABIN', 0, ''),
+('65', 'PT. SHARP ELECTRONICS INDONESIA (TV)', 0, ''),
+('66', 'PT. TOYO DENSO INDONESIA', 0, ''),
+('67', 'PT. BINTANG PRATAMA WIJAYA TEKNIK', 0, ''),
+('68', 'PT. FUKOKU TOKAI RUBBER INDONESIA', 0, ''),
+('69', 'PT. TOA GALVA INDUSTRIES SP 2', 0, ''),
+('7', 'PT. DAIJO INDUSTRIAL', 0, ''),
+('70', 'PT. TOYODA GOSEI SAFETY SYSTEM', 0, ''),
+('71', 'PT. TSUANG HINE INDUSTRIAL', 0, ''),
+('72', 'PT. KARYA BAHANA UNIGAM', 0, ''),
+('73', 'PT. UTAMA RAYA MOTOR', 0, ''),
+('74', 'PT. INDO VDO INSTRUMENTS', 0, ''),
+('75', 'PT. GEMALA KEMPA DAYA', 0, ''),
+('76', 'PT. YANMAR DIESEL INDONESIA', 0, ''),
+('77', 'PT. YAMAHA INDONESIA MOTOR MFG', 0, ''),
+('78', 'PT. MARUFUJI KENZAI INDONESIA', 0, ''),
+('79', 'PT. YASUNLI ABADI UTAMA PLASTIK (LEGOK)', 0, ''),
+('8', 'BPK. ADI', 0, ''),
+('80', 'PT. PARAMOUNT BED', 0, ''),
+('81', 'PT. ORIENTAL KYOWA INDUSTRIES', 0, ''),
+('82', 'PT. YAMAHA ELECTRONIC Mfg. IND', 0, ''),
+('83', 'PT. SHIN HEUNG INDONESIA', 0, ''),
+('84', 'PT. METINDO ERA SAKTI', 0, ''),
+('85', 'PT. YASUFUKU INDONESIA', 0, ''),
+('86', 'PT. ASALTA MANDIRI AGUNG', 0, ''),
+('87', 'CV. WIRACANA', 0, ''),
+('88', 'PT. SURYA TEKNIKA CEMERLANG', 0, ''),
+('89', 'PT. ASTRA DAIHATSU MOTOR', 0, ''),
+('9', 'PT. ROKI INDONESIA', 0, ''),
+('90', 'PT. INOAC POLYTECHNO INDONESIA', 0, ''),
+('91', 'PT. B.S. INDONESIA', 0, ''),
+('92', 'PT. YAMAHA MOTOR NUANSA INDONESIA', 0, ''),
+('93', 'PT. HONDA LOCK INDONESIA', 0, ''),
+('94', 'PT. POSMI STEEL INDONESIA', 0, ''),
+('95', 'PT. GUNA SENAPUTRA SEJAHTERA', 0, ''),
+('96', 'PT. HANS PLATINDO', 0, ''),
+('97', 'PT. EXEDY INDONESIA', 0, ''),
+('98', 'PT. CHANDRA NUGERAH CEMERLANG', 0, ''),
+('99', 'PT. TRIMITRA CHITRAHASTA', 0, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `furnace`
+--
+
+CREATE TABLE IF NOT EXISTS `furnace` (
+  `Id` int(1) NOT NULL AUTO_INCREMENT,
+  `Kode_Supp` varchar(20) NOT NULL,
+  `Name` varchar(50) NOT NULL,
+  `Price` double NOT NULL,
+  `Currency` enum('USD','IDR') NOT NULL,
+  `Tgl_update` date NOT NULL,
+  `Active` enum('YES','NO') NOT NULL DEFAULT 'YES',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `furnace`
+--
+
+INSERT INTO `furnace` (`Id`, `Kode_Supp`, `Name`, `Price`, `Currency`, `Tgl_update`, `Active`) VALUES
+(1, 'TMI', 'Annealing', 8000, 'IDR', '2013-12-11', 'YES'),
+(2, 'JML', 'Screw', 5000, 'IDR', '2014-08-28', 'YES'),
+(3, 'JML', 'FB', 4500, 'IDR', '2014-08-28', 'YES'),
+(4, 'JML', 'HTB', 4500, 'IDR', '2014-08-28', 'YES');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `labor`
+--
+
+CREATE TABLE IF NOT EXISTS `labor` (
+  `Id` int(1) NOT NULL AUTO_INCREMENT,
+  `Process` varchar(20) NOT NULL,
+  `Gaji_per_year` double NOT NULL,
+  `Hasilprod_per_tahun` double NOT NULL,
+  `Jumlah_labor` double NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `labor`
+--
+
+INSERT INTO `labor` (`Id`, `Process`, `Gaji_per_year`, `Hasilprod_per_tahun`, `Jumlah_labor`) VALUES
+(1, 'Heading', 4144250962, 3916429, 85),
+(2, 'Rolling', 2513771023, 3676626, 53),
+(3, 'Trimming', 183049726, 258582, 4),
+(4, 'Cutting', 183049726, 258582, 4),
+(5, 'Slotting', 183049726, 258582, 4),
+(6, 'FQ', 3055710540, 4089370, 72),
+(7, 'Packing', 1755718962, 4035107, 37);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `machine_cutting`
+--
+
+CREATE TABLE IF NOT EXISTS `machine_cutting` (
+  `Kode_mchncutt` int(1) NOT NULL AUTO_INCREMENT,
+  `Dia_nominal` double NOT NULL,
+  `Length_range` varchar(20) NOT NULL,
+  `Mchn_cutting` varchar(20) NOT NULL,
+  `Mchn_price` double NOT NULL,
+  `Depr_per_month` double NOT NULL,
+  `Output_per_min` double NOT NULL,
+  `Working_time` double NOT NULL,
+  `Working_time_sec` double NOT NULL,
+  `Output_per_day` double NOT NULL,
+  `Output_per_month` double NOT NULL,
+  `Productivity_ratio` double NOT NULL,
+  `Prod_plan_month` double NOT NULL,
+  `Cycle_time` double NOT NULL,
+  `Dandori_time` double NOT NULL,
+  `Cutting_depr_cost` double NOT NULL,
+  PRIMARY KEY (`Kode_mchncutt`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `machine_cutting`
+--
+
+INSERT INTO `machine_cutting` (`Kode_mchncutt`, `Dia_nominal`, `Length_range`, `Mchn_cutting`, `Mchn_price`, `Depr_per_month`, `Output_per_min`, `Working_time`, `Working_time_sec`, `Output_per_day`, `Output_per_month`, `Productivity_ratio`, `Prod_plan_month`, `Cycle_time`, `Dandori_time`, `Cutting_depr_cost`) VALUES
+(1, 3, '8 - 35', 'CT-2B', 39704522, 413589, 150, 23, 13910400, 126000, 2898000, 62, 1796760, 0.4, 10800, 0.23),
+(2, 4, '8 - 35', 'CT-2B', 39704522, 413589, 150, 23, 13910400, 126000, 2898000, 62, 1796760, 0.4, 10800, 0.23),
+(3, 4, '16 - 150', 'CT- SF-100', 75000000, 781250, 150, 23, 13910400, 126000, 2898000, 62, 1796760, 0.4, 10800, 0.43),
+(4, 5, '8 - 35', 'CT-2B', 39704522, 413589, 150, 23, 13910400, 126000, 2898000, 62, 1796760, 0.4, 10800, 0.23),
+(5, 5, '16 - 150', 'CT-SF-100', 75000000, 781250, 150, 23, 13910400, 126000, 2898000, 62, 1796760, 0.4, 10800, 0.43),
+(6, 6, '16 - 150', 'CT-SF-100', 75000000, 781250, 150, 23, 13910400, 126000, 2898000, 62, 1796760, 0.4, 10800, 0.43);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `machine_heading`
+--
+
+CREATE TABLE IF NOT EXISTS `machine_heading` (
+  `Kode_mchnhead` int(1) NOT NULL AUTO_INCREMENT,
+  `Gol_mchn_head` enum('Heading 1 die','Bolt Former 2 dies','Rivet Former 2 dies','Bolt Former 4 dies') NOT NULL,
+  `Dia_nominal` double NOT NULL,
+  `Length_range` varchar(20) NOT NULL,
+  `Mchn_heading` varchar(20) NOT NULL,
+  `Mchn_price` double NOT NULL,
+  `Depr_per_month` double NOT NULL,
+  `Output_per_min` double NOT NULL,
+  `Working_time` double NOT NULL,
+  `Working_time_sec` double NOT NULL,
+  `Output_per_day` double NOT NULL,
+  `Output_per_month` double NOT NULL,
+  `Productivity_ratio` double NOT NULL,
+  `Prod_plan_month` double NOT NULL,
+  `Cycle_time` double NOT NULL,
+  `Dandori_time` double NOT NULL,
+  `Heading_depr_cost` double NOT NULL,
+  PRIMARY KEY (`Kode_mchnhead`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
+
+--
+-- Dumping data for table `machine_heading`
+--
+
+INSERT INTO `machine_heading` (`Kode_mchnhead`, `Gol_mchn_head`, `Dia_nominal`, `Length_range`, `Mchn_heading`, `Mchn_price`, `Depr_per_month`, `Output_per_min`, `Working_time`, `Working_time_sec`, `Output_per_day`, `Output_per_month`, `Productivity_ratio`, `Prod_plan_month`, `Cycle_time`, `Dandori_time`, `Heading_depr_cost`) VALUES
+(1, 'Heading 1 die', 2, '4 - 20', 'YH 1030', 107072630, 1115340, 138, 23, 13910400, 115920, 2666160, 63, 1679681, 0.43, 10800, 0.66),
+(2, 'Heading 1 die', 2.6, '4 - 25', 'YH 1030', 107072630, 1115340, 138, 23, 13910400, 115920, 2666160, 63, 1679681, 0.43, 10800, 0.66),
+(3, 'Heading 1 die', 3, '4 - 25', 'YH 1030', 107072630, 1115340, 138, 23, 13910400, 115920, 2666160, 63, 1679681, 0.43, 10800, 0.66),
+(4, 'Heading 1 die', 3, '10 - 50', 'YH 1552', 113554375, 1182858, 106, 23, 13910400, 89040, 2047920, 50, 1023960, 0.57, 10800, 1.16),
+(5, 'Heading 1 die', 3.5, '4 - 25', 'YH 1030', 107072630, 1115340, 138, 23, 13910400, 115920, 2666160, 63, 1679681, 0.43, 10800, 0.66),
+(6, 'Heading 1 die', 3.5, '10 - 50', 'YH 1552', 113554375, 1182858, 106, 23, 13910400, 89040, 2047920, 50, 1023960, 0.57, 10800, 1.16),
+(7, 'Heading 1 die', 4, '10 - 30', 'YH 1552', 113554375, 1182858, 106, 23, 13910400, 89040, 2047920, 50, 1023960, 0.57, 10800, 1.16),
+(8, 'Heading 1 die', 4, '10 - 50', 'YH 1552', 113554375, 1182858, 106, 23, 13910400, 89040, 2047920, 50, 1023960, 0.57, 10800, 1.16),
+(9, 'Heading 1 die', 4, '10 - 100', 'YH 20102', 247406250, 2577148, 73, 23, 13910400, 61320, 1410360, 50, 705180, 0.82, 10800, 3.65),
+(10, 'Heading 1 die', 5, '10 - 50', 'YH 1552', 113554375, 1182858, 106, 23, 13910400, 89040, 2047920, 50, 1023960, 0.57, 10800, 1.16),
+(11, 'Heading 1 die', 5, '10 - 60', 'YH 2076', 197436250, 2056628, 80, 23, 13910400, 67200, 1545600, 50, 772800, 0.75, 10800, 2.66),
+(12, 'Heading 1 die', 6, '6 - 56', 'YH 2076', 197436250, 2056628, 80, 23, 13910400, 67200, 1545600, 50, 772800, 0.75, 10800, 2.66),
+(13, 'Heading 1 die', 8, '10 - 150', 'ZH 30152', 524062940, 5458989, 58, 23, 13910400, 48720, 1120560, 50, 560280, 1.03, 10800, 9.74),
+(14, 'Heading 1 die', 8, '10 - 150', 'ZH 25152', 403981727, 4208143, 60, 23, 13910400, 50400, 1159200, 50, 579600, 1, 10800, 7.26),
+(15, 'Heading 1 die', 10, '20 - 150', 'ZH 30152', 524062940, 5458989, 58, 23, 13910400, 48720, 1120560, 58, 649925, 1.03, 10800, 8.4),
+(16, 'Heading 1 die', 10, '25 - 300', 'ZH 40305', 1743099601, 18157288, 60, 23, 13910400, 50400, 1159200, 50, 579600, 1, 10800, 31.33),
+(17, 'Heading 1 die', 12, '25 - 300', 'ZH 40305', 1743099601, 18157288, 60, 23, 13910400, 50400, 1159200, 50, 579600, 1, 10800, 31.33),
+(18, 'Bolt Former 2 dies', 3, '4 - 20', 'MT 1115', 302459057, 3150615, 50, 23, 1159200, 42000, 966000, 45, 434700, 1.2, 10800, 7.25),
+(19, 'Bolt Former 2 dies', 4, '4 - 20', 'MT 1115', 302459057, 3150615, 50, 23, 13910400, 42000, 966000, 45, 434700, 1.2, 10800, 7.25),
+(20, 'Bolt Former 2 dies', 5, '4 - 20', 'MT 1115', 302459057, 3150615, 50, 23, 13910400, 42000, 966000, 45, 434700, 1.2, 10800, 7.25),
+(21, 'Bolt Former 2 dies', 6, '10 - 60', 'MT 1125', 491323192, 5117950, 60, 23, 13910400, 50400, 1159200, 60, 695520, 1, 10800, 7.36),
+(22, 'Bolt Former 2 dies', 8, '10 - 60', 'MT 1125', 491323192, 5117950, 60, 23, 13910400, 50400, 1159200, 60, 695520, 1, 10800, 7.36),
+(23, 'Bolt Former 4 dies', 3, '10 - 50', 'CBF 64 S', 893200000, 9304167, 240, 23, 13910400, 201600, 4636800, 50, 2318400, 0.25, 10800, 4.01),
+(24, 'Bolt Former 4 dies', 4, '10 - 50', 'CBF 64 S', 893200000, 9304167, 240, 23, 13910400, 201600, 4636800, 50, 2318400, 0.25, 10800, 4.01),
+(25, 'Bolt Former 4 dies', 5, '10 - 70', 'CBF 64 S', 893200000, 9304167, 240, 23, 13910400, 201600, 4636800, 50, 2318400, 0.25, 10800, 4.01),
+(26, 'Bolt Former 4 dies', 5, '15 - 75', 'CBF 84 S', 1335710000, 13913646, 120, 23, 13910400, 100800, 2318400, 50, 1159200, 0.5, 10800, 12),
+(27, 'Bolt Former 4 dies', 6, '10 - 70', 'CBF 64 S', 893200000, 9304167, 240, 23, 13910400, 201600, 4636800, 50, 2318400, 0.25, 10800, 4.01),
+(28, 'Bolt Former 4 dies', 6, '15 - 75', 'CBF 84 S', 1335710000, 13913646, 120, 23, 13910400, 100800, 2318400, 50, 1159200, 0.5, 10800, 12),
+(29, 'Bolt Former 4 dies', 6, '15 - 100', 'CBF 104L', 2082142600, 21688985, 120, 23, 13910400, 100800, 2318400, 50, 1159200, 0.5, 10800, 18.71),
+(30, 'Bolt Former 4 dies', 8, '25 - 100', 'CBF 134L', 2043840000, 21290000, 120, 23, 13910400, 100800, 2318400, 50, 1159200, 0.5, 10800, 18.37),
+(31, 'Bolt Former 4 dies', 10, '15 - 100', 'CBF 104L', 2082142600, 21688985, 120, 23, 13910400, 100800, 2318400, 50, 1159200, 0.5, 10800, 18.71),
+(32, 'Bolt Former 4 dies', 14, '60 - 200', 'CBF 164L', 5273400000, 54931250, 120, 23, 13910400, 100800, 2318400, 50, 1159200, 0.5, 10800, 47.39),
+(33, 'Rivet Former 2 dies', 2.6, '4 - 20', 'MT 1115', 302459057, 3150615, 50, 23, 13910400, 42000, 966000, 61, 589260, 1.2, 10800, 5.35),
+(34, 'Rivet Former 2 dies', 3, '4 - 20', 'MT 1115', 302459057, 3150615, 50, 23, 13910400, 42000, 966000, 61, 589260, 1.2, 10800, 5.35),
+(35, 'Rivet Former 2 dies', 4, '4 - 20', 'MT 1115', 302459057, 3150615, 50, 23, 13910400, 42000, 966000, 61, 589260, 1.2, 10800, 5.35),
+(36, 'Bolt Former 4 dies', 12, '25 - 150', 'CBF 134L', 2043840000, 21290000, 120, 23, 13910400, 100800, 2318400, 50, 1159200, 0.5, 10800, 18.37);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `machine_pressing`
+--
+
+CREATE TABLE IF NOT EXISTS `machine_pressing` (
+  `Kode_mchnpress` int(1) NOT NULL AUTO_INCREMENT,
+  `Dia_nominal` double NOT NULL,
+  `Length_range` varchar(20) NOT NULL,
+  `Mchn_pressing` varchar(20) NOT NULL,
+  `Mchn_price` double NOT NULL,
+  `Depr_per_month` double NOT NULL,
+  `Output_per_min` double NOT NULL,
+  `Working_time` double NOT NULL,
+  `Working_time_sec` double NOT NULL,
+  `Output_per_day` double NOT NULL,
+  `Output_per_month` double NOT NULL,
+  `Productivity_ratio` double NOT NULL,
+  `Prod_plan_month` double NOT NULL,
+  `Cycle_time` double NOT NULL,
+  `Dandori_time` double NOT NULL,
+  `Pressing_depr_cost` double NOT NULL,
+  PRIMARY KEY (`Kode_mchnpress`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `machine_rolling`
+--
+
+CREATE TABLE IF NOT EXISTS `machine_rolling` (
+  `Kode_mchnroll` int(1) NOT NULL AUTO_INCREMENT,
+  `Gol_mchn_roll` enum('Ordinary','ASFA','Stud Bolt') NOT NULL,
+  `Dia_nominal` double NOT NULL,
+  `Length_range` varchar(20) NOT NULL,
+  `Mchn_rolling` varchar(20) NOT NULL,
+  `Mchn_price` double NOT NULL,
+  `Depr_per_month` double NOT NULL,
+  `Output_per_min` double NOT NULL,
+  `Working_time` double NOT NULL,
+  `Working_time_sec` double NOT NULL,
+  `Output_per_day` double NOT NULL,
+  `Output_per_month` double NOT NULL,
+  `Productivity_ratio` double NOT NULL,
+  `Prod_plan_month` double NOT NULL,
+  `Cycle_time` double NOT NULL,
+  `Dandori_time` double NOT NULL,
+  `Rolling_depr_cost` double NOT NULL,
+  PRIMARY KEY (`Kode_mchnroll`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
+
+--
+-- Dumping data for table `machine_rolling`
+--
+
+INSERT INTO `machine_rolling` (`Kode_mchnroll`, `Gol_mchn_roll`, `Dia_nominal`, `Length_range`, `Mchn_rolling`, `Mchn_price`, `Depr_per_month`, `Output_per_min`, `Working_time`, `Working_time_sec`, `Output_per_day`, `Output_per_month`, `Productivity_ratio`, `Prod_plan_month`, `Cycle_time`, `Dandori_time`, `Rolling_depr_cost`) VALUES
+(1, 'Ordinary', 2, '4 - 20', 'CTR 2', 53900000, 561458, 230, 23, 13910400, 193200, 4443600, 58, 2577288, 0.26, 7200, 0.22),
+(2, 'Ordinary', 2.6, '4 - 20', 'CTR 2', 53900000, 561458, 230, 23, 13910400, 193200, 4443600, 58, 2577288, 0.26, 7200, 0.22),
+(3, 'Ordinary', 3, '4 - 20', 'CTR 2', 53900000, 561458, 230, 23, 13910400, 193200, 4443600, 70, 3110520, 0.26, 7200, 0.18),
+(4, 'Ordinary', 3.5, '6 - 35', 'CTR 4', 87400000, 910417, 248, 23, 13910400, 208320, 4791360, 59, 2826902, 0.24, 7200, 0.32),
+(5, 'Ordinary', 4, '6 - 35', 'CTR 4', 87400000, 910417, 248, 23, 13910400, 208320, 4791360, 59, 2826902, 0.24, 7200, 0.32),
+(6, 'Ordinary', 4, '6 - 35', 'CTR 5', 79657600, 829767, 102, 23, 13910400, 85680, 1970640, 66, 1300622, 0.59, 7200, 0.64),
+(7, 'Ordinary', 4.5, '6 - 35', 'CTR 4', 87400000, 910417, 248, 23, 13910400, 208320, 4791360, 59, 2826902, 0.24, 7200, 0.32),
+(8, 'Ordinary', 5, '6 - 35', 'CTR 4', 87400000, 910417, 248, 23, 13910400, 208320, 4791360, 59, 2826902, 0.24, 7200, 0.32),
+(9, 'Ordinary', 5, '6 - 35', 'CTR 5', 79657600, 829767, 102, 23, 13910400, 85680, 1970640, 66, 1300622, 0.59, 7200, 0.64),
+(10, 'Ordinary', 5, '8 - 50', 'CTR 6', 132932800, 1384717, 213, 23, 13910400, 178920, 4115160, 50, 2057580, 0.28, 7200, 0.67),
+(11, 'Ordinary', 6, '8 - 50', 'CTR 6', 132932800, 1384717, 218, 23, 13910400, 183120, 4211760, 50, 2105880, 0.28, 7200, 0.66),
+(12, 'Ordinary', 6, '10 - 65', 'CTR 8', 156369240, 1628846, 150, 23, 13910400, 126000, 2898000, 50, 1449000, 0.4, 7200, 1.12),
+(13, 'Ordinary', 6, '16 - 130', 'ZR 30', 300000000, 3125000, 100, 23, 13910400, 84000, 1932000, 50, 966000, 0.6, 7200, 3.23),
+(14, 'Ordinary', 8, '10 - 65', 'CTR 8', 156396240, 1629128, 150, 23, 13910400, 126000, 2898000, 50, 1449000, 0.4, 7200, 1.12),
+(15, 'Ordinary', 8, '16 - 130', 'ZR 30', 300000000, 3125000, 100, 23, 13910400, 84000, 1932000, 50, 966000, 0.6, 7200, 3.23),
+(16, 'Ordinary', 10, '16 - 130', 'ZR 30', 300000000, 3125000, 100, 23, 13910400, 84000, 1932000, 50, 966000, 0.6, 7200, 3.23),
+(17, 'Ordinary', 10, '30 - 300', 'ZR 40', 384840456, 4008755, 60, 23, 13910400, 50400, 1159200, 50, 579600, 1, 7200, 6.92),
+(18, 'Ordinary', 12, '30 - 300', 'ZR 40', 384840456, 4008755, 60, 23, 13910400, 50400, 1159200, 50, 579600, 1, 7200, 6.92),
+(19, 'Ordinary', 12, '30 - 300', 'ZR 70', 686802424, 7154192, 30, 23, 13910400, 25200, 579600, 50, 289800, 2, 7200, 24.69),
+(20, 'Ordinary', 14, '30 - 300', 'ZR 70', 686802424, 7154192, 30, 23, 13910400, 25200, 579600, 50, 289800, 2, 7200, 24.69),
+(21, 'ASFA', 2.6, '6 - 28', 'MT 1203', 266675640, 2777871, 120, 23, 13910400, 100800, 2318400, 61, 1414224, 0.5, 7200, 1.96),
+(22, 'ASFA', 3, '6 - 28', 'MT 1203', 266675640, 2777871, 120, 23, 13910400, 100800, 2318400, 61, 1414224, 0.5, 7200, 1.96),
+(23, 'ASFA', 3.5, '6 - 28', 'MT 1203', 266675640, 2777871, 120, 23, 13910400, 100800, 2318400, 61, 1414224, 0.5, 7200, 1.96),
+(24, 'ASFA', 4, '8 - 50', 'MT 1206', 297728800, 3101342, 150, 23, 13910400, 126000, 2898000, 50, 1449000, 0.4, 7200, 2.14),
+(25, 'ASFA', 5, '8 - 50', 'MT 1206', 297728200, 3101335, 150, 23, 13910400, 126000, 2898000, 50, 1449000, 0.4, 7200, 2.14),
+(26, 'ASFA', 6, '8 - 50', 'MT 1206', 297728800, 3101342, 150, 23, 13910400, 126000, 2898000, 50, 1449000, 0.4, 7200, 2.14),
+(27, 'ASFA', 6, '10 - 70', 'MT 1208', 332323200, 3461700, 130, 23, 13910400, 109200, 2511600, 50, 1255800, 0.46, 7200, 2.76),
+(28, 'ASFA', 8, '10 - 70', 'MT 1208', 332323200, 3461700, 130, 23, 13910400, 109200, 2511600, 50, 1255800, 0.46, 7200, 2.76),
+(29, 'ASFA', 10, '10 - 70', 'MT 1208', 332323200, 3461700, 130, 23, 13910400, 109200, 2511600, 50, 1255800, 0.46, 7200, 2.76),
+(30, 'Stud Bolt', 6, '20 - 70', 'CTR 08N', 156396240, 1629128, 100, 23, 13910400, 84000, 1932000, 30, 579600, 0.6, 7200, 2.81),
+(31, 'Stud Bolt', 8, '20 - 70', 'CTR 08N', 156396240, 1629128, 100, 23, 13910400, 84000, 1932000, 30, 579600, 0.6, 7200, 2.81),
+(32, 'Stud Bolt', 10, '20 - 70', 'CTR 08N', 156396240, 1629128, 100, 23, 13910400, 84000, 1932000, 50, 966000, 0.6, 7200, 1.69);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `machine_slotting`
+--
+
+CREATE TABLE IF NOT EXISTS `machine_slotting` (
+  `Kode_mchnslott` int(1) NOT NULL AUTO_INCREMENT,
+  `Dia_nominal` double NOT NULL,
+  `Length_range` varchar(20) NOT NULL,
+  `Mchn_slotting` varchar(20) NOT NULL,
+  `Mchn_price` double NOT NULL,
+  `Depr_per_month` double NOT NULL,
+  `Output_per_min` double NOT NULL,
+  `Working_time` double NOT NULL,
+  `Working_time_sec` double NOT NULL,
+  `Output_per_day` double NOT NULL,
+  `Output_per_month` double NOT NULL,
+  `Productivity_ratio` double NOT NULL,
+  `Prod_plan_month` double NOT NULL,
+  `Cycle_time` double NOT NULL,
+  `Dandori_time` double NOT NULL,
+  `Slotting_depr_cost` double NOT NULL,
+  PRIMARY KEY (`Kode_mchnslott`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `machine_slotting`
+--
+
+INSERT INTO `machine_slotting` (`Kode_mchnslott`, `Dia_nominal`, `Length_range`, `Mchn_slotting`, `Mchn_price`, `Depr_per_month`, `Output_per_min`, `Working_time`, `Working_time_sec`, `Output_per_day`, `Output_per_month`, `Productivity_ratio`, `Prod_plan_month`, `Cycle_time`, `Dandori_time`, `Slotting_depr_cost`) VALUES
+(1, 3, '6 - 25', 'SLT 15A', 28491749, 296789, 100, 23, 13910400, 84000, 1932000, 23, 444360, 0.6, 10800, 0.67),
+(2, 4, '6 - 25', 'SLT 15A', 28491749, 296789, 100, 23, 13910400, 84000, 1932000, 23, 444360, 0.6, 10800, 0.67),
+(3, 4, '6 - 25', 'SLT 10A', 28491749, 296789, 100, 23, 13910400, 84000, 1932000, 43, 830760, 0.6, 10800, 0.36),
+(4, 5, '6 - 25', 'SLT 15A', 28491749, 296789, 100, 23, 13910400, 84000, 1932000, 23, 444360, 0.6, 10800, 0.67),
+(5, 5, '6 - 25', 'SLT 10A', 28491749, 296789, 100, 23, 13910400, 84000, 1932000, 43, 830760, 0.6, 10800, 0.36);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `machine_straightening`
+--
+
+CREATE TABLE IF NOT EXISTS `machine_straightening` (
+  `Kode_mchnstraighten` int(1) NOT NULL AUTO_INCREMENT,
+  `Dia_nominal` double NOT NULL,
+  `Length_range` varchar(20) NOT NULL,
+  `Mchn_straightening` varchar(20) NOT NULL,
+  `Mchn_price` double NOT NULL,
+  `Depr_per_month` double NOT NULL,
+  `Output_per_min` double NOT NULL,
+  `Working_time` double NOT NULL,
+  `Working_time_sec` double NOT NULL,
+  `Output_per_day` double NOT NULL,
+  `Output_per_month` double NOT NULL,
+  `Productivity_ratio` double NOT NULL,
+  `Prod_plan_month` double NOT NULL,
+  `Cycle_time` double NOT NULL,
+  `Dandori_time` double NOT NULL,
+  `Straightening_depr_cost` double NOT NULL,
+  PRIMARY KEY (`Kode_mchnstraighten`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `machine_trimming`
+--
+
+CREATE TABLE IF NOT EXISTS `machine_trimming` (
+  `Kode_mchntrimm` int(1) NOT NULL AUTO_INCREMENT,
+  `Dia_nominal` double NOT NULL,
+  `Length_range` varchar(20) NOT NULL,
+  `Mchn_trimming` varchar(20) NOT NULL,
+  `Mchn_price` double NOT NULL,
+  `Depr_per_month` double NOT NULL,
+  `Output_per_min` double NOT NULL,
+  `Working_time` double NOT NULL,
+  `Working_time_sec` double NOT NULL,
+  `Output_per_day` double NOT NULL,
+  `Output_per_month` double NOT NULL,
+  `Productivity_ratio` double NOT NULL,
+  `Prod_plan_month` double NOT NULL,
+  `Cycle_time` double NOT NULL,
+  `Dandori_time` double NOT NULL,
+  `Trimming_depr_cost` double NOT NULL,
+  PRIMARY KEY (`Kode_mchntrimm`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+
+--
+-- Dumping data for table `machine_trimming`
+--
+
+INSERT INTO `machine_trimming` (`Kode_mchntrimm`, `Dia_nominal`, `Length_range`, `Mchn_trimming`, `Mchn_price`, `Depr_per_month`, `Output_per_min`, `Working_time`, `Working_time_sec`, `Output_per_day`, `Output_per_month`, `Productivity_ratio`, `Prod_plan_month`, `Cycle_time`, `Dandori_time`, `Trimming_depr_cost`) VALUES
+(1, 3, '10 - 35', 'TR 5A', 102863376, 1071494, 70, 23, 13910400, 58800, 1352400, 40, 540960, 0.86, 10800, 1.98),
+(2, 4, '10 - 35', 'TR 6A', 152140800, 1584800, 70, 23, 13910400, 58800, 1352400, 60, 811440, 0.86, 10800, 1.95),
+(3, 4, '10 - 35', 'TR 5A', 102863376, 1071494, 70, 23, 13910400, 58800, 1352400, 40, 540960, 0.86, 10800, 1.98),
+(4, 5, '10 - 35', 'TR 6A', 152140800, 1584800, 70, 23, 13910400, 58800, 1352400, 60, 811440, 0.86, 10800, 1.95),
+(5, 5, '10 - 35', 'TR 5A', 102863376, 1071494, 70, 23, 13910400, 58800, 1352400, 40, 540960, 0.86, 10800, 1.98),
+(6, 6, '1O - 35', 'TR 6A', 152140800, 1584800, 70, 23, 13910400, 58800, 1352400, 60, 811440, 0.86, 10800, 1.95),
+(7, 6, '10 - 35', 'TR 5A', 102863376, 1071494, 70, 23, 13910400, 58800, 1352400, 40, 540960, 0.86, 10800, 1.98),
+(8, 6, '15 - 100', 'TR 8A', 99927050, 1040907, 70, 23, 13910400, 58800, 1352400, 25, 338100, 0.86, 10800, 3.08),
+(9, 8, '10 - 35', 'TR 6A', 152140800, 1584800, 70, 23, 13910400, 58800, 1352400, 60, 811440, 0.86, 10800, 1.95),
+(10, 8, '15 - 100', 'TR 8A', 99927050, 1040907, 70, 23, 13910400, 58800, 1352400, 25, 338100, 0.86, 10800, 3.08),
+(11, 10, '15 - 100', 'TR 8A', 99927050, 1040907, 70, 23, 13910400, 58800, 1352400, 25, 338100, 0.86, 10800, 3.08);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu`
+--
+
+CREATE TABLE IF NOT EXISTS `menu` (
+  `id` int(1) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `parentId` int(1) NOT NULL,
+  `uri` varchar(255) NOT NULL,
+  `allowed` varchar(255) NOT NULL,
+  `iconCls` varchar(255) NOT NULL,
+  `type` enum('dialog','messager','tabs','window') NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=41 ;
+
+--
+-- Dumping data for table `menu`
+--
+
+INSERT INTO `menu` (`id`, `name`, `parentId`, `uri`, `allowed`, `iconCls`, `type`) VALUES
+(1, 'Master', 0, '', '+1+2+', 'icon-master', ''),
+(2, 'Transaksi', 0, '', '+1+2+', 'icon-transaksi', ''),
+(3, 'Report', 0, '', '+1+2+', 'icon-print', ''),
+(4, 'Admin', 0, '', '+1+', 'icon-admin', ''),
+(5, 'Setting', 0, '', '+1+2+', 'icon-setup', ''),
+(6, 'Admin User', 4, 'admin/user', '+1+', 'icon-user', 'tabs'),
+(7, 'Admin Menu', 4, 'admin/menu', '+1+', 'icon-menu', 'tabs'),
+(8, 'Supplier', 1, 'master/supplier', '+1+2+', 'icon-master', 'tabs'),
+(9, 'Customer', 1, 'master/customer', '+1+2+', 'icon-master', 'tabs'),
+(11, 'Wire Price', 1, 'master/wire', '+1+2+', 'icon-master', 'tabs'),
+(12, 'Wire Type', 1, 'master/typewire', '+1+2+', 'icon-master', 'tabs'),
+(13, 'Washer', 1, 'master/washer', '+1+2+', 'icon-master', 'tabs'),
+(15, 'Process', 1, '', '+1+2+', 'icon-master', 'tabs'),
+(16, 'Coating', 15, 'master/process/coating', '+1+2+', 'icon-master', 'tabs'),
+(17, 'Furnace', 15, 'master/process/furnace', '+1+2+', 'icon-master', 'tabs'),
+(18, 'Assembly', 15, 'master/process/assembly', '+1+2+', 'icon-master', 'tabs'),
+(19, 'Tools', 1, '', '+1+2+', 'icon-master', 'tabs'),
+(20, 'Heading Category', 19, 'master/tools/headingcat', '+1+2+', 'icon-master', 'tabs'),
+(21, 'Heading 1 dies', 19, 'master/tools/heading1', '+1+2+', 'icon-master', 'tabs'),
+(22, 'Heading 2 dies', 19, 'master/tools/heading2', '+1+2+', 'icon-master', 'tabs'),
+(23, 'Heading 4 dies', 19, 'master/tools/heading4', '+1+2+', 'icon-master', 'tabs'),
+(24, 'Rolling', 19, 'master/tools/rolling', '+1+2+', 'icon-master', 'tabs'),
+(25, 'Cutting', 19, 'master/tools/cutting', '+1+2+', 'icon-master', 'tabs'),
+(26, 'Slotting', 19, 'master/tools/slotting', '+1+2+', 'icon-master', 'tabs'),
+(27, 'Trimming', 19, 'master/tools/trimming', '+1+2+', 'icon-master', 'tabs'),
+(28, 'Machine', 1, '', '+1+2+', 'icon-master', 'tabs'),
+(29, 'Heading', 28, 'master/machine/heading_mchn', '+1+2+', 'icon-master', 'tabs'),
+(30, 'Rolling', 28, 'master/machine/rolling_mchn', '+1+2+', 'icon-master', 'tabs'),
+(31, 'Cutting', 28, 'master/machine/cutting_mchn', '+1+2+', 'icon-master', 'tabs'),
+(32, 'Slotting', 28, 'master/machine/slotting_mchn', '+1+2+', 'icon-master', 'tabs'),
+(33, 'Calculation', 2, 'transaksi/calculation', '+1+2+', 'icon-money', 'tabs'),
+(34, 'Trimming', 28, 'master/machine/trimming_mchn', '+1+2+', 'icon-master', 'tabs'),
+(35, 'Straightening', 28, 'master/machine/straightening_mchn', '+1+2+', 'icon-master', 'tabs'),
+(36, 'Pressing', 28, 'master/machine/pressing_mchn', '+1+2+', 'icon-master', 'tabs'),
+(37, 'Rolling Category', 19, 'master/tools/rollingcat', '+1+2+', 'icon-master', 'tabs'),
+(38, 'Plating', 15, 'master/process/plating', '+1+2+', 'icon-master', 'tabs'),
+(39, 'Labor', 15, 'master/process/labor', '+1+2+', 'icon-master', 'tabs'),
+(40, 'Turret', 15, 'master/process/turret', '+1+2+', 'icon-master', 'tabs');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `plating`
+--
+
+CREATE TABLE IF NOT EXISTS `plating` (
+  `Id` int(1) NOT NULL AUTO_INCREMENT,
+  `Kode_Supp` varchar(20) NOT NULL,
+  `Name` varchar(50) NOT NULL,
+  `Price` double NOT NULL,
+  `Currency` enum('USD','IDR') NOT NULL,
+  `Tgl_update` date NOT NULL,
+  `Active` enum('YES','NO') NOT NULL DEFAULT 'YES',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=39 ;
+
+--
+-- Dumping data for table `plating`
+--
+
+INSERT INTO `plating` (`Id`, `Kode_Supp`, `Name`, `Price`, `Currency`, `Tgl_update`, `Active`) VALUES
+(1, 'HJP-CBT', 'SRK 4 X 12.7 TIN ANL', 15000, 'IDR', '2014-09-09', 'YES'),
+(2, 'HJP-CBT', 'SRK 4 X 7.9 TIN ANL', 15000, 'IDR', '2014-09-09', 'YES'),
+(3, 'HJP-CBT', 'COPPER ANTIK', 10500, 'IDR', '2014-05-21', 'YES'),
+(4, 'HJP-CBT', 'MC3', 4000, 'IDR', '2014-01-17', 'YES'),
+(5, 'HJP-CBT', 'CF', 4000, 'IDR', '2014-01-17', 'YES'),
+(6, 'HJP-CBT', 'BRASS', 18500, 'IDR', '2013-12-16', 'YES'),
+(7, 'HJP-CBT', 'BLACK NICKEL', 15000, 'IDR', '2013-10-14', 'YES'),
+(8, 'HJP-CBT', 'BLACK OXIDE (SUS 430)', 3800, 'IDR', '2013-10-03', 'YES'),
+(9, 'HJP-CBT', 'COPPER + ANTIOKSIDAN (SUS 430)', 19700, 'IDR', '2013-10-03', 'YES'),
+(10, 'HJP-CBT', 'WAX', 1800, 'IDR', '2013-04-10', 'YES'),
+(11, 'HJP-CBT', 'BLACKENING ALKALINE', 3700, 'IDR', '2013-04-10', 'YES'),
+(12, 'HJP-CBT', 'TIN COPPER', 12500, 'IDR', '2014-04-02', 'YES'),
+(13, 'HJP-CBT', 'PHOSPATING', 2500, 'IDR', '2013-02-21', 'YES'),
+(14, 'HJP-CBT', 'RUST PREVENTIVE', 2000, 'IDR', '2013-02-21', 'YES'),
+(15, 'HJP-CBT', 'BLACK PHOSPATE', 2000, 'IDR', '2012-10-12', 'YES'),
+(16, 'HJP-CBT', 'BLACK OXIDE', 2000, 'IDR', '2012-10-12', 'YES'),
+(17, 'HJP-CBT', 'BC', 2500, 'IDR', '2012-10-12', 'YES'),
+(18, 'HJP-CBT', 'BC3', 9750, 'IDR', '2012-10-12', 'YES'),
+(19, 'HJP-CBT', 'BR', 15000, 'IDR', '2012-12-03', 'YES'),
+(20, 'HJP-CBT', 'CU', 7000, 'IDR', '2012-12-03', 'YES'),
+(21, 'HJP-CBT', 'EB', 8600, 'IDR', '2012-12-03', 'YES'),
+(22, 'HJP-CBT', 'GR', 3200, 'IDR', '2012-12-03', 'YES'),
+(23, 'HJP-CBT', 'HO', 2000, 'IDR', '2012-12-03', 'YES'),
+(24, 'HJP-CBT', 'KZ', 1850, 'IDR', '2012-12-03', 'YES'),
+(25, 'HJP-CBT', 'MC', 1500, 'IDR', '2012-12-03', 'YES'),
+(26, 'HJP-CBT', 'NI', 14000, 'IDR', '2012-12-03', 'YES'),
+(27, 'HJP-CBT', 'NI3', 10500, 'IDR', '2012-12-03', 'YES'),
+(28, 'HJP-CBT', 'PS', 1850, 'IDR', '2012-12-03', 'YES'),
+(29, 'HJP-CBT', 'SUS', 1850, 'IDR', '2012-12-03', 'YES'),
+(30, 'HJP-CBT', 'TN', 9000, 'IDR', '2012-12-03', 'YES'),
+(31, 'HJP-CBT', 'UC', 2000, 'IDR', '2012-12-03', 'YES'),
+(32, 'HJP-CBT', 'ZK', 4300, 'IDR', '2012-12-03', 'YES'),
+(33, 'HJP-CBT', 'ZN', 2500, 'IDR', '2012-12-03', 'YES'),
+(34, 'HJP-CBT', 'GB', 6500, 'IDR', '2012-12-03', 'YES'),
+(35, 'HJP-CBT', 'BN', 17000, 'IDR', '2012-12-03', 'YES'),
+(36, 'HJP-CBT', 'NC', 26500, 'IDR', '2012-12-03', 'YES'),
+(37, 'HJP-CBT', 'KF', 8600, 'IDR', '2012-12-03', 'YES'),
+(38, 'HJP-CBT', 'BAKING', 650, 'IDR', '2012-12-03', 'YES');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sesdata`
+--
+
+CREATE TABLE IF NOT EXISTS `sesdata` (
+  `Scrap` int(1) NOT NULL,
+  `Exch_rate` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sesdata`
+--
+
+INSERT INTO `sesdata` (`Scrap`, `Exch_rate`) VALUES
+(5, 11915);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supplier`
+--
+
+CREATE TABLE IF NOT EXISTS `supplier` (
+  `Id` varchar(20) NOT NULL,
+  `Name` varchar(60) NOT NULL,
+  `PayTerm` int(1) NOT NULL,
+  `SuppGroup` enum('LOKAL','IMPORT') NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `supplier`
+--
+
+INSERT INTO `supplier` (`Id`, `Name`, `PayTerm`, `SuppGroup`) VALUES
+('AB', 'AJI BEARING', 30, 'LOKAL'),
+('ABC', 'PT. ABC', 30, 'LOKAL'),
+('AJ', 'AKBAR JAYA', 30, 'LOKAL'),
+('AJS', 'PD. ASIA JAYA SAKTI', 30, 'LOKAL'),
+('AKB', 'ANUGRAH KEMENANGAN BERSAMA', 30, 'LOKAL'),
+('AKB+PLAT', 'ANUGRAH KEMENANGAN BERSAMA + PLATING', 30, 'LOKAL'),
+('AKVORISTA', 'AKVORISTA', 30, 'LOKAL'),
+('AMB', 'PT. ALPINDO MITRA BAJA', 30, 'LOKAL'),
+('ANDI', 'CV. SARANA PRINTING', 30, 'LOKAL'),
+('AP', 'ANUGRAH PLASTIK', 30, 'LOKAL'),
+('ASI', 'PT. ASIA SAFETY INDONESIA', 30, 'LOKAL'),
+('ASP', 'PT. AUTO SUKSES PERKASA', 30, 'LOKAL'),
+('AT', 'ABADI Technic', 30, 'LOKAL'),
+('BHI', 'BHINNEKA.COM', 30, 'LOKAL'),
+('BIG', 'TOKO BERKAT INTI GARMINDO', 30, 'LOKAL'),
+('BIK', 'PT. BUANA INDAH KREASI', 30, 'LOKAL'),
+('BIMA', 'PT. BIMA EKARAYA TEKNIK', 30, 'LOKAL'),
+('BJ', 'BAJA JAYA', 30, 'LOKAL'),
+('BK', 'CV. BAKTI KARYA', 30, 'LOKAL'),
+('CBM', 'PT. CIWANGI BERLIAN MOTORS', 30, 'LOKAL'),
+('CH', 'CITY HOME', 30, 'LOKAL'),
+('CL', 'Cikarang Listrik', 30, 'LOKAL'),
+('CP', 'CHUN PAO', 30, 'LOKAL'),
+('DEX', 'DEX Electrindo', 30, 'LOKAL'),
+('EIK', 'PT. EXCELLENT INFOTAMA KREASINDO', 30, 'LOKAL'),
+('EPINDO', 'PT. ELEKTRO PLATING SUPERINDO', 30, 'LOKAL'),
+('GE', 'GOLDEN ELECTRA', 30, 'LOKAL'),
+('GEUMCHEON', 'GEUM CHEON INDO', 30, 'LOKAL'),
+('GINSA', 'PT. GINSA INTI PRATAMA', 30, 'LOKAL'),
+('GIP', 'PT. GALUNGGUNG INDOSTEEL PERKASA', 30, 'LOKAL'),
+('GLOBAL', 'GLOBAL INC.', 30, 'IMPORT'),
+('GLOBAL+PLAT', 'GLOBAL + PLATING', 30, 'LOKAL'),
+('GMM', 'CV. GLOBAL MITRA MANDIRI', 30, 'LOKAL'),
+('GPI', 'PT. GLOBAL PACKAGING INDUSTRIES', 30, 'LOKAL'),
+('GS', 'PT. GLOBAL SMART SOLUSINDO', 30, 'LOKAL'),
+('GSS', 'PT. GALIH SEKAR SAKTI', 30, 'LOKAL'),
+('GT', 'GriyaTekno.com', 30, 'LOKAL'),
+('HJP-CBT', 'PT. HOTMAL JAYA PERKASA-CIBITUNG', 30, 'LOKAL'),
+('HJP-TGR', 'PT. HOTMAL JASA PERKASA-TANGERANG', 30, 'LOKAL'),
+('HMP', 'PT. HIKARI METALINDO PRATAMA', 30, 'LOKAL'),
+('I 88', 'INTERIOR 88', 30, 'LOKAL'),
+('IC', 'ISTANA COMPUTER', 30, 'LOKAL'),
+('IGNP', 'PT. INDRAGRAHA NUSAPLASINDO', 30, 'LOKAL'),
+('IHP', 'PT. INDOCIPTA HASTA PERKASA', 30, 'LOKAL'),
+('IJR', 'INTI JAYA RING', 30, 'LOKAL'),
+('IN', 'PT. INDRAGRAHA NUSAPLASINDO', 30, 'LOKAL'),
+('INDONAGA', 'PT. INDONAGATOMI ELEKTROUTAMA', 30, 'LOKAL'),
+('IPP', 'PT. INDOMETAL PRIMA PERKASA', 30, 'LOKAL'),
+('IWWI', 'IRON WIRE WORKS INDONESIA', 30, 'LOKAL'),
+('JF', 'JOINT FRAME', 30, 'LOKAL'),
+('JKP', 'JAYA KURNIA PERKASA', 30, 'LOKAL'),
+('JKP+PLAT', 'JAYA KURNIA PERKASA+PLAT', 30, 'LOKAL'),
+('JML', 'JAKARTA MARTEN LOGAMINDO', 30, 'LOKAL'),
+('KADOYA', 'KADOYA KINZOKU CO,LTD', 30, 'IMPORT'),
+('KAMIYAMA', 'KAMIYAMA TEKKOUSHO', 30, 'IMPORT'),
+('KE', 'KAPPA ELECTRONIC', 30, 'LOKAL'),
+('KI', 'TOKO KURNIA INDAH', 30, 'LOKAL'),
+('KJK', 'PT. KUMALA JAYA KENCANA', 30, 'LOKAL'),
+('KL', 'KAWAN LAMA', 30, 'LOKAL'),
+('KOS', 'KOS LIMITED', 30, 'IMPORT'),
+('KOSTEC', 'KOSTEC', 30, 'LOKAL'),
+('KRT', 'KERTAJAYA', 30, 'LOKAL'),
+('KT', 'CV. KARANG TEKNIK', 30, 'LOKAL'),
+('LAA', 'PT. LEWI ANUGRAH ABADI', 30, 'LOKAL'),
+('LAV', 'PT. LAV INDONESIA', 30, 'LOKAL'),
+('LBT', 'PT. LOLI BINTANG TIMUR', 30, 'LOKAL'),
+('LI JUMP', 'LI JUMP ENTERPRISE CO, LTD.', 30, 'IMPORT'),
+('LP', 'ALIZINDO PERKASA', 30, 'LOKAL'),
+('MAM', 'PT. MANDIRI AKSARA MULIA', 30, 'LOKAL'),
+('MASTER', 'PD. MASTER', 30, 'LOKAL'),
+('MATA', 'CV. MATA', 30, 'LOKAL'),
+('MC', 'MDUA.COM', 30, 'LOKAL'),
+('MCM', 'PT. MENARA CIPTA METALINDO', 30, 'LOKAL'),
+('MEDIA', 'PT. MEDIAFORMINDO PRATAMA', 30, 'LOKAL'),
+('MSC', 'CV. MITRA SHINJU CEMERLANG', 30, 'LOKAL'),
+('NIC', 'NIC INDONESIA', 30, 'LOKAL'),
+('OJIYAS', 'PT. YAKIN MAJU SENTOSA', 30, 'LOKAL'),
+('OMI', 'PT. OCHIAI MENARA INDONESIA', 30, 'LOKAL'),
+('PA', 'PRIMA ABADI', 30, 'LOKAL'),
+('PAP', 'PT. PARANTA ANUGERAH PRIMA', 30, 'IMPORT'),
+('PGK', 'PT. PARAMITRA GUNAKARYA CEMERLANG', 30, 'LOKAL'),
+('PLAT', 'PLATING', 30, 'LOKAL'),
+('PNC', 'PT.PANACIPTA SEINAN COMP.', 30, 'LOKAL'),
+('PP', 'PURI PURNAMA', 30, 'LOKAL'),
+('QTM', 'QUANTUM', 30, 'LOKAL'),
+('RKC', 'ROOTS KYUSHU CO.,LTD.', 30, 'IMPORT'),
+('ROOTS', 'ROOTS TRADING CO.,LTD', 30, 'IMPORT'),
+('SDC', 'SUMBER DAYA CIPTA', 30, 'LOKAL'),
+('SDS', 'PT. SUMBER DAYA STEEL', 30, 'LOKAL'),
+('SGP', 'TOKO SURYA GRAHA PERKASA', 30, 'LOKAL'),
+('SHARP', 'PT. SHARP ELECTRONICS INDONESIA', 30, 'LOKAL'),
+('SI', 'PT. SYNERAL INDONESIA', 30, 'LOKAL'),
+('SIM', 'CV. SIGMA INDONESIA MANUFACTURING', 30, 'LOKAL'),
+('SK', 'SUPPLIER KOMPUTER', 30, 'LOKAL'),
+('SL', 'PT. STARINDO LESTARI', 30, 'LOKAL'),
+('SLA', 'PT. SINAR LAUT ABADI', 30, 'LOKAL'),
+('SLM', 'PT. SINAR LAUT MANDIRI', 30, 'LOKAL'),
+('SM', 'SAN MARGA', 30, 'LOKAL'),
+('SMM', 'PT. SETIANITA MEGAH MOTOR', 30, 'LOKAL'),
+('SN', 'PT. SATO NAGATOMI', 30, 'LOKAL'),
+('SPS', 'SRIREJEKI PERDANA STEEL', 30, 'LOKAL'),
+('SR', 'SINAR RAYA', 30, 'LOKAL'),
+('SSS', 'PT.SINAR SURYA SAKTI', 30, 'LOKAL'),
+('ST', 'CV. SETIA TEKNIK', 30, 'LOKAL'),
+('STEP', 'STEP', 30, 'LOKAL'),
+('STS', 'PT. SAGATEKNINDO SEJATI', 30, 'LOKAL'),
+('SURYA', 'SURYA TEKNIK', 30, 'LOKAL'),
+('SUZUKI', 'PT. SUZUKI INDOMOBIL MOTOR', 30, 'LOKAL'),
+('TAIYO', 'TAIYO FASTENER (THAILAND) CO.LTD.', 30, 'IMPORT'),
+('TAP', 'PT. TRIMITRA ADI PERKASA', 30, 'LOKAL'),
+('TBI', 'CV. TUNAS BARU INDONESIA', 30, 'LOKAL'),
+('TBM', 'PT. THREE BOND MANUFACTURING IND.', 30, 'LOKAL'),
+('TIT', 'PT. TSUBAKI INDONESIA TRADING', 30, 'LOKAL'),
+('TKH', 'HANGZHOU TOKUHATSU SPRING WASHER', 30, 'IMPORT'),
+('TKJ', 'PT. TRINITY KARYA JAYA', 30, 'LOKAL'),
+('TMI', 'PT. TECHNO METAL INDUSTRY', 30, 'LOKAL'),
+('TMS', 'TEMBAGA MULIA SEMANAN', 30, 'LOKAL'),
+('TOKO', 'TOKO (OTHERS)', 30, 'LOKAL'),
+('TZ', 'TOKO ZON''X', 30, 'LOKAL'),
+('UMC', 'TOKO USAHA MANDIRI COMP', 30, 'LOKAL'),
+('UP', 'PT. UNILAB PERDANA', 30, 'LOKAL'),
+('VANTAGE', 'VANTAGE ASPIRE CO., LTD', 30, 'IMPORT'),
+('VELASARI', 'VELASARI INTERNATIONAL CO, LTD', 30, 'IMPORT'),
+('YONG YUEN', 'YONG YUEN INTERNATIONAL CO.,LTD', 30, 'IMPORT'),
+('ZHE JIANG', 'ZHEJIANG TOKUHATSU METALPROD.CORP', 30, 'IMPORT'),
+('ZHE JIANG+PLAT', 'ZHEJIANG TOKUHATSU + PLATING', 30, 'LOKAL'),
+('ZUNLI', 'ZUNLI INTERNATIONAL CO.,LTD', 30, 'IMPORT');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tools_cutting`
+--
+
+CREATE TABLE IF NOT EXISTS `tools_cutting` (
+  `Id` int(1) NOT NULL AUTO_INCREMENT,
+  `Diameter` double NOT NULL,
+  `Min_panjang` double NOT NULL,
+  `Max_panjang` double NOT NULL,
+  `Cost` double NOT NULL,
+  `Currency` enum('IDR','USD') NOT NULL,
+  `Tgl_Update` date NOT NULL,
+  `Active` enum('YES','NO') NOT NULL DEFAULT 'YES',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `tools_cutting`
+--
+
+INSERT INTO `tools_cutting` (`Id`, `Diameter`, `Min_panjang`, `Max_panjang`, `Cost`, `Currency`, `Tgl_Update`, `Active`) VALUES
+(1, 3, 10, 100, 1.18, 'IDR', '2010-01-01', 'YES'),
+(2, 3.5, 10, 100, 1.18, 'IDR', '2010-01-01', 'YES'),
+(3, 4, 10, 100, 2.24, 'IDR', '2010-01-01', 'YES'),
+(4, 5, 10, 100, 2.24, 'IDR', '2010-01-01', 'YES');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tools_heading1`
+--
+
+CREATE TABLE IF NOT EXISTS `tools_heading1` (
+  `Id` int(1) NOT NULL AUTO_INCREMENT,
+  `Category` varchar(50) NOT NULL,
+  `Diameter` double NOT NULL,
+  `Min_panjang` double NOT NULL,
+  `Max_panjang` double NOT NULL,
+  `Cost` double NOT NULL,
+  `Currency` enum('IDR','USD') NOT NULL,
+  `Tgl_Update` date NOT NULL,
+  `Active` enum('YES','NO') NOT NULL DEFAULT 'YES',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=187 ;
+
+--
+-- Dumping data for table `tools_heading1`
+--
+
+INSERT INTO `tools_heading1` (`Id`, `Category`, `Diameter`, `Min_panjang`, `Max_panjang`, `Cost`, `Currency`, `Tgl_Update`, `Active`) VALUES
+(1, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 2, 4, 20, 2.96, 'IDR', '2010-01-02', 'YES'),
+(2, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 2.6, 4, 20, 2.96, 'IDR', '2010-01-02', 'YES'),
+(3, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 3, 4, 19, 3.35, 'IDR', '2010-01-02', 'YES'),
+(4, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 3, 20, 30, 3.46, 'IDR', '2010-01-02', 'YES'),
+(5, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 3.5, 4, 19, 3.35, 'IDR', '2010-01-02', 'YES'),
+(6, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 3.5, 20, 30, 3.46, 'IDR', '2010-01-02', 'YES'),
+(7, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 4, 6, 17, 4.32, 'IDR', '2010-01-02', 'YES'),
+(8, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 4, 18, 50, 4.43, 'IDR', '2010-01-02', 'YES'),
+(9, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 4.5, 6, 17, 4.32, 'IDR', '2010-01-02', 'YES'),
+(10, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 4.5, 18, 50, 4.43, 'IDR', '2010-01-02', 'YES'),
+(11, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 5, 6, 21, 5.27, 'IDR', '2010-01-02', 'YES'),
+(12, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 5, 22, 50, 5.38, 'IDR', '2010-01-02', 'YES'),
+(13, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 6, 6, 21, 7.18, 'IDR', '2010-01-02', 'YES'),
+(14, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 6, 22, 57, 7.79, 'IDR', '2010-01-02', 'YES'),
+(15, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 6, 58, 110, 8.23, 'IDR', '2010-01-02', 'YES'),
+(16, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 8, 10, 27, 9.36, 'IDR', '2010-01-02', 'YES'),
+(17, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 8, 28, 57, 9.54, 'IDR', '2010-01-02', 'YES'),
+(18, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 8, 58, 110, 11.51, 'IDR', '2010-01-02', 'YES'),
+(19, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 10, 12, 27, 17.87, 'IDR', '2010-01-02', 'YES'),
+(20, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 10, 28, 57, 17.89, 'IDR', '2010-01-02', 'YES'),
+(21, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 10, 58, 140, 18.53, 'IDR', '2010-01-02', 'YES'),
+(22, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 12, 141, 200, 66.11, 'IDR', '2010-01-02', 'YES'),
+(23, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 2, 4, 20, 3.21, 'IDR', '2010-01-02', 'YES'),
+(24, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 2.6, 4, 20, 3.21, 'IDR', '2010-01-02', 'YES'),
+(25, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 3, 4, 19, 3.61, 'IDR', '2010-01-02', 'YES'),
+(26, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 3, 20, 30, 3.81, 'IDR', '2010-01-02', 'YES'),
+(27, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 3.5, 4, 19, 3.61, 'IDR', '2010-01-02', 'YES'),
+(28, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 3.5, 20, 30, 3.81, 'IDR', '2010-01-02', 'YES'),
+(29, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 4, 6, 17, 4.67, 'IDR', '2010-01-02', 'YES'),
+(30, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 4, 18, 50, 4.97, 'IDR', '2010-01-02', 'YES'),
+(31, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 4.5, 6, 17, 4.67, 'IDR', '2010-01-02', 'YES'),
+(32, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 4.5, 18, 50, 4.97, 'IDR', '2010-01-02', 'YES'),
+(33, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 5, 6, 21, 5.61, 'IDR', '2010-01-02', 'YES'),
+(34, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 5, 22, 50, 6.33, 'IDR', '2010-01-02', 'YES'),
+(35, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 6, 6, 21, 7.49, 'IDR', '2010-01-02', 'YES'),
+(36, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 6, 22, 57, 8.25, 'IDR', '2010-01-02', 'YES'),
+(37, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 6, 58, 110, 9.09, 'IDR', '2010-01-02', 'YES'),
+(38, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 8, 10, 27, 9.66, 'IDR', '2010-01-02', 'YES'),
+(39, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 8, 28, 57, 9.96, 'IDR', '2010-01-02', 'YES'),
+(40, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 8, 58, 110, 12.38, 'IDR', '2010-01-02', 'YES'),
+(41, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 10, 12, 27, 18.01, 'IDR', '2010-01-02', 'YES'),
+(42, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 10, 28, 57, 18.31, 'IDR', '2010-01-02', 'YES'),
+(43, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 10, 58, 140, 19.55, 'IDR', '2010-01-02', 'YES'),
+(44, 'TAPTITE SCREW', 2, 4, 20, 3.33, 'IDR', '2010-01-02', 'YES'),
+(45, 'TAPTITE SCREW', 2.6, 4, 20, 3.33, 'IDR', '2010-01-02', 'YES'),
+(46, 'TAPTITE SCREW', 3, 4, 19, 3.76, 'IDR', '2010-01-02', 'YES'),
+(47, 'TAPTITE SCREW', 3, 20, 30, 4.37, 'IDR', '2010-01-02', 'YES'),
+(48, 'TAPTITE SCREW', 3.5, 4, 19, 3.76, 'IDR', '2010-01-02', 'YES'),
+(49, 'TAPTITE SCREW', 3.5, 20, 30, 4.37, 'IDR', '2010-01-02', 'YES'),
+(50, 'TAPTITE SCREW', 4, 6, 17, 4.72, 'IDR', '2010-01-02', 'YES'),
+(51, 'TAPTITE SCREW', 4, 18, 50, 5.34, 'IDR', '2010-01-02', 'YES'),
+(52, 'TAPTITE SCREW', 4.5, 6, 17, 4.72, 'IDR', '2010-01-02', 'YES'),
+(53, 'TAPTITE SCREW', 4.5, 18, 50, 5.34, 'IDR', '2010-01-02', 'YES'),
+(54, 'TAPTITE SCREW', 5, 6, 21, 5.72, 'IDR', '2010-01-02', 'YES'),
+(55, 'TAPTITE SCREW', 5, 22, 50, 6.4, 'IDR', '2010-01-02', 'YES'),
+(56, 'TAPTITE SCREW', 6, 6, 21, 8.19, 'IDR', '2010-01-02', 'YES'),
+(57, 'TAPTITE SCREW', 6, 22, 56, 9.93, 'IDR', '2010-01-02', 'YES'),
+(58, 'FLANGE BOLT', 5, 6, 21, 17.58, 'IDR', '2010-01-02', 'YES'),
+(59, 'FLANGE BOLT', 5, 22, 50, 17.7, 'IDR', '2010-01-02', 'YES'),
+(60, 'FLANGE BOLT', 6, 6, 21, 28.32, 'IDR', '2010-01-02', 'YES'),
+(61, 'FLANGE BOLT', 6, 22, 57, 28.93, 'IDR', '2010-01-02', 'YES'),
+(62, 'FLANGE BOLT', 6, 58, 110, 29.37, 'IDR', '2010-01-02', 'YES'),
+(63, 'FLANGE BOLT', 8, 10, 27, 44.77, 'IDR', '2010-01-02', 'YES'),
+(64, 'FLANGE BOLT', 8, 28, 57, 44.95, 'IDR', '2010-01-02', 'YES'),
+(65, 'FLANGE BOLT', 8, 58, 110, 57.99, 'IDR', '2010-01-02', 'YES'),
+(66, 'FLANGE BOLT', 10, 12, 27, 81.27, 'IDR', '2010-01-02', 'YES'),
+(67, 'FLANGE BOLT', 10, 28, 57, 81.3, 'IDR', '2010-01-02', 'YES'),
+(68, 'FLANGE BOLT', 10, 58, 140, 81.93, 'IDR', '2010-01-02', 'YES'),
+(69, 'FLANGE BOLT', 12, 141, 200, 169.86, 'IDR', '2010-01-02', 'YES'),
+(70, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 2, 4, 20, 2.16, 'IDR', '2010-01-02', 'YES'),
+(71, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 2.6, 4, 20, 2.16, 'IDR', '2010-01-02', 'YES'),
+(72, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 3, 4, 19, 2.55, 'IDR', '2010-01-02', 'YES'),
+(73, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 3, 20, 30, 2.67, 'IDR', '2010-01-02', 'YES'),
+(74, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 3.5, 4, 19, 2.55, 'IDR', '2010-01-02', 'YES'),
+(75, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 3.5, 20, 30, 2.67, 'IDR', '2010-01-02', 'YES'),
+(76, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 4, 6, 17, 3.55, 'IDR', '2010-01-02', 'YES'),
+(77, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 4, 18, 50, 3.66, 'IDR', '2010-01-02', 'YES'),
+(78, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 4.5, 6, 17, 3.55, 'IDR', '2010-01-02', 'YES'),
+(79, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 4.5, 18, 50, 3.66, 'IDR', '2010-01-02', 'YES'),
+(80, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 5, 6, 21, 3.57, 'IDR', '2010-01-02', 'YES'),
+(81, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 5, 22, 50, 3.68, 'IDR', '2010-01-02', 'YES'),
+(82, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 6, 6, 21, 5.45, 'IDR', '2010-01-02', 'YES'),
+(83, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 6, 22, 57, 6.06, 'IDR', '2010-01-02', 'YES'),
+(84, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 6, 58, 110, 6.49, 'IDR', '2010-01-02', 'YES'),
+(85, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 8, 10, 27, 6.58, 'IDR', '2010-01-02', 'YES'),
+(86, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 8, 28, 57, 6.76, 'IDR', '2010-01-02', 'YES'),
+(87, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 8, 58, 110, 8.73, 'IDR', '2010-01-02', 'YES'),
+(88, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 10, 12, 27, 8.68, 'IDR', '2010-01-02', 'YES'),
+(89, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 10, 28, 57, 8.7, 'IDR', '2010-01-02', 'YES'),
+(90, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 10, 58, 140, 9.34, 'IDR', '2010-01-02', 'YES'),
+(91, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 3, 4, 19, 4.66, 'IDR', '2010-01-02', 'YES'),
+(92, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 3, 20, 30, 4.68, 'IDR', '2010-01-02', 'YES'),
+(93, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 3.5, 4, 19, 4.66, 'IDR', '2010-01-02', 'YES'),
+(94, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 3.5, 20, 30, 4.68, 'IDR', '2010-01-02', 'YES'),
+(95, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 4, 6, 17, 5.82, 'IDR', '2010-01-02', 'YES'),
+(96, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 4, 18, 50, 5.82, 'IDR', '2010-01-02', 'YES'),
+(97, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 4.5, 6, 17, 5.82, 'IDR', '2010-01-02', 'YES'),
+(98, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 4.5, 18, 50, 5.82, 'IDR', '2010-01-02', 'YES'),
+(99, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 5, 6, 21, 7.4, 'IDR', '2010-01-02', 'YES'),
+(100, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 5, 22, 50, 7.4, 'IDR', '2010-01-02', 'YES'),
+(101, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 6, 6, 21, 9.71, 'IDR', '2010-01-02', 'YES'),
+(102, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 6, 22, 57, 10.17, 'IDR', '2010-01-02', 'YES'),
+(103, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 6, 58, 110, 10.19, 'IDR', '2010-01-02', 'YES'),
+(104, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 8, 10, 27, 11.95, 'IDR', '2010-01-02', 'YES'),
+(105, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 8, 28, 57, 11.95, 'IDR', '2010-01-02', 'YES'),
+(106, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 8, 58, 110, 13.54, 'IDR', '2010-01-02', 'YES'),
+(107, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 10, 12, 27, 14.3, 'IDR', '2010-01-02', 'YES'),
+(108, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 10, 28, 57, 14.3, 'IDR', '2010-01-02', 'YES'),
+(109, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 10, 58, 140, 14.56, 'IDR', '2010-01-02', 'YES'),
+(110, 'WOOD SCREW', 2, 4, 20, 2.22, 'IDR', '2010-01-02', 'YES'),
+(111, 'WOOD SCREW', 2.6, 4, 20, 2.22, 'IDR', '2010-01-02', 'YES'),
+(112, 'WOOD SCREW', 3, 4, 19, 2.61, 'IDR', '2010-01-02', 'YES'),
+(113, 'WOOD SCREW', 3, 20, 30, 2.61, 'IDR', '2010-01-02', 'YES'),
+(114, 'WOOD SCREW', 3.5, 4, 19, 2.61, 'IDR', '2010-01-02', 'YES'),
+(115, 'WOOD SCREW', 3.5, 20, 30, 2.61, 'IDR', '2010-01-02', 'YES'),
+(116, 'WOOD SCREW', 4, 6, 17, 4.35, 'IDR', '2010-01-02', 'YES'),
+(117, 'WOOD SCREW', 4, 18, 50, 4.39, 'IDR', '2010-01-02', 'YES'),
+(118, 'WOOD SCREW', 4.5, 6, 17, 4.35, 'IDR', '2010-01-02', 'YES'),
+(119, 'WOOD SCREW', 4.5, 18, 50, 4.39, 'IDR', '2010-01-02', 'YES'),
+(120, 'WOOD SCREW', 5, 6, 21, 5.57, 'IDR', '2010-01-02', 'YES'),
+(121, 'WOOD SCREW', 5, 22, 50, 5.77, 'IDR', '2010-01-02', 'YES'),
+(122, 'WOOD SCREW', 6, 6, 21, 9.59, 'IDR', '2010-01-02', 'YES'),
+(123, 'WOOD SCREW', 6, 22, 56, 9.59, 'IDR', '2010-01-02', 'YES'),
+(124, 'TUBULAR RIVET', 2, 4, 20, 3.79, 'IDR', '2010-01-02', 'YES'),
+(125, 'TUBULAR RIVET', 2.6, 4, 20, 3.79, 'IDR', '2010-01-02', 'YES'),
+(126, 'TUBULAR RIVET', 3, 4, 19, 3.9, 'IDR', '2010-01-02', 'YES'),
+(127, 'TUBULAR RIVET', 3, 20, 30, 3.9, 'IDR', '2010-01-02', 'YES'),
+(128, 'TUBULAR RIVET', 3.5, 4, 19, 3.9, 'IDR', '2010-01-02', 'YES'),
+(129, 'TUBULAR RIVET', 3.5, 20, 30, 3.9, 'IDR', '2010-01-02', 'YES'),
+(130, 'TUBULAR RIVET', 4, 6, 17, 5.1, 'IDR', '2010-01-02', 'YES'),
+(131, 'TUBULAR RIVET', 4, 18, 50, 5.14, 'IDR', '2010-01-02', 'YES'),
+(132, 'TUBULAR RIVET', 4.5, 6, 17, 5.1, 'IDR', '2010-01-02', 'YES'),
+(133, 'TUBULAR RIVET', 4.5, 18, 50, 5.14, 'IDR', '2010-01-02', 'YES'),
+(134, 'TUBULAR RIVET', 5, 6, 21, 5.58, 'IDR', '2010-01-02', 'YES'),
+(135, 'TUBULAR RIVET', 5, 22, 50, 5.78, 'IDR', '2010-01-02', 'YES'),
+(136, 'SUS MACHINE SCREW', 2, 4, 20, 4.25, 'IDR', '2010-01-02', 'YES'),
+(137, 'SUS MACHINE SCREW', 2.6, 4, 20, 4.25, 'IDR', '2010-01-02', 'YES'),
+(138, 'SUS MACHINE SCREW', 3, 4, 19, 5.13, 'IDR', '2010-01-02', 'YES'),
+(139, 'SUS MACHINE SCREW', 3, 20, 30, 5.13, 'IDR', '2010-01-02', 'YES'),
+(140, 'SUS MACHINE SCREW', 3.5, 4, 19, 5.13, 'IDR', '2010-01-02', 'YES'),
+(141, 'SUS MACHINE SCREW', 3.5, 20, 30, 5.13, 'IDR', '2010-01-02', 'YES'),
+(142, 'SUS MACHINE SCREW', 4, 6, 17, 5.54, 'IDR', '2010-01-02', 'YES'),
+(143, 'SUS MACHINE SCREW', 4, 18, 50, 5.69, 'IDR', '2010-01-02', 'YES'),
+(144, 'SUS MACHINE SCREW', 4.5, 6, 17, 5.54, 'IDR', '2010-01-02', 'YES'),
+(145, 'SUS MACHINE SCREW', 4.5, 18, 50, 5.69, 'IDR', '2010-01-02', 'YES'),
+(146, 'SUS MACHINE SCREW', 5, 6, 21, 6.82, 'IDR', '2010-01-02', 'YES'),
+(147, 'SUS MACHINE SCREW', 5, 22, 50, 7.24, 'IDR', '2010-01-02', 'YES'),
+(148, 'SUS MACHINE SCREW', 6, 6, 21, 12.06, 'IDR', '2010-01-02', 'YES'),
+(149, 'SUS MACHINE SCREW', 6, 22, 57, 12.06, 'IDR', '2010-01-02', 'YES'),
+(150, 'SUS MACHINE SCREW', 6, 58, 110, 13.07, 'IDR', '2010-01-02', 'YES'),
+(151, 'SUS MACHINE SCREW', 8, 10, 27, 14.62, 'IDR', '2010-01-02', 'YES'),
+(152, 'SUS MACHINE SCREW', 8, 28, 57, 14.62, 'IDR', '2010-01-02', 'YES'),
+(153, 'SUS MACHINE SCREW', 8, 58, 110, 16.1, 'IDR', '2010-01-02', 'YES'),
+(154, 'SUS HEXAGONAL TRIMMING', 2, 4, 20, 4.25, 'IDR', '2010-01-02', 'YES'),
+(155, 'SUS HEXAGONAL TRIMMING', 2.6, 4, 20, 4.25, 'IDR', '2010-01-02', 'YES'),
+(156, 'SUS HEXAGONAL TRIMMING', 3, 4, 19, 5.13, 'IDR', '2010-01-02', 'YES'),
+(157, 'SUS HEXAGONAL TRIMMING', 3, 20, 30, 5.13, 'IDR', '2010-01-02', 'YES'),
+(158, 'SUS HEXAGONAL TRIMMING', 3.5, 4, 19, 5.13, 'IDR', '2010-01-02', 'YES'),
+(159, 'SUS HEXAGONAL TRIMMING', 3.5, 20, 30, 5.13, 'IDR', '2010-01-02', 'YES'),
+(160, 'SUS HEXAGONAL TRIMMING', 4, 6, 17, 5.54, 'IDR', '2010-01-02', 'YES'),
+(161, 'SUS HEXAGONAL TRIMMING', 4, 18, 50, 5.69, 'IDR', '2010-01-02', 'YES'),
+(162, 'SUS HEXAGONAL TRIMMING', 4.5, 6, 17, 5.54, 'IDR', '2010-01-02', 'YES'),
+(163, 'SUS HEXAGONAL TRIMMING', 4.5, 18, 50, 5.69, 'IDR', '2010-01-02', 'YES'),
+(164, 'SUS HEXAGONAL TRIMMING', 5, 6, 21, 6.82, 'IDR', '2010-01-02', 'YES'),
+(165, 'SUS HEXAGONAL TRIMMING', 5, 22, 50, 7.24, 'IDR', '2010-01-02', 'YES'),
+(166, 'SUS HEXAGONAL TRIMMING', 6, 6, 21, 12.06, 'IDR', '2010-01-02', 'YES'),
+(167, 'SUS HEXAGONAL TRIMMING', 6, 22, 57, 12.06, 'IDR', '2010-01-02', 'YES'),
+(168, 'SUS HEXAGONAL TRIMMING', 6, 58, 110, 13.07, 'IDR', '2010-01-02', 'YES'),
+(169, 'SUS HEXAGONAL TRIMMING', 8, 10, 27, 14.62, 'IDR', '2010-01-02', 'YES'),
+(170, 'SUS HEXAGONAL TRIMMING', 8, 28, 57, 14.62, 'IDR', '2010-01-02', 'YES'),
+(171, 'SUS HEXAGONAL TRIMMING', 8, 58, 110, 16.1, 'IDR', '2010-01-02', 'YES'),
+(172, 'SUS HEXAGONAL TRIMMING', 10, 12, 26, 16.16, 'IDR', '2010-01-02', 'YES'),
+(173, 'SUS TAPPING SCREW', 2, 4, 20, 4.48, 'IDR', '2010-01-02', 'YES'),
+(174, 'SUS TAPPING SCREW', 2.6, 4, 20, 4.48, 'IDR', '2010-01-02', 'YES'),
+(175, 'SUS TAPPING SCREW', 3, 4, 19, 5.18, 'IDR', '2010-01-02', 'YES'),
+(176, 'SUS TAPPING SCREW', 3, 20, 30, 5.18, 'IDR', '2010-01-02', 'YES'),
+(177, 'SUS TAPPING SCREW', 3.5, 4, 19, 5.18, 'IDR', '2010-01-02', 'YES'),
+(178, 'SUS TAPPING SCREW', 3.5, 20, 30, 5.18, 'IDR', '2010-01-02', 'YES'),
+(179, 'SUS TAPPING SCREW', 4, 6, 17, 5.45, 'IDR', '2010-01-02', 'YES'),
+(180, 'SUS TAPPING SCREW', 4, 18, 50, 5.64, 'IDR', '2010-01-02', 'YES'),
+(181, 'SUS TAPPING SCREW', 4.5, 6, 17, 5.45, 'IDR', '2010-01-02', 'YES'),
+(182, 'SUS TAPPING SCREW', 4.5, 18, 50, 5.64, 'IDR', '2010-01-02', 'YES'),
+(183, 'SUS TAPPING SCREW', 5, 6, 21, 6.85, 'IDR', '2010-01-02', 'YES'),
+(184, 'SUS TAPPING SCREW', 5, 22, 50, 7.47, 'IDR', '2010-01-02', 'YES'),
+(185, 'SUS TAPPING SCREW', 6, 6, 21, 11.74, 'IDR', '2010-01-02', 'YES'),
+(186, 'SUS TAPPING SCREW', 6, 22, 56, 11.74, 'IDR', '2010-01-02', 'YES');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tools_headingcat`
+--
+
+CREATE TABLE IF NOT EXISTS `tools_headingcat` (
+  `Id` int(1) NOT NULL AUTO_INCREMENT,
+  `Category` varchar(50) NOT NULL,
+  `Type_screw` varchar(20) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tools_headingcat`
+--
+
+INSERT INTO `tools_headingcat` (`Id`, `Category`, `Type_screw`) VALUES
+(1, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'BMP'),
+(2, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'BMN'),
+(3, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'HANGBOLT'),
+(4, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'KONTAK PIN'),
+(5, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'PIN'),
+(6, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'SMB'),
+(7, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'SMKS'),
+(8, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'SMN'),
+(9, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'SMP'),
+(10, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'SMQ'),
+(11, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'SMR'),
+(12, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'SMT'),
+(13, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'SMX'),
+(14, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSA'),
+(15, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSAB'),
+(16, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSAK'),
+(17, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSAN'),
+(18, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSAP'),
+(19, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSAT'),
+(20, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSAV'),
+(21, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSAZ'),
+(22, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSB'),
+(23, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSBAB'),
+(24, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSBAP'),
+(25, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSBB'),
+(26, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSBK'),
+(27, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSBN'),
+(28, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSBP'),
+(29, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSBT'),
+(30, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSBV'),
+(31, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSCB'),
+(32, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSCN'),
+(33, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSCP'),
+(34, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSCT'),
+(35, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSCV'),
+(36, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'WELD BOLT'),
+(37, 'MACHINE SCREW & TAPPING SCREW KEPALA R', 'TSBAX'),
+(38, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 'SMF'),
+(39, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 'SMO'),
+(40, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 'TSAF'),
+(41, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 'TSAO'),
+(42, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 'TSBF'),
+(43, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 'TSBO'),
+(44, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 'TSBAF'),
+(45, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 'TSCF'),
+(46, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 'BMF'),
+(47, 'MACHINE SCREW & TAPPING SCREW KEPALA F DAN O', 'BWF'),
+(48, 'TAPTITE SCREW', 'BT'),
+(49, 'TAPTITE SCREW', 'CT'),
+(50, 'TAPTITE SCREW', 'PT'),
+(51, 'TAPTITE SCREW', 'ST'),
+(52, 'FLANGE BOLT', 'FB'),
+(53, 'FLANGE BOLT', 'SMW'),
+(54, 'FLANGE BOLT', 'STW'),
+(55, 'FLANGE BOLT', 'TSABW'),
+(56, 'FLANGE BOLT', 'TSBW'),
+(57, 'FLANGE BOLT', 'SMKW'),
+(58, 'FLANGE BOLT', 'TSAW'),
+(59, 'FLANGE BOLT', 'STUD BOLT'),
+(60, 'FLANGE BOLT', 'HSMW'),
+(61, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 'SMH TRIMMING'),
+(62, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 'RVK SQ'),
+(63, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL TRIMMING', 'TAPPING TRIMMING'),
+(64, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 'SMH NON TRIMMING'),
+(65, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 'SMH UP SET'),
+(66, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 'BMH'),
+(67, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 'BMK'),
+(68, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 'SMK'),
+(69, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 'PCAH'),
+(70, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 'PCH'),
+(71, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 'TSABH'),
+(72, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 'TSAH'),
+(73, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 'TSBH'),
+(74, 'MACHINE SCREW & TAPPING SCREW HEXAGONAL UPSET', 'TSCH'),
+(75, 'WOOD SCREW', 'SWF'),
+(76, 'WOOD SCREW', 'SWM'),
+(77, 'WOOD SCREW', 'SWR'),
+(78, 'WOOD SCREW', 'SWZ'),
+(79, 'WOOD SCREW', 'SWO'),
+(80, 'TUBULAR RIVET', 'SRK'),
+(81, 'TUBULAR RIVET', 'SRP'),
+(82, 'TUBULAR RIVET', 'SRT'),
+(83, 'SUS MACHINE SCREW', 'UMB'),
+(84, 'SUS MACHINE SCREW', 'UMF'),
+(85, 'SUS MACHINE SCREW', 'UMK'),
+(86, 'SUS MACHINE SCREW', 'UMO'),
+(87, 'SUS MACHINE SCREW', 'UMP'),
+(88, 'SUS MACHINE SCREW', 'UMR'),
+(89, 'SUS MACHINE SCREW', 'UMS'),
+(90, 'SUS MACHINE SCREW', 'UMT'),
+(91, 'SUS MACHINE SCREW', 'UMX'),
+(92, 'SUS HEXAGONAL TRIMMING', 'UMH'),
+(93, 'SUS HEXAGONAL TRIMMING', 'TRIMMING'),
+(94, 'SUS TAPPING SCREW', 'SUS TAPPING SCREW');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tools_rolling`
+--
+
+CREATE TABLE IF NOT EXISTS `tools_rolling` (
+  `Id` int(1) NOT NULL AUTO_INCREMENT,
+  `Category2` varchar(50) NOT NULL,
+  `Diameter` double NOT NULL,
+  `Min_panjang` double NOT NULL,
+  `Max_panjang` double NOT NULL,
+  `Cost` double NOT NULL,
+  `Currency` enum('IDR','USD') NOT NULL,
+  `Tgl_Update` date NOT NULL,
+  `Active` enum('YES','NO') NOT NULL DEFAULT 'YES',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=80 ;
+
+--
+-- Dumping data for table `tools_rolling`
+--
+
+INSERT INTO `tools_rolling` (`Id`, `Category2`, `Diameter`, `Min_panjang`, `Max_panjang`, `Cost`, `Currency`, `Tgl_Update`, `Active`) VALUES
+(1, 'MACHINE SCREW', 2, 4, 20, 0.78, 'IDR', '2010-01-01', 'YES'),
+(2, 'MACHINE SCREW', 2.6, 4, 20, 0.78, 'IDR', '2010-01-01', 'YES'),
+(3, 'MACHINE SCREW', 3, 4, 30, 0.84, 'IDR', '2010-01-01', 'YES'),
+(4, 'MACHINE SCREW', 3.5, 4, 30, 0.84, 'IDR', '2010-01-01', 'YES'),
+(5, 'MACHINE SCREW', 4, 6, 17, 0.79, 'IDR', '2010-01-01', 'YES'),
+(6, 'MACHINE SCREW', 4, 18, 50, 1.07, 'IDR', '2010-01-01', 'YES'),
+(7, 'MACHINE SCREW', 4.5, 6, 17, 0.79, 'IDR', '2010-01-01', 'YES'),
+(8, 'MACHINE SCREW', 4.5, 18, 50, 1.07, 'IDR', '2010-01-01', 'YES'),
+(9, 'MACHINE SCREW', 5, 6, 21, 0.79, 'IDR', '2010-01-01', 'YES'),
+(10, 'MACHINE SCREW', 5, 22, 50, 1.07, 'IDR', '2010-01-01', 'YES'),
+(11, 'MACHINE SCREW', 6, 6, 21, 1.68, 'IDR', '2010-01-01', 'YES'),
+(12, 'MACHINE SCREW', 6, 22, 57, 1.68, 'IDR', '2010-01-01', 'YES'),
+(13, 'MACHINE SCREW', 6, 58, 110, 5.07, 'IDR', '2010-01-01', 'YES'),
+(14, 'MACHINE SCREW', 8, 10, 27, 2.34, 'IDR', '2010-01-01', 'YES'),
+(15, 'MACHINE SCREW', 8, 28, 57, 2.34, 'IDR', '2010-01-01', 'YES'),
+(16, 'MACHINE SCREW', 8, 58, 110, 5.25, 'IDR', '2010-01-01', 'YES'),
+(17, 'MACHINE SCREW', 10, 12, 27, 2.34, 'IDR', '2010-01-01', 'YES'),
+(18, 'MACHINE SCREW', 10, 28, 57, 2.34, 'IDR', '2010-01-01', 'YES'),
+(19, 'MACHINE SCREW', 10, 58, 140, 5.25, 'IDR', '2010-01-01', 'YES'),
+(20, 'MACHINE SCREW', 12, 12, 27, 2.58, 'IDR', '2010-01-01', 'YES'),
+(21, 'MACHINE SCREW', 12, 28, 57, 2.58, 'IDR', '2010-01-01', 'YES'),
+(22, 'MACHINE SCREW', 12, 58, 140, 19.72, 'IDR', '2010-01-01', 'YES'),
+(23, 'TAPPING SCREW', 2, 4, 20, 1.58, 'IDR', '2010-01-01', 'YES'),
+(24, 'TAPPING SCREW', 2.6, 4, 20, 1.58, 'IDR', '2010-01-01', 'YES'),
+(25, 'TAPPING SCREW', 3, 4, 30, 1.73, 'IDR', '2010-01-01', 'YES'),
+(26, 'TAPPING SCREW', 3.5, 4, 30, 1.73, 'IDR', '2010-01-01', 'YES'),
+(27, 'TAPPING SCREW', 4, 6, 50, 1.73, 'IDR', '2010-01-01', 'YES'),
+(28, 'TAPPING SCREW', 4.5, 6, 50, 1.73, 'IDR', '2010-01-01', 'YES'),
+(29, 'TAPPING SCREW', 5, 6, 21, 2.02, 'IDR', '2010-01-01', 'YES'),
+(30, 'TAPPING SCREW', 5, 22, 50, 3.83, 'IDR', '2010-01-01', 'YES'),
+(31, 'TAPPING SCREW', 6, 6, 56, 3.83, 'IDR', '2010-01-01', 'YES'),
+(32, 'TAPPING SCREW', 8, 28, 57, 3.83, 'IDR', '2010-01-01', 'YES'),
+(33, 'TAPPING SCREW', 8, 58, 110, 5.25, 'IDR', '2010-01-01', 'YES'),
+(34, 'TAPPING SCREW', 10, 28, 57, 3.83, 'IDR', '2010-01-01', 'YES'),
+(35, 'TAPPING SCREW', 10, 58, 110, 5.25, 'IDR', '2010-01-01', 'YES'),
+(36, 'WOOD SCREW', 2, 4, 20, 1.58, 'IDR', '2010-01-01', 'YES'),
+(37, 'WOOD SCREW', 2.6, 4, 20, 1.58, 'IDR', '2010-01-01', 'YES'),
+(38, 'WOOD SCREW', 3, 4, 30, 1.73, 'IDR', '2010-01-01', 'YES'),
+(39, 'WOOD SCREW', 3.5, 4, 30, 1.73, 'IDR', '2010-01-01', 'YES'),
+(40, 'WOOD SCREW', 4, 6, 50, 1.73, 'IDR', '2010-01-01', 'YES'),
+(41, 'WOOD SCREW', 4.5, 6, 50, 1.73, 'IDR', '2010-01-01', 'YES'),
+(42, 'WOOD SCREW', 5, 6, 21, 2.02, 'IDR', '2010-01-01', 'YES'),
+(43, 'WOOD SCREW', 5, 22, 50, 3.83, 'IDR', '2010-01-01', 'YES'),
+(44, 'WOOD SCREW', 6, 6, 56, 3.83, 'IDR', '2010-01-01', 'YES'),
+(45, 'WOOD SCREW', 8, 28, 57, 3.83, 'IDR', '2010-01-01', 'YES'),
+(46, 'WOOD SCREW', 8, 58, 110, 5.25, 'IDR', '2010-01-01', 'YES'),
+(47, 'WOOD SCREW', 10, 28, 57, 3.83, 'IDR', '2010-01-01', 'YES'),
+(48, 'WOOD SCREW', 10, 58, 110, 5.25, 'IDR', '2010-01-01', 'YES'),
+(49, 'FLANGE BOLT', 2, 4, 20, 0.78, 'IDR', '2010-01-01', 'YES'),
+(50, 'FLANGE BOLT', 2.6, 4, 20, 0.78, 'IDR', '2010-01-01', 'YES'),
+(51, 'FLANGE BOLT', 3, 4, 30, 0.84, 'IDR', '2010-01-01', 'YES'),
+(52, 'FLANGE BOLT', 3.5, 4, 30, 0.84, 'IDR', '2010-01-01', 'YES'),
+(53, 'FLANGE BOLT', 4, 6, 17, 0.79, 'IDR', '2010-01-01', 'YES'),
+(54, 'FLANGE BOLT', 4, 18, 50, 1.07, 'IDR', '2010-01-01', 'YES'),
+(55, 'FLANGE BOLT', 4.5, 6, 17, 0.79, 'IDR', '2010-01-01', 'YES'),
+(56, 'FLANGE BOLT', 4.5, 18, 50, 1.07, 'IDR', '2010-01-01', 'YES'),
+(57, 'FLANGE BOLT', 5, 6, 21, 0.79, 'IDR', '2010-01-01', 'YES'),
+(58, 'FLANGE BOLT', 5, 22, 50, 1.07, 'IDR', '2010-01-01', 'YES'),
+(59, 'FLANGE BOLT', 6, 6, 21, 1.68, 'IDR', '2010-01-01', 'YES'),
+(60, 'FLANGE BOLT', 6, 22, 57, 1.68, 'IDR', '2010-01-01', 'YES'),
+(61, 'FLANGE BOLT', 6, 58, 110, 5.07, 'IDR', '2010-01-01', 'YES'),
+(62, 'FLANGE BOLT', 8, 10, 27, 2.34, 'IDR', '2010-01-01', 'YES'),
+(63, 'FLANGE BOLT', 8, 28, 57, 2.34, 'IDR', '2010-01-01', 'YES'),
+(64, 'FLANGE BOLT', 8, 58, 110, 5.25, 'IDR', '2010-01-01', 'YES'),
+(65, 'FLANGE BOLT', 10, 12, 27, 2.34, 'IDR', '2010-01-01', 'YES'),
+(66, 'FLANGE BOLT', 10, 28, 57, 2.34, 'IDR', '2010-01-01', 'YES'),
+(67, 'FLANGE BOLT', 10, 58, 140, 5.25, 'IDR', '2010-01-01', 'YES'),
+(68, 'FLANGE BOLT', 12, 12, 27, 2.58, 'IDR', '2010-01-01', 'YES'),
+(69, 'FLANGE BOLT', 12, 28, 57, 2.58, 'IDR', '2010-01-01', 'YES'),
+(70, 'FLANGE BOLT', 12, 58, 140, 19.72, 'IDR', '2010-01-01', 'YES'),
+(71, 'TAPTITE SCREW', 2, 4, 20, 1.94, 'IDR', '2010-01-01', 'YES'),
+(72, 'TAPTITE SCREW', 2.6, 4, 20, 1.94, 'IDR', '2010-01-01', 'YES'),
+(73, 'TAPTITE SCREW', 3, 4, 30, 1.94, 'IDR', '2010-01-01', 'YES'),
+(74, 'TAPTITE SCREW', 3.5, 4, 30, 1.94, 'IDR', '2010-01-01', 'YES'),
+(75, 'TAPTITE SCREW', 4, 6, 50, 2.63, 'IDR', '2010-01-01', 'YES'),
+(76, 'TAPTITE SCREW', 4.5, 6, 50, 2.63, 'IDR', '2010-01-01', 'YES'),
+(77, 'TAPTITE SCREW', 5, 6, 21, 2.63, 'IDR', '2010-01-01', 'YES'),
+(78, 'TAPTITE SCREW', 5, 22, 50, 3.6, 'IDR', '2010-01-01', 'YES'),
+(79, 'TAPTITE SCREW', 6, 6, 56, 4.2, 'IDR', '2010-01-01', 'YES');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tools_rollingcat`
+--
+
+CREATE TABLE IF NOT EXISTS `tools_rollingcat` (
+  `Id` int(1) NOT NULL AUTO_INCREMENT,
+  `Category2` varchar(50) NOT NULL,
+  `Type_screw` varchar(20) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=95 ;
+
+--
+-- Dumping data for table `tools_rollingcat`
+--
+
+INSERT INTO `tools_rollingcat` (`Id`, `Category2`, `Type_screw`) VALUES
+(1, 'MACHINE SCREW', 'BMP'),
+(2, 'MACHINE SCREW', 'BMN'),
+(3, 'MACHINE SCREW ', 'HANGBOLT'),
+(4, 'MACHINE SCREW ', 'KONTAK PIN'),
+(5, 'MACHINE SCREW', 'PIN'),
+(6, 'MACHINE SCREW ', 'SMB'),
+(7, 'MACHINE SCREW ', 'SMKS'),
+(8, 'MACHINE SCREW', 'SMN'),
+(9, 'MACHINE SCREW ', 'SMP'),
+(10, 'MACHINE SCREW ', 'SMQ'),
+(11, 'MACHINE SCREW ', 'SMR'),
+(12, 'MACHINE SCREW ', 'SMT'),
+(13, 'MACHINE SCREW ', 'SMX'),
+(14, 'TAPPING SCREW ', 'TSA'),
+(15, 'TAPPING SCREW', 'TSAB'),
+(16, 'TAPPING SCREW', 'TSAK'),
+(17, 'TAPPING SCREW', 'TSAN'),
+(18, 'TAPPING SCREW', 'TSAP'),
+(19, 'TAPPING SCREW ', 'TSAT'),
+(20, 'TAPPING SCREW ', 'TSAV'),
+(21, 'TAPPING SCREW', 'TSAZ'),
+(22, 'TAPPING SCREW ', 'TSB'),
+(23, 'TAPPING SCREW ', 'TSBAB'),
+(24, 'TAPPING SCREW', 'TSBAP'),
+(25, 'TAPPING SCREW', 'TSBB'),
+(26, 'TAPPING SCREW ', 'TSBK'),
+(27, 'TAPPING SCREW ', 'TSBN'),
+(28, 'TAPPING SCREW', 'TSBP'),
+(29, 'TAPPING SCREW', 'TSBT'),
+(30, 'TAPPING SCREW', 'TSBV'),
+(31, 'TAPPING SCREW', 'TSCB'),
+(32, 'TAPPING SCREW', 'TSCN'),
+(33, 'TAPPING SCREW', 'TSCP'),
+(34, 'TAPPING SCREW', 'TSCT'),
+(35, 'TAPPING SCREW', 'TSCV'),
+(36, 'TAPPING SCREW', 'WELD BOLT'),
+(37, 'TAPPING SCREW', 'TSBAX'),
+(38, 'MACHINE SCREW ', 'SMF'),
+(39, 'MACHINE SCREW ', 'SMO'),
+(40, 'MACHINE SCREW ', 'TSAF'),
+(41, 'MACHINE SCREW ', 'TSAO'),
+(42, 'MACHINE SCREW ', 'TSBF'),
+(43, 'MACHINE SCREW', 'TSBO'),
+(44, 'MACHINE SCREW ', 'TSBAF'),
+(45, 'MACHINE SCREW ', 'TSCF'),
+(46, 'MACHINE SCREW ', 'BMF'),
+(47, 'MACHINE SCREW', 'BWF'),
+(48, 'TAPTITE SCREW', 'BT'),
+(49, 'TAPTITE SCREW', 'CT'),
+(50, 'TAPTITE SCREW', 'PT'),
+(51, 'TAPTITE SCREW', 'ST'),
+(52, 'FLANGE BOLT', 'FB'),
+(53, 'FLANGE BOLT', 'SMW'),
+(54, 'FLANGE BOLT', 'STW'),
+(55, 'FLANGE BOLT', 'TSABW'),
+(56, 'FLANGE BOLT', 'TSBW'),
+(57, 'FLANGE BOLT', 'SMKW'),
+(58, 'FLANGE BOLT', 'TSAW'),
+(59, 'FLANGE BOLT', 'STUD BOLT'),
+(60, 'FLANGE BOLT', 'HSMW'),
+(61, 'MACHINE SCREW ', 'SMH TRIMMING'),
+(62, 'MACHINE SCREW ', 'RVK SQ'),
+(63, 'TAPPING SCREW ', 'TAPPING TRIMMING'),
+(64, 'MACHINE SCREW ', 'SMH NON TRIMMING'),
+(65, 'MACHINE SCREW ', 'SMH UP SET'),
+(66, 'MACHINE SCREW ', 'BMH'),
+(67, 'MACHINE SCREW ', 'BMK'),
+(68, 'MACHINE SCREW ', 'SMK'),
+(69, 'MACHINE SCREW ', 'PCAH'),
+(70, 'MACHINE SCREW ', 'PCH'),
+(71, 'TAPPING SCREW ', 'TSABH'),
+(72, 'TAPPING SCREW ', 'TSAH'),
+(73, 'MACHINE SCREW', 'TSBH'),
+(74, 'MACHINE SCREW', 'TSCH'),
+(75, 'WOOD SCREW', 'SWF'),
+(76, 'WOOD SCREW', 'SWM'),
+(77, 'WOOD SCREW', 'SWR'),
+(78, 'WOOD SCREW', 'SWZ'),
+(79, 'WOOD SCREW', 'SWO'),
+(80, 'TUBULAR RIVET', 'SRK'),
+(81, 'TUBULAR RIVET', 'SRP'),
+(82, 'TUBULAR RIVET', 'SRT'),
+(83, 'SUS MACHINE SCREW', 'UMB'),
+(84, 'SUS MACHINE SCREW', 'UMF'),
+(85, 'SUS MACHINE SCREW', 'UMK'),
+(86, 'SUS MACHINE SCREW', 'UMO'),
+(87, 'SUS MACHINE SCREW', 'UMP'),
+(88, 'SUS MACHINE SCREW', 'UMR'),
+(89, 'SUS MACHINE SCREW', 'UMS'),
+(90, 'SUS MACHINE SCREW', 'UMT'),
+(91, 'SUS MACHINE SCREW', 'UMX'),
+(92, 'SUS MACHINE SCREW ', 'UMH'),
+(93, 'SUS MACHINE SCREW', 'TRIMMING'),
+(94, 'SUS TAPPING SCREW', 'SUS TAPPING SCREW');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tools_slotting`
+--
+
+CREATE TABLE IF NOT EXISTS `tools_slotting` (
+  `Id` int(1) NOT NULL AUTO_INCREMENT,
+  `Diameter` double NOT NULL,
+  `Min_panjang` double NOT NULL,
+  `Max_panjang` double NOT NULL,
+  `Cost` double NOT NULL,
+  `Currency` enum('IDR','USD') NOT NULL,
+  `Tgl_Update` date NOT NULL,
+  `Active` enum('YES','NO') NOT NULL DEFAULT 'YES',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `tools_slotting`
+--
+
+INSERT INTO `tools_slotting` (`Id`, `Diameter`, `Min_panjang`, `Max_panjang`, `Cost`, `Currency`, `Tgl_Update`, `Active`) VALUES
+(1, 3, 10, 100, 3.9, 'IDR', '2010-01-01', 'YES'),
+(2, 3.5, 10, 100, 3.9, 'IDR', '2015-04-09', 'YES'),
+(3, 4, 10, 100, 3.9, 'IDR', '2015-04-09', 'YES'),
+(4, 4.5, 10, 100, 3.9, 'IDR', '2015-04-09', 'YES'),
+(5, 5, 10, 100, 5.8, 'IDR', '2015-04-09', 'YES'),
+(6, 6, 10, 100, 5.8, 'IDR', '2015-04-09', 'YES');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tools_trimming`
+--
+
+CREATE TABLE IF NOT EXISTS `tools_trimming` (
+  `Id` int(1) NOT NULL AUTO_INCREMENT,
+  `Diameter` double NOT NULL,
+  `Min_panjang` double NOT NULL,
+  `Max_panjang` double NOT NULL,
+  `Cost` double NOT NULL,
+  `Currency` enum('IDR','USD') NOT NULL,
+  `Tgl_Update` date NOT NULL,
+  `Active` enum('YES','NO') NOT NULL DEFAULT 'YES',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `tools_trimming`
+--
+
+INSERT INTO `tools_trimming` (`Id`, `Diameter`, `Min_panjang`, `Max_panjang`, `Cost`, `Currency`, `Tgl_Update`, `Active`) VALUES
+(1, 4, 10, 100, 2.89, 'IDR', '2010-01-01', 'YES'),
+(2, 4.5, 10, 100, 2.89, 'IDR', '2015-04-09', 'YES'),
+(3, 5, 10, 100, 4.91, 'IDR', '2015-04-09', 'YES'),
+(4, 6, 10, 100, 3.05, 'IDR', '2015-04-09', 'YES'),
+(5, 8, 10, 100, 7.11, 'IDR', '2015-04-09', 'YES'),
+(6, 10, 10, 100, 12.67, 'IDR', '2015-04-09', 'YES');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `turret`
+--
+
+CREATE TABLE IF NOT EXISTS `turret` (
+  `Gaji` double NOT NULL,
+  `Estimasi` double NOT NULL,
+  `Working_day` double NOT NULL,
+  `Working_hour` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `turret`
+--
+
+INSERT INTO `turret` (`Gaji`, `Estimasi`, `Working_day`, `Working_hour`) VALUES
+(3250000, 50, 20, 8);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `typewire`
+--
+
+CREATE TABLE IF NOT EXISTS `typewire` (
+  `Id` int(1) NOT NULL AUTO_INCREMENT,
+  `Type` varchar(30) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+
+--
+-- Dumping data for table `typewire`
+--
+
+INSERT INTO `typewire` (`Id`, `Type`) VALUES
+(1, 'Nippon Steel'),
+(2, 'Kobe Steel'),
+(3, 'Saarstahl Steel'),
+(4, 'Posco'),
+(5, 'CSC'),
+(6, 'China Steel'),
+(7, 'Copper Wire'),
+(8, 'Stainless Steel'),
+(9, 'Brass Wire');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int(1) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `level` varchar(3) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `name`, `username`, `password`, `level`) VALUES
+(1, 'Janki', 'admin', '202cb962ac59075b964b07152d234b70', '+1+'),
+(2, 'Desi', 'desi', '250cf8b51c773f3f8dc8b4be867a9a02', '+2+');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `washer`
+--
+
+CREATE TABLE IF NOT EXISTS `washer` (
+  `Id` int(1) NOT NULL AUTO_INCREMENT,
+  `Kode_Supp` varchar(20) NOT NULL,
+  `Name` varchar(50) NOT NULL,
+  `Weight` double NOT NULL,
+  `Price` double NOT NULL,
+  `Currency` enum('USD','IDR') NOT NULL,
+  `Tgl_update` date NOT NULL,
+  `Active` enum('YES','NO') NOT NULL DEFAULT 'YES',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=143 ;
+
+--
+-- Dumping data for table `washer`
+--
+
+INSERT INTO `washer` (`Id`, `Kode_Supp`, `Name`, `Weight`, `Price`, `Currency`, `Tgl_update`, `Active`) VALUES
+(1, 'STS', 'SW M3 KZ SEMS', 0.07, 8, 'IDR', '2014-07-22', 'YES'),
+(2, 'STS', 'SW M3.5 KZ SEMS', 0.1, 9, 'IDR', '2014-07-22', 'YES'),
+(3, 'STS', 'SW M4 KZ SEMS', 0.17, 10, 'IDR', '2014-07-22', 'YES'),
+(4, 'STS', 'SW M5 KZ SEMS', 0.32, 13, 'IDR', '2014-07-22', 'YES'),
+(5, 'STS', 'SW M6 KZ SEMS', 0.83, 20, 'IDR', '2014-07-22', 'YES'),
+(6, 'STS', 'SW M8 KZ SEMS', 1.7, 39, 'IDR', '2014-07-22', 'YES'),
+(7, 'STS', 'SW M10 KZ SEMS', 3, 65, 'IDR', '2014-07-22', 'YES'),
+(8, 'STS', 'SW M12 KZ SEMS', 4.85, 142, 'IDR', '2014-07-22', 'YES'),
+(9, 'STS', 'SW SPC M2.6 KZ FOR SEMS', 0.05, 7, 'IDR', '2014-07-22', 'YES'),
+(10, 'STS', 'WSW M4 FOR SEMS', 0, 15, 'IDR', '2014-07-22', 'YES'),
+(11, 'STS', 'WSW M5 FOR SEMS', 0, 22, 'IDR', '2014-07-22', 'YES'),
+(12, 'STS', 'WSW M6 FOR SEMS', 0, 56, 'IDR', '2014-07-22', 'YES'),
+(13, 'STS', 'SW M3 SUS SEMS', 0, 0.00264, 'USD', '2014-08-25', 'YES'),
+(14, 'STS', 'SW M4 SUS SEMS', 0, 0.00624, 'USD', '2014-08-25', 'YES'),
+(15, 'STS', 'SW M8 T2.5', 0, 0.01128, 'USD', '2014-08-25', 'YES'),
+(16, 'STS', 'SW M5 SUS SEMS', 0.33, 0.01164, 'USD', '2014-08-21', 'YES'),
+(17, 'STS', 'SW M6 SUS SEMS', 0, 0.02976, 'USD', '2014-08-21', 'YES'),
+(18, 'AKB', 'PW 11.4 X 32 X 3.2 KZ', 0, 650, 'IDR', '2014-01-06', 'YES'),
+(19, 'AKB', 'PW 12 X 26 X 2.3 KZ', 0, 238, 'IDR', '2011-10-01', 'YES'),
+(20, 'AKB', 'PW 2.3 X 8 X 0.5 CU', 0, 24, 'IDR', '2011-08-01', 'YES'),
+(21, 'AKB', 'PW 2.53 X 8 X 0.5 KZ', 0.16, 13, 'IDR', '2011-02-01', 'YES'),
+(22, 'AKB', 'PW 2.60 X 6 X 0.5 KZ', 0, 15, 'IDR', '2011-01-01', 'YES'),
+(23, 'AKB', 'PW 2.60 X 8 X 0.5 KZ', 0.16, 12, 'IDR', '2011-02-01', 'YES'),
+(24, 'AKB', 'PW 2.65 X 10 X 0.8 KZ', 0, 12, 'IDR', '2014-08-25', 'YES'),
+(25, 'AKB', 'PW 2.65 X 10 X 1 KZ', 0.52, 17, 'IDR', '2011-02-01', 'YES'),
+(26, 'AKB', 'PW 2.65 X 6 X 0.5 KZ', 0.08, 13, 'IDR', '2011-02-01', 'YES'),
+(27, 'AKB', 'PW 2.65 X 6 X 0.5 SUS', 0, 28, 'IDR', '2014-08-25', 'YES'),
+(28, 'AKB', 'PW 2.65 X 8 X 0.5 KZ', 0.17, 15, 'IDR', '2013-05-28', 'YES'),
+(29, 'AKB', 'PW 2.68 X 13 X 1 KZ', 0, 35, 'IDR', '2013-10-28', 'YES'),
+(30, 'AKB', 'PW 2.68 X 6 X 0.5 CU', 0.08, 20, 'IDR', '2011-02-01', 'YES'),
+(31, 'AKB', 'PW 2.68 X 6 X 0.5 KZ', 0.08, 15, 'IDR', '2010-03-01', 'YES'),
+(32, 'AKB', 'PW 2.68 X 7 X 0.5 CU', 0.12, 21, 'IDR', '2011-02-01', 'YES'),
+(33, 'AKB', 'PW 2.68 X 7 X 0.5 KZ', 0.12, 15, 'IDR', '2011-02-01', 'YES'),
+(34, 'AKB', 'PW 2.68 X 8 X 0.5 CU', 0.16, 24, 'IDR', '2011-02-01', 'YES'),
+(35, 'AKB', 'PW 2.68 X 8 X 0.5 KZ', 0.16, 15, 'IDR', '2011-02-01', 'YES'),
+(36, 'AKB', 'PW 2.7 X 7.5 X 1 BR', 0.27, 78, 'IDR', '2011-02-01', 'YES'),
+(37, 'AKB', 'PW 2.7 X 7.5 X 1 KZ', 0, 65, 'IDR', '2010-03-01', 'YES'),
+(38, 'AKB', 'PW 2.82 X 6 X 0.5 CU', 0, 20, 'IDR', '2011-04-01', 'YES'),
+(39, 'AKB', 'PW 2.82 X 6 X 0.5 KZ', 0, 17, 'IDR', '2011-03-01', 'YES'),
+(40, 'AKB', 'PW 2.82 X 7 X 0.5 CU', 0.12, 21, 'IDR', '2011-06-01', 'YES'),
+(41, 'AKB', 'PW 2.82 X 7 X 0.5 KZ', 0, 18, 'IDR', '2011-02-01', 'YES'),
+(42, 'AKB', 'PW 2.82 X 8 X 0.5 CU', 0.16, 22, 'IDR', '2011-02-01', 'YES'),
+(43, 'AKB', 'PW 2.82 X 8 X 0.5 KZ', 0.16, 17, 'IDR', '2011-02-01', 'YES'),
+(44, 'AKB', 'PW 2.90 X 7 X 0.5 KZ', 0, 15, 'IDR', '2009-07-01', 'YES'),
+(45, 'AKB', 'PW 2.90 X 8 X 0.5 KZ', 0, 15, 'IDR', '2009-07-01', 'YES'),
+(46, 'AKB', 'PW 3.22 X 10 X 1 KZ', 0.48, 15, 'IDR', '2008-12-01', 'YES'),
+(47, 'AKB', 'PW 3.28 X 17 X 0.8 KZ', 1.28, 48, 'IDR', '2011-02-01', 'YES'),
+(48, 'AKB', 'PW 3.29 X 10 X 0.8 KZ', 0, 21, 'IDR', '2013-07-25', 'YES'),
+(49, 'AKB', 'PW 3.29 X 14 X 1 KZ', 1.07, 35, 'IDR', '2011-02-01', 'YES'),
+(50, 'AKB', 'PW 3.29 X 8 X 0.8 KZ', 0.23, 13, 'IDR', '2011-02-01', 'YES'),
+(51, 'AKB', 'PW  3.35 X 7 X 1.1 SUS', 0, 43, 'IDR', '2011-09-01', 'YES'),
+(52, 'AKB', 'PW 3.37 X 12 X 1 KZ', 0.75, 24, 'IDR', '2011-02-01', 'YES'),
+(53, 'AKB', 'PW 3.37 X 14 X 0.8 KZ', 0, 25, 'IDR', '2011-02-01', 'YES'),
+(54, 'AKB', 'PW 3.37 X 22 X 1 KZ', 0, 95, 'IDR', '2009-05-01', 'YES'),
+(55, 'AKB', 'PW 3.37 X 9 X 0.8 KZ', 0.31, 17, 'IDR', '2011-02-01', 'YES'),
+(56, 'AKB', 'PW 3.37 X 9 X 1 KZ', 0, 27, 'IDR', '2013-11-28', 'YES'),
+(57, 'AKB', 'PW 3.40 X 14 X 0.8 KZ', 0, 25, 'IDR', '2008-12-01', 'YES'),
+(58, 'AKB', 'PW 3.40 X 17 X 0.8 KZ', 1.3, 48, 'IDR', '2011-02-01', 'YES'),
+(59, 'AKB', 'PW 3.47 X 14 X 0.8 KZ', 0.8, 27, 'IDR', '2011-02-01', 'YES'),
+(60, 'AKB', 'PW 3.47 X 19 X 0.8 KZ', 0, 50, 'IDR', '2014-01-22', 'YES'),
+(61, 'AKB', 'PW 3.50 X 12 X 1 KZ', 0.75, 27, 'IDR', '2008-12-01', 'YES'),
+(62, 'AKB', 'PW 3.52 X 10 X 1 KZ', 0.47, 15, 'IDR', '2008-12-01', 'YES'),
+(63, 'AKB', 'PW 3.52 X 10 X 1 SUS', 0, 95, 'IDR', '2013-09-02', 'YES'),
+(64, 'AKB', 'PW 3.52 X 11 X 2 KZ', 0, 45, 'IDR', '2009-04-01', 'YES'),
+(65, 'AKB', 'PW 3.52 X 16 X 1.6 KZ', 2.28, 75, 'IDR', '2010-03-01', 'YES'),
+(66, 'AKB', 'PW 3.52 X 75 X 0.5 KZ', 0, 17, 'IDR', '2013-08-02', 'YES'),
+(67, 'AKB', 'PW 3.52 X 8 X 0.5 KZ', 0.15, 20, 'IDR', '2012-06-01', 'YES'),
+(68, 'AKB', 'PW 3.52 X 8 X 0.8 KZ', 0.23, 10, 'IDR', '2010-03-01', 'YES'),
+(69, 'AKB', 'PW 3.52 X 8 X 0.8 SUS', 0, 45, 'IDR', '2014-08-25', 'YES'),
+(70, 'AKB', 'PW 3.52 X 9 X 0.8 KZ', 0.29, 18, 'IDR', '2010-03-01', 'YES'),
+(71, 'AKB', 'PW 3.53 X 10 X 0.8 KZ', 0.38, 19, 'IDR', '2009-07-01', 'YES'),
+(72, 'AKB', 'PW 3.53 X 18 X 1 KZ', 0, 70, 'IDR', '2009-07-01', 'YES'),
+(73, 'AKB', 'PW 4.1 X 10 X 0.8 KZ', 0.37, 16, 'IDR', '2009-07-01', 'YES'),
+(74, 'AKB', 'PW 4.1 X 11.5 X 0.8 KZ', 0, 25, 'IDR', '2014-09-09', 'YES'),
+(75, 'AKB', 'PW 4.1 X 12 X 0.8 KZ', 0.56, 17, 'IDR', '2010-03-01', 'YES'),
+(76, 'AKB', 'PW 4.1 X 14 X 1 KZ', 0, 37, 'IDR', '2009-09-01', 'YES'),
+(77, 'AKB', 'PW 4.1 X 16 X 1.2 KZ', 1.66, 58, 'IDR', '2008-12-01', 'YES'),
+(78, 'AKB', 'PW 4.1 X 18 X 0.8 KZ', 1.45, 52, 'IDR', '2010-03-01', 'YES'),
+(79, 'AKB', 'PW 4.1 X 18 X 1 KZ', 2, 70, 'IDR', '2009-08-01', 'YES'),
+(80, 'AKB', 'PW 4.1 X 20 X 1 KZ', 2.25, 77, 'IDR', '2010-03-01', 'YES'),
+(81, 'AKB', 'PW 4.2 X 10 X 1 KZ', 0, 19, 'IDR', '2009-05-01', 'YES'),
+(82, 'AKB', 'PW 4.45 X 10 X 0.8 KZ', 0.36, 18, 'IDR', '2010-03-01', 'YES'),
+(83, 'AKB', 'PW 4.45 X 12 X 0.8 KZ', 0.56, 18, 'IDR', '2010-03-01', 'YES'),
+(84, 'AKB', 'PW 4.45 X 14 X 1.6 KZ', 1.65, 74, 'IDR', '2010-03-01', 'YES'),
+(85, 'AKB', 'PW 4.45 X 15 X 2 KZ', 2.35, 75, 'IDR', '2008-12-01', 'YES'),
+(86, 'AKB', 'PW 4.45 X 16 X 1.6 KZ', 0, 75, 'IDR', '2014-04-10', 'YES'),
+(87, 'AKB', 'PW 4.45 X 18 X 1 KZ', 1.76, 63, 'IDR', '2010-03-01', 'YES'),
+(88, 'AKB', 'PW 4.5 X 10 X 1 KZ', 0.44, 15, 'IDR', '2010-03-01', 'YES'),
+(89, 'AKB', 'PW 4.5 X 10 X 1.2 KZ', 0, 32, 'IDR', '2014-03-11', 'YES'),
+(90, 'AKB', 'PW 4.5 X 11 X 0.5 KZ', 0, 30, 'IDR', '2013-06-05', 'YES'),
+(91, 'AKB', 'PW 4.5 X 14 X 1 KZ', 1.02, 33, 'IDR', '2010-03-01', 'YES'),
+(92, 'AKB', 'PW 4.5 X 16 X 1.2 KZ', 1.63, 61, 'IDR', '2010-05-01', 'YES'),
+(93, 'AKB', 'PW 4.5 X 20 X 1 KZ', 1.98, 66, 'IDR', '2008-12-01', 'YES'),
+(94, 'AKB', 'PW 5.35 X 11.5 X 0.8 KZ', 0.46, 20, 'IDR', '2008-12-01', 'YES'),
+(95, 'AKB', 'PW 5.35 X 11.5 X 1 KZ', 0.58, 21, 'IDR', '2010-03-01', 'YES'),
+(96, 'AKB', 'PW 5.35 X 11.5 X 1.6 KZ', 0.92, 30, 'IDR', '2010-03-01', 'YES'),
+(97, 'AKB', 'PW 5.35 X 12 X 1.2 KZ', 0.78, 29, 'IDR', '2010-03-01', 'YES'),
+(98, 'AKB', 'PW 5.35 X 12.5 X 1.6 KZ', 0, 43, 'IDR', '2014-11-17', 'YES'),
+(99, 'AKB', 'PW 5.35 X 13 X 0.8 KZ', 0, 30, 'IDR', '2013-06-20', 'YES'),
+(100, 'AKB', 'PW 5.35 X 13 X 1 KZ', 0.79, 25, 'IDR', '2010-03-01', 'YES'),
+(101, 'AKB', 'PW 5.35 X 13 X 1 SUS', 0, 200, 'IDR', '2013-05-17', 'YES'),
+(102, 'AKB', 'PW 5.35 X 14 X 1 KZ', 0.93, 33, 'IDR', '2009-12-01', 'YES'),
+(103, 'AKB', 'PW 5.35 X 14 X 1.6 KZ', 0, 65, 'IDR', '2013-03-21', 'YES'),
+(104, 'AKB', 'PW 5.35 X 16 X 0.5 SUS', 0, 175, 'IDR', '2009-04-01', 'YES'),
+(105, 'AKB', 'PW 5.35 X 16 X 1 KZ', 1.31, 42, 'IDR', '2010-03-01', 'YES'),
+(106, 'AKB', 'PW 5.35 X 16 X 1.2 KZ', 1.58, 59, 'IDR', '2010-03-01', 'YES'),
+(107, 'AKB', 'PW 5.35 X 16 X 1.6 KZ', 2.1, 73, 'IDR', '2010-03-01', 'YES'),
+(108, 'AKB', 'PW 5.35 X 18 X 1 KZ', 1.72, 56, 'IDR', '2010-03-01', 'YES'),
+(109, 'AKB', 'PW 5.35 X 18 X 1 SUS', 1.69, 400, 'IDR', '2009-05-01', 'YES'),
+(110, 'AKB', 'PW 5.35 X 18 X 1.2 KZ', 2.07, 84, 'IDR', '2010-03-01', 'YES'),
+(111, 'AKB', 'PW 5.35 X 18 X 1.6 KZ', 2.78, 97, 'IDR', '2010-03-01', 'YES'),
+(112, 'AKB', 'PW 5.35 X 20 X 1.2 KZ', 2.61, 84, 'IDR', '2010-03-01', 'YES'),
+(113, 'AKB', 'PW 5.35 X 20 X 1.6 KZ', 3.5, 125, 'IDR', '2010-03-01', 'YES'),
+(114, 'AKB', 'PW 5.35 X 20 X 2 KZ', 0, 175, 'IDR', '2014-01-22', 'YES'),
+(115, 'AKB', 'PW 5.35 X 22 X 1.6 KZ', 0, 175, 'IDR', '2014-09-09', 'YES'),
+(116, 'AKB', 'PW 5.35 X 23 X 1.6 KZ', 0, 175, 'IDR', '2013-06-20', 'YES'),
+(117, 'AKB', 'PW 5.35 X 24 X 1.6 KZ', 0, 185, 'IDR', '2013-04-19', 'YES'),
+(118, 'AKB', 'PW 5.4 X 11.5 X 1.6 SK', 0.91, 175, 'IDR', '2014-03-12', 'YES'),
+(119, 'AKB', 'PW 5.4 X 13 X 1 SUS', 0, 210, 'IDR', '2012-09-03', 'YES'),
+(120, 'AKB', 'PW 5.50 X 12 X 1 KZ', 0, 95, 'IDR', '2013-03-22', 'YES'),
+(121, 'AKB', 'PW 5.50 X 13 X 1 SUS', 0, 185, 'IDR', '2013-03-22', 'YES'),
+(122, 'AKB', 'PW 6 X 13 X 1.0 KZ', 0.74, 25, 'IDR', '2012-02-01', 'YES'),
+(123, 'AKB', 'PW 7.2 X 24 X 1.6 KZ', 0, 185, 'IDR', '2009-04-01', 'YES'),
+(124, 'AKB', 'PW 7.2 X 16 X 1.2 KZ', 0, 53, 'IDR', '2013-04-19', 'YES'),
+(125, 'AKB', 'PW 7.2 X 17 X 1.6 KZ', 0, 85, 'IDR', '2014-11-17', 'YES'),
+(126, 'AKB', 'PW 7.2 X 18 X 1.6 KZ', 2.5, 82, 'IDR', '2010-03-01', 'YES'),
+(127, 'AKB', 'PW 7.2 X 18 X 2.3 KZ', 3.62, 118, 'IDR', '2010-03-01', 'YES'),
+(128, 'AKB', 'PW 7.2 X 18 X 3.2 KZ', 0, 210, 'IDR', '2013-06-21', 'YES'),
+(129, 'AKB', 'PW 7.2 X 20 X 3.2 KZ', 0, 210, 'IDR', '2014-10-31', 'YES'),
+(130, 'AKB', 'PW 7.2 X 22 X 1.6 KZ', 0, 135, 'IDR', '2014-01-06', 'YES'),
+(131, 'AKB', 'PW 7.2 X 30 X 1.6 KZ', 0, 300, 'IDR', '2014-11-05', 'YES'),
+(132, 'AKB', 'PW 7.3 X 17 X 1.5 SUS', 2.01, 280, 'IDR', '2011-07-01', 'YES'),
+(133, 'AKB', 'PW 7.3 X 18 X 1.6 SUS', 0, 279, 'IDR', '2011-07-01', 'YES'),
+(134, 'AKB', 'PW 8.5 X 18 X 2.3 KZ', 0, 116, 'IDR', '2012-02-07', 'YES'),
+(135, 'AKB', 'PW 9.2 X 16.5 X 2 KZ', 0, 180, 'IDR', '2009-05-01', 'YES'),
+(136, 'AKB', 'PW 9.2 X 22 X 1.6 KZ', 3.84, 130, 'IDR', '2008-12-01', 'YES'),
+(137, 'AKB', 'PW 9.2 X 22 X 2 KZ', 0, 200, 'IDR', '2009-08-01', 'YES'),
+(138, 'AKB', 'PW 9.2 X 22 X 3 KZ', 0, 245, 'IDR', '2009-07-01', 'YES'),
+(139, 'AKB', 'PW 9.2 X 22 X 3.2 KZ', 0, 280, 'IDR', '2013-04-19', 'YES'),
+(140, 'AKB', 'PW 9.2 X 46 X 2.3 KZ', 0, 1000, 'IDR', '2013-04-19', 'YES'),
+(141, 'AKB', 'PW 9.3 X 17 X 2.5 KZ', 0, 110, 'IDR', '2011-01-01', 'YES'),
+(142, 'AKB', 'PW 9.3 X 21 X 2 KZ', 0, 200, 'IDR', '2012-04-26', 'YES');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wire`
+--
+
+CREATE TABLE IF NOT EXISTS `wire` (
+  `Id` int(1) NOT NULL AUTO_INCREMENT,
+  `Kode_Supp` varchar(20) NOT NULL,
+  `Grade` varchar(20) NOT NULL,
+  `Min_dia` double NOT NULL,
+  `Max_dia` double NOT NULL,
+  `Type` varchar(30) NOT NULL,
+  `Jenis` enum('wire rod','bar','plate') NOT NULL,
+  `Price` double NOT NULL,
+  `Currency` enum('USD','IDR') NOT NULL,
+  `Tgl_update` date NOT NULL,
+  `Active` enum('YES','NO') NOT NULL DEFAULT 'YES',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=111 ;
+
+--
+-- Dumping data for table `wire`
+--
+
+INSERT INTO `wire` (`Id`, `Kode_Supp`, `Grade`, `Min_dia`, `Max_dia`, `Type`, `Jenis`, `Price`, `Currency`, `Tgl_update`, `Active`) VALUES
+(4, 'IWWI', '8A', 1, 1.99, '1', 'wire rod', 1.522, 'USD', '2014-01-10', 'YES'),
+(5, 'IWWI', '8A', 2, 4, '1', 'wire rod', 1.492, 'USD', '2014-01-10', 'YES'),
+(6, 'IWWI', '8A', 4.01, 15, '1', 'wire rod', 1.482, 'USD', '2014-01-10', 'YES'),
+(7, 'IWWI', '10A', 1, 1.99, '1', 'wire rod', 1.522, 'USD', '2014-01-10', 'YES'),
+(10, 'IWWI', '10A', 2, 4, '1', 'wire rod', 1.492, 'USD', '2014-01-10', 'YES'),
+(11, 'IWWI', '10A', 4.01, 15, '1', 'wire rod', 1.482, 'USD', '2014-01-10', 'YES'),
+(12, 'IWWI', '12A', 1, 1.99, '1', 'wire rod', 1.522, 'USD', '2014-01-10', 'YES'),
+(13, 'IWWI', '12A', 2, 4, '1', 'wire rod', 1.492, 'USD', '2014-01-10', 'YES'),
+(14, 'IWWI', '12A', 4.01, 15, '1', 'wire rod', 1.482, 'USD', '2014-01-10', 'YES'),
+(16, 'IWWI', '16A', 1, 1.99, '1', 'wire rod', 1.522, 'USD', '2014-01-10', 'YES'),
+(17, 'IWWI', '16A', 2, 4, '1', 'wire rod', 1.492, 'USD', '2014-01-10', 'YES'),
+(18, 'IWWI', '16A', 4.01, 15, '1', 'wire rod', 1.482, 'USD', '2014-01-10', 'YES'),
+(19, 'IWWI', '18A', 1, 1.99, '1', 'wire rod', 1.522, 'USD', '2014-01-10', 'YES'),
+(20, 'IWWI', '18A', 2, 4, '1', 'wire rod', 1.492, 'USD', '2014-01-10', 'YES'),
+(21, 'IWWI', '18A', 4.01, 15, '1', 'wire rod', 1.482, 'USD', '2014-01-10', 'YES'),
+(22, 'IWWI', '20K', 2, 4, '1', 'wire rod', 1.535, 'USD', '2014-01-10', 'YES'),
+(23, 'IWWI', '20K', 4.01, 15, '1', 'wire rod', 1.523, 'USD', '2014-01-10', 'YES'),
+(24, 'IWWI', '35K', 2, 4, '1', 'wire rod', 1.535, 'USD', '2014-01-10', 'YES'),
+(25, 'IWWI', '35K', 4.01, 15, '1', 'wire rod', 1.523, 'USD', '2014-01-10', 'YES'),
+(26, 'IWWI', '38K', 2, 4, '1', 'wire rod', 1.535, 'USD', '2014-01-10', 'YES'),
+(27, 'IWWI', '38K', 4.01, 15, '1', 'wire rod', 1.523, 'USD', '2014-01-10', 'YES'),
+(28, 'IWWI', '45K', 2, 4, '1', 'wire rod', 1.535, 'USD', '2014-01-10', 'YES'),
+(29, 'IWWI', '45K', 4.01, 15, '1', 'wire rod', 1.523, 'USD', '2014-01-10', 'YES'),
+(30, 'IWWI', '8A', 4.01, 15, '2', 'wire rod', 1.798, 'USD', '2014-01-10', 'YES'),
+(31, 'IWWI', '10A', 4.01, 15, '2', 'wire rod', 1.798, 'USD', '2014-01-10', 'YES'),
+(32, 'IWWI', '12A', 4.01, 15, '2', 'wire rod', 1.798, 'USD', '2014-01-10', 'YES'),
+(33, 'IWWI', '16A', 4.01, 15, '2', 'wire rod', 1.798, 'USD', '2014-01-10', 'YES'),
+(34, 'IWWI', '18A', 4.01, 15, '2', 'wire rod', 1.798, 'USD', '2014-01-10', 'YES'),
+(35, 'IWWI', '10K', 4.01, 15, '2', 'wire rod', 1.798, 'USD', '2014-01-10', 'YES'),
+(36, 'IWWI', '20K', 4.01, 15, '2', 'wire rod', 1.798, 'USD', '2014-01-10', 'YES'),
+(37, 'IWWI', '35K', 4.01, 15, '2', 'wire rod', 1.798, 'USD', '2014-01-10', 'YES'),
+(38, 'IWWI', '38K', 4.01, 15, '2', 'wire rod', 1.798, 'USD', '2014-01-10', 'YES'),
+(39, 'IWWI', '45K', 4.01, 15, '2', 'wire rod', 1.798, 'USD', '2014-01-10', 'YES'),
+(40, 'IWWI', 'SCM 415', 4.01, 15, '2', 'wire rod', 1.95, 'USD', '2014-01-10', 'YES'),
+(41, 'IWWI', 'SCM 435', 4.01, 15, '2', 'wire rod', 1.95, 'USD', '2014-01-10', 'YES'),
+(42, 'IWWI', 'SUM 24L', 6, 15, '3', 'bar', 1.908, 'USD', '2014-01-10', 'YES'),
+(43, 'IWWI', 'SS41', 6, 15, '2', 'bar', 1.908, 'USD', '2014-01-10', 'YES'),
+(44, 'IWWI', 'SGD400', 6, 15, '2', 'bar', 1.835, 'USD', '2014-01-10', 'YES'),
+(45, 'IWWI', 'SCM 435', 7, 15, '4', 'wire rod', 1.65, 'USD', '2014-09-10', 'YES'),
+(46, 'IWWI', '10A', 5, 15, '4', 'wire rod', 1.29, 'USD', '2014-10-28', 'YES'),
+(47, 'IWWI', '12A', 5, 15, '4', 'wire rod', 1.65, 'USD', '2014-10-28', 'YES'),
+(48, 'IWWI', '18A', 4.01, 4.01, '4', 'wire rod', 1.29, 'USD', '2014-10-28', 'YES'),
+(49, 'IWWI', '35K', 5, 15, '4', 'wire rod', 1.33, 'USD', '2014-10-28', 'YES'),
+(50, 'IWWI', '45K', 5, 15, '4', 'wire rod', 1.33, 'USD', '2014-10-28', 'YES'),
+(51, 'IWWI', '10A', 5, 15, '5', 'wire rod', 1.27, 'USD', '2014-10-28', 'YES'),
+(52, 'IWWI', '12A', 5, 15, '5', 'wire rod', 1.27, 'USD', '2014-10-28', 'YES'),
+(53, 'IWWI', '18A', 4.01, 4.01, '5', 'wire rod', 1.27, 'USD', '2014-10-28', 'YES'),
+(54, 'IWWI', '35K', 5, 15, '5', 'wire rod', 1.29, 'USD', '2014-10-28', 'YES'),
+(55, 'IWWI', '45K', 5, 15, '5', 'wire rod', 1.29, 'USD', '2014-10-28', 'YES'),
+(56, 'CP', '10A', 1, 15, '6', 'wire rod', 1.225, 'USD', '2014-11-19', 'NO'),
+(57, 'CP', '12A', 1, 15, '6', 'wire rod', 1.225, 'USD', '2014-11-19', 'NO'),
+(58, 'CP', '16A', 1, 15, '6', 'wire rod', 1.225, 'USD', '2014-11-19', 'NO'),
+(59, 'CP', '18A', 1, 15, '6', 'wire rod', 1.225, 'USD', '2014-11-19', 'NO'),
+(60, 'CP', 'S20C', 1, 15, '6', 'wire rod', 1.225, 'USD', '2014-11-19', 'NO'),
+(61, 'CP', '10A (AD)', 1, 15, '6', 'wire rod', 1.125, 'USD', '2014-11-19', 'NO'),
+(62, 'CP', '12A (AD)', 1, 15, '6', 'wire rod', 1.125, 'USD', '2014-11-19', 'NO'),
+(63, 'TMS', 'MMH', 2.96, 2.96, '7', 'wire rod', 9.275, 'USD', '2014-11-14', 'YES'),
+(64, 'TMS', 'MMH', 2.4, 2.4, '7', 'wire rod', 9.35, 'USD', '2014-11-14', 'YES'),
+(65, 'SPS', 'STKM 13A-EC', 1, 15, '4', 'plate', 18000, 'IDR', '2014-05-21', 'YES'),
+(66, 'KOS', 'SUS XM-7 ', 4.37, 4.37, '8', 'wire rod', 6.9, 'USD', '2014-11-14', 'YES'),
+(67, 'KOS', 'SUS XM-7 ', 5.25, 5.25, '8', 'wire rod', 6.9, 'USD', '2014-11-11', 'YES'),
+(68, 'KOS', 'SUS XM-7 ', 9.4, 9.4, '8', 'wire rod', 7.14, 'USD', '2014-10-20', 'YES'),
+(69, 'KOS', 'SUS XM-7 ', 6.75, 6.75, '8', 'wire rod', 7.14, 'USD', '2014-10-14', 'YES'),
+(70, 'KOS', 'SUS XM-7 ', 1.67, 1.67, '8', 'wire rod', 7.8, 'USD', '2014-08-20', 'YES'),
+(71, 'KOS', 'SUS XM-7 ', 2.58, 2.58, '8', 'wire rod', 7.38, 'USD', '2014-08-20', 'YES'),
+(72, 'KOS', 'SUS XM-7 ', 2.42, 2.42, '8', 'wire rod', 7.32, 'USD', '2014-08-06', 'YES'),
+(73, 'KOS', 'SUS XM-7 ', 3.44, 3.44, '8', 'wire rod', 7.2, 'USD', '2014-06-02', 'YES'),
+(74, 'KOS', 'SUS XM-7 ', 8.87, 8.87, '8', 'wire rod', 7.2, 'USD', '2014-06-02', 'YES'),
+(75, 'KOS', 'SUS XM-7 ', 7.02, 7.02, '8', 'wire rod', 7.56, 'USD', '2014-06-02', 'YES'),
+(76, 'KOS', 'SUS  305 JI', 3.75, 3.75, '8', 'wire rod', 8.82, 'USD', '2014-10-02', 'YES'),
+(77, 'KOS', 'SUS  305 JI', 1.62, 1.62, '8', 'wire rod', 9.24, 'USD', '2014-06-02', 'YES'),
+(78, 'KOS', 'SUS  305 JI', 2.42, 2.42, '8', 'wire rod', 8.64, 'USD', '2014-06-02', 'YES'),
+(79, 'KOS', 'SUS  305 JI', 3.22, 3.22, '8', 'wire rod', 8.64, 'USD', '2014-06-02', 'YES'),
+(80, 'KOS', 'SUS  305 JI', 4.01, 4.01, '8', 'wire rod', 4, 'USD', '2014-06-02', 'YES'),
+(81, 'KOS', 'SUS  304 J3', 2.42, 2.42, '8', 'wire rod', 5.64, 'USD', '2014-06-02', 'YES'),
+(82, 'KOS', 'SUS  304 J3', 3.44, 3.44, '8', 'wire rod', 5.64, 'USD', '2014-06-02', 'YES'),
+(83, 'KOS', 'SUS  304 J3', 4.9, 4.9, '8', 'wire rod', 5.64, 'USD', '2014-06-02', 'YES'),
+(84, 'KOS', 'SUS  304 J3', 5.25, 5.25, '8', 'wire rod', 5.64, 'USD', '2014-06-02', 'YES'),
+(85, 'KOS ', 'SUS 304 SPC', 9.85, 9.85, '8', 'wire rod', 6, 'USD', '2014-07-22', 'YES'),
+(86, 'KOS', 'SUS 410', 3.22, 3.22, '8', 'wire rod', 5.04, 'USD', '2014-06-02', 'YES'),
+(87, 'KOS', 'SUS 430', 2.99, 2.99, '8', 'wire rod', 5.04, 'USD', '2014-06-02', 'YES'),
+(88, 'KOS', 'SUS 430', 4.9, 4.9, '8', 'wire rod', 5.04, 'USD', '2014-06-02', 'YES'),
+(89, 'KOS', 'SUS 430', 4.95, 4.95, '8', 'wire rod', 5.04, 'USD', '2014-06-02', 'YES'),
+(90, 'KOS', 'SUS BAR 303', 2, 2, '8', 'bar', 6.24, 'USD', '2014-07-02', 'YES'),
+(91, 'KOS', 'BRASS BAR C3604', 8, 8, '9', 'bar', 8.24, 'USD', '2014-07-02', 'YES'),
+(92, 'KOS', 'C2700', 2.61, 2.61, '7', 'wire rod', 9.48, 'USD', '2014-11-14', 'YES'),
+(93, 'KOS', 'C2700', 4.85, 4.85, '7', 'wire rod', 9.48, 'USD', '2014-11-14', 'YES'),
+(94, 'KOS', 'C2700', 4.93, 4.93, '7', 'wire rod', 9.48, 'USD', '2014-11-14', 'YES'),
+(95, 'KOS', 'C2700', 3, 3, '7', 'wire rod', 9.54, 'USD', '2014-07-22', 'YES'),
+(96, 'KOS', 'C2700 (H65)', 3.35, 3.35, '7', 'wire rod', 9.48, 'USD', '2014-09-23', 'YES'),
+(97, 'KOS', 'C2600', 2.91, 2.91, '7', 'wire rod', 9.48, 'USD', '2014-05-28', 'YES'),
+(104, 'CP', '12A', 1, 15, '6', 'wire rod', 1.125, 'USD', '2015-04-01', 'YES'),
+(105, 'CP', '16A', 1, 15, '6', 'wire rod', 1.125, 'USD', '2015-04-01', 'YES'),
+(106, 'CP', '18A', 1, 15, '6', 'wire rod', 1.125, 'USD', '2015-04-01', 'YES'),
+(107, 'CP', 'S20C', 1, 15, '6', 'wire rod', 1.125, 'USD', '2015-04-01', 'YES'),
+(108, 'CP', '10A (AD)', 1, 15, '6', 'wire rod', 1.125, 'USD', '2015-04-01', 'YES'),
+(109, 'CP', '12A (AD)', 1, 15, '6', 'wire rod', 1.125, 'USD', '2015-04-01', 'YES'),
+(110, 'CP', '10A', 1, 15, '6', 'wire rod', 1.125, 'USD', '2015-04-01', 'YES');
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

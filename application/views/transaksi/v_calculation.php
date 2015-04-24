@@ -139,6 +139,9 @@
                var qty = $('#Quantity').numberbox('getValue');
                $('#Quantity2').numberbox('setValue', qty);
                $('#Quantity3').numberbox('setValue', qty);
+               $('#Quantity4').numberbox('setValue', qty);
+               $('#Quantity5').numberbox('setValue', qty);
+               $('#Quantity6').numberbox('setValue', qty);
             }
         });
         
@@ -239,7 +242,37 @@
                 var lcr = ((eval(ctr)*eval(qpmr) + eval(dtr))*eval(gpsr)/eval(qpmr));
         $('#Labor_cost_rolling').numberbox('setValue', lcr);              
             }
-        });  
+        }); 
+        $('#Quantity4').numberbox('textbox').keypress(function(e){
+            if (e.keyCode == 13){
+                var gpsc = $('#Gaji_per_sec3').numberbox('getValue');
+                var ctc = $('#Cycle_time3').numberbox('getValue');
+                var dtc = $('#Dandori_time3').numberbox('getValue');
+                var qpmc = $('#Quantity4').numberbox('getValue');
+                var lcc = ((eval(ctc)*eval(qpmc) + eval(dtc))*eval(gpsc)/eval(qpmc));
+        $('#Labor_cost_cutting').numberbox('setValue', lcc);              
+            }
+        });
+        $('#Quantity5').numberbox('textbox').keypress(function(e){
+            if (e.keyCode == 13){
+                var gpss = $('#Gaji_per_sec4').numberbox('getValue');
+                var cts = $('#Cycle_time4').numberbox('getValue');
+                var dts = $('#Dandori_time4').numberbox('getValue');
+                var qpms = $('#Quantity5').numberbox('getValue');
+                var lcs = ((eval(cts)*eval(qpms) + eval(dts))*eval(gpss)/eval(qpms));
+        $('#Labor_cost_slotting').numberbox('setValue', lcs);              
+            }
+        });
+        $('#Quantity6').numberbox('textbox').keypress(function(e){
+            if (e.keyCode == 13){
+                var gpst = $('#Gaji_per_sec5').numberbox('getValue');
+                var ctt = $('#Cycle_time5').numberbox('getValue');
+                var dtt = $('#Dandori_time5').numberbox('getValue');
+                var qpmt = $('#Quantity6').numberbox('getValue');
+                var lct = ((eval(ctt)*eval(qpmt) + eval(dtt))*eval(gpst)/eval(qpmt));
+        $('#Labor_cost_trimming').numberbox('setValue', lct);              
+            }
+        });
  }
         
     function transaksicalculationUpdate() {
@@ -447,6 +480,12 @@
                 var g = $('#Kode_mchncutt').combogrid('grid');	// get datagrid object
                 var r = g.datagrid('getSelected');	// get the selected row
                 $('#Cuttingdepr_cost').numberbox('setValue', r.Cutting_depr_cost);
+                $('#Cutting_machine').textbox('setValue', r.Mchn_cutting);
+                $('#Dandori_time3').textbox('setValue', r.Dandori_time);
+                $('#Cycle_time3').textbox('setValue', r.Cycle_time);
+                $('#Working_time3').textbox('setValue', r.Working_time);
+                $('#Working_time_sec3').textbox('setValue', r.Working_time_sec);
+                gaji_cutting();
             }
         });        
     }
@@ -468,6 +507,12 @@
                 var g = $('#Kode_mchnslott').combogrid('grid');	// get datagrid object
                 var r = g.datagrid('getSelected');	// get the selected row
                 $('#Slottingdepr_cost').numberbox('setValue', r.Slotting_depr_cost);
+                $('#Slotting_machine').textbox('setValue', r.Mchn_slotting);
+                $('#Dandori_time4').textbox('setValue', r.Dandori_time);
+                $('#Cycle_time4').textbox('setValue', r.Cycle_time);
+                $('#Working_time4').textbox('setValue', r.Working_time);
+                $('#Working_time_sec4').textbox('setValue', r.Working_time_sec);
+                gaji_slotting();
             }
         });        
     }
@@ -489,6 +534,12 @@
                 var g = $('#Kode_mchntrimm').combogrid('grid');	// get datagrid object
                 var r = g.datagrid('getSelected');	// get the selected row
                 $('#Trimmingdepr_cost').numberbox('setValue', r.Trimming_depr_cost);
+                $('#Trimming_machine').textbox('setValue', r.Mchn_trimming);
+                $('#Dandori_time5').textbox('setValue', r.Dandori_time);
+                $('#Cycle_time5').textbox('setValue', r.Cycle_time);
+                $('#Working_time5').textbox('setValue', r.Working_time);
+                $('#Working_time_sec5').textbox('setValue', r.Working_time_sec);
+                gaji_trimming();
             }
         });        
     }
@@ -580,6 +631,33 @@
         $('#Gaji_per_sec2').numberbox('setValue', (result.gpy)/(wtsr*result.jl));
          },'json');
      }
+     function gaji_cutting()
+     {
+         var proses = 'Cutting';
+         var wtsc = $('#Working_time_sec3').numberbox('getValue');
+        $.post('<?php echo site_url('transaksi/calculation/getGaji'); ?>', 
+        {proses:proses}, function(result){
+        $('#Gaji_per_sec3').numberbox('setValue', (result.gpy)/(wtsc*result.jl));
+         },'json');
+     }
+     function gaji_slotting()
+     {
+         var proses = 'Slotting';
+         var wtss = $('#Working_time_sec4').numberbox('getValue');
+        $.post('<?php echo site_url('transaksi/calculation/getGaji'); ?>', 
+        {proses:proses}, function(result){
+        $('#Gaji_per_sec4').numberbox('setValue', (result.gpy)/(wtss*result.jl));
+         },'json');
+     }
+    function gaji_trimming()
+     {
+         var proses = 'Trimming';
+         var wtst = $('#Working_time_sec5').numberbox('getValue');
+        $.post('<?php echo site_url('transaksi/calculation/getGaji'); ?>', 
+        {proses:proses}, function(result){
+        $('#Gaji_per_sec5').numberbox('setValue', (result.gpy)/(wtst*result.jl));
+         },'json');
+     } 
 </script>
 
 <style type="text/css">
@@ -1206,7 +1284,153 @@
                         <input id="Labor_cost_rolling" name="Labor_cost_rolling" class="easyui-numberbox" data-options="precision:2" style="width:160px" readonly="true"/>
                     </div>   
                 </div>
-                <div title="Cutting" style="padding:10px;">Content 3</div>
+                <div title="Cutting" style="padding:10px;">
+                  <div class="fitem">
+                        <label for="type">Cutting Machine</label>
+                        <input id="Cutting_machine" name="Cutting_machine" class="easyui-textbox" readonly="true"/>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Dandori time</label>
+                        <input id="Dandori_time3" name="Dandori_time3" class="easyui-numberbox" style="width:160px" readonly="true"/>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Cycle time</label>
+                        <input id="Cycle_time3" name="Cycle_time3" class="easyui-textbox" data-options="precision:2" readonly="true"/>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Hari Kerja</label>
+                        <input id="Working_time3" name="Working_time3" class="easyui-numberbox" style="width:160px" readonly="true"/>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Working time(sec)</label>
+                        <input id="Working_time_sec3" name="Working_time_sec3" class="easyui-numberbox" data-options="precision:2,groupSeparator:'.',decimalSeparator:',', readonly: true" style="width:160px" readonly="true"/>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Gaji per sec</label>
+                        <input id="Gaji_per_sec3" name="Gaji_per_sec3" class="easyui-numberbox" data-options="precision:2" style="width:160px;" readonly="true"/> 
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Quantity</label>
+                        <input id="Quantity4" name="Quantity4" class="easyui-numberbox" data-options="precision:0" style="width:160px" required="true"/>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Labor Cost</label>
+                        <input id="Labor_cost_cutting" name="Labor_cost_cutting" class="easyui-numberbox" data-options="precision:2" style="width:160px" readonly="true"/>
+                    </div>     
+                </div>
+                <div title="Slotting" style="padding:10px;">
+                  <div class="fitem">
+                        <label for="type">Slotting Machine</label>
+                        <input id="Slotting_machine" name="Slotting_machine" class="easyui-textbox" readonly="true"/>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Dandori time</label>
+                        <input id="Dandori_time4" name="Dandori_time4" class="easyui-numberbox" style="width:160px" readonly="true"/>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Cycle time</label>
+                        <input id="Cycle_time4" name="Cycle_time4" class="easyui-textbox" data-options="precision:2" readonly="true"/>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Hari Kerja</label>
+                        <input id="Working_time4" name="Working_time4" class="easyui-numberbox" style="width:160px" readonly="true"/>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Working time(sec)</label>
+                        <input id="Working_time_sec4" name="Working_time_sec4" class="easyui-numberbox" data-options="precision:2,groupSeparator:'.',decimalSeparator:',', readonly: true" style="width:160px" readonly="true"/>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Gaji per sec</label>
+                        <input id="Gaji_per_sec4" name="Gaji_per_sec4" class="easyui-numberbox" data-options="precision:2" style="width:160px;" readonly="true"/> 
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Quantity</label>
+                        <input id="Quantity5" name="Quantity5" class="easyui-numberbox" data-options="precision:0" style="width:160px" required="true"/>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Labor Cost</label>
+                        <input id="Labor_cost_slotting" name="Labor_cost_slotting" class="easyui-numberbox" data-options="precision:2" style="width:160px" readonly="true"/>
+                    </div>     
+                </div>
+                <div title="Trimming" style="padding:10px;">
+                  <div class="fitem">
+                        <label for="type">Trimming Machine</label>
+                        <input id="Trimming_machine" name="Trimming_machine" class="easyui-textbox" readonly="true"/>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Dandori time</label>
+                        <input id="Dandori_time5" name="Dandori_time5" class="easyui-numberbox" style="width:160px" readonly="true"/>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Cycle time</label>
+                        <input id="Cycle_time5" name="Cycle_time5" class="easyui-textbox" data-options="precision:2" readonly="true"/>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Hari Kerja</label>
+                        <input id="Working_time5" name="Working_time5" class="easyui-numberbox" style="width:160px" readonly="true"/>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Working time(sec)</label>
+                        <input id="Working_time_sec5" name="Working_time_sec5" class="easyui-numberbox" data-options="precision:2,groupSeparator:'.',decimalSeparator:',', readonly: true" style="width:160px" readonly="true"/>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Gaji per sec</label>
+                        <input id="Gaji_per_sec5" name="Gaji_per_sec5" class="easyui-numberbox" data-options="precision:2" style="width:160px;" readonly="true"/> 
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Quantity</label>
+                        <input id="Quantity6" name="Quantity6" class="easyui-numberbox" data-options="precision:0" style="width:160px" required="true"/>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Labor Cost</label>
+                        <input id="Labor_cost_trimming" name="Labor_cost_trimming" class="easyui-numberbox" data-options="precision:2" style="width:160px" readonly="true"/>
+                    </div>     
+                </div>
+                 <div title="Turret/Auto/Bor" style="padding:10px;">
+                  <div class="fitem">
+                        <label for="type">Proses 1</label>
+                        <select id="Proses1" class="easyui-combobox" name="Proses1" style="width:160px;">
+                            <option>Turret 1</option>
+                            <option>Turret 2</option>
+                            <option>Turret 3</option>
+                            <option>Bor</option>
+                            <option>Champer</option>
+                            <option>Welding</option>
+                            <option>Autolathe</option>
+                            <option> </option>
+                        </select>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Jumlah Shot/menit</label>
+                        <input id="Jumlah_shot1" class="easyui-numberspinner" style="width:160px;"
+                                required="required" data-options="min:0,max:10,editable:false">
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Biaya Labor</label>
+                        <input id="Biaya_labor1" name="Biaya_labor1" class="easyui-textbox" data-options="precision:2" readonly="true"/>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Proses 2</label>
+                        <select id="Proses2" class="easyui-combobox" name="Proses2" style="width:160px;">
+                            <option>Turret 1</option>
+                            <option>Turret 2</option>
+                            <option>Turret 3</option>
+                            <option>Bor</option>
+                            <option>Champer</option>
+                            <option>Welding</option>
+                            <option>Autolathe</option>
+                            <option> </option>
+                        </select>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Jumlah Shot/menit</label>
+                        <input id="Jumlah_shot2" name="Jumlah_shot2" class="easyui-numberbox" style="width:160px" required="true"/>
+                    </div>
+                    <div class="fitem">
+                        <label for="type">Biaya Labor</label>
+                        <input id="Biaya_labor2" name="Biaya_labor2" class="easyui-textbox" data-options="precision:2" readonly="true"/>
+                    </div>     
+                </div>   
                 </div>      
             </div>
             

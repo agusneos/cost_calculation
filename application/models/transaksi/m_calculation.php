@@ -277,7 +277,7 @@ class M_calculation extends CI_Model
     
     function getCuttMchncode($dnom4)
     {
-        $this->db->select('Kode_mchncutt,  Dia_nominal, Length_range, Mchn_cutting, Cutting_depr_cost');
+        $this->db->select('Kode_mchncutt,  Dia_nominal, Length_range, Mchn_cutting, Cutting_depr_cost, Dandori_time, Cycle_time, Working_time, Working_time_sec');
         $this->db->where('Dia_nominal', $dnom4);                 
         $this->db->order_by('Kode_mchncutt', 'ASC');
         $query  = $this->db->get(self::$machine_cutting);
@@ -291,7 +291,7 @@ class M_calculation extends CI_Model
     }
     function getSlottMchncode($dnom5)
     {
-        $this->db->select('Kode_mchnslott,  Dia_nominal, Length_range, Mchn_slotting, Slotting_depr_cost');
+        $this->db->select('Kode_mchnslott,  Dia_nominal, Length_range, Mchn_slotting, Slotting_depr_cost, Dandori_time, Cycle_time, Working_time, Working_time_sec');
         $this->db->where('Dia_nominal', $dnom5);                 
         $this->db->order_by('Kode_mchnslott', 'ASC');
         $query  = $this->db->get(self::$machine_slotting);
@@ -305,7 +305,7 @@ class M_calculation extends CI_Model
     }
     function getTrimmMchncode($dnom6)
     {
-        $this->db->select('Kode_mchntrimm,  Dia_nominal, Length_range, Mchn_trimming, Trimming_depr_cost');
+        $this->db->select('Kode_mchntrimm,  Dia_nominal, Length_range, Mchn_trimming, Trimming_depr_cost, Dandori_time, Cycle_time, Working_time, Working_time_sec');
         $this->db->where('Dia_nominal', $dnom6);                 
         $this->db->order_by('Kode_mchntrimm', 'ASC');
         $query  = $this->db->get(self::$machine_trimming);
@@ -319,7 +319,7 @@ class M_calculation extends CI_Model
     }
     function getStraightenMchncode($dnom7)
     {
-        $this->db->select('Kode_mchnstraighten,  Dia_nominal, Length_range, Mchn_straightening, Straightening_depr_cost');
+        $this->db->select('Kode_mchnstraighten,  Dia_nominal, Length_range, Mchn_straightening, Straightening_depr_cost, Dandori_time, Cycle_time, Working_time, Working_time_sec');
         $this->db->where('Dia_nominal', $dnom7);                 
         $this->db->order_by('Kode_mchnstraighten', 'ASC');
         $query  = $this->db->get(self::$machine_straightening);
@@ -333,7 +333,7 @@ class M_calculation extends CI_Model
     }
     function getPressMchncode($dnom8)
     {
-        $this->db->select('Kode_mchnpress,  Dia_nominal, Length_range, Mchn_pressing, Pressing_depr_cost');
+        $this->db->select('Kode_mchnpress,  Dia_nominal, Length_range, Mchn_pressing, Pressing_depr_cost, Dandori_time, Cycle_time, Working_time, Working_time_sec');
         $this->db->where('Dia_nominal', $dnom8);                 
         $this->db->order_by('Kode_mchnpress', 'ASC');
         $query  = $this->db->get(self::$machine_pressing);

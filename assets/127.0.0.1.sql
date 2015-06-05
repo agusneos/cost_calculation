@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2015 at 03:47 AM
+-- Generation Time: Jun 05, 2015 at 09:58 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -62,28 +62,31 @@ CREATE TABLE IF NOT EXISTS `calculation` (
   `Length_nominal` varchar(10) NOT NULL,
   `Quantity` int(1) NOT NULL,
   `Saga_code` varchar(40) NOT NULL,
+  `Type_screwOri` varchar(20) NOT NULL,
   `Dia_wire` double NOT NULL,
   `Kode_wire` varchar(20) NOT NULL,
   `Net_weight` double NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `calculation`
 --
 
-INSERT INTO `calculation` (`Id`, `Tanggal`, `Customer`, `Customer_code`, `Dia_nominal`, `Length_nominal`, `Quantity`, `Saga_code`, `Dia_wire`, `Kode_wire`, `Net_weight`) VALUES
-(1, '2014-12-19', '123', 'GE90110100', 8, '20', 0, '(A)HSMH 8X20 MC3', 7.85, '109', 10),
-(2, '2014-12-19', '101', 'jasdlfli', 0, '', 0, 'SMP 5 X 6 GR', 0, '', 0),
-(3, '2014-12-26', '100', '1232', 0, '', 0, 'SNP 5X8 KZ', 0, '0', 0),
-(4, '2015-01-05', '102', '1234454', 0, '', 0, 'smp 5 x 7 zk', 0, '0', 0),
-(5, '2015-01-05', '1', 'sdsd', 0, '', 0, 'sdfds', 2, '', 0),
-(6, '2015-01-20', '100', 'safs', 0, '', 30000, 'sdfsd', 0, '62', 0),
-(7, '2015-01-09', '100', '12312', 0, '', 25000, '12321', 3.48, '57', 0),
-(8, '2015-01-09', '121', '323323', 0, '', 50000, '1231', 3.5, '58', 0),
-(9, '2015-01-20', '121', '12312', 0, '', 60000, '443t', 5.7, '60', 0),
-(10, '2015-01-25', '122', '5545reg', 0, '', 5000, 'eratet2', 9, '60', 8.4),
-(11, '2015-01-15', '102', '12212', 5, '12', 100000, 'HSMH 5 X 12 CF', 4.89, '57', 3.65);
+INSERT INTO `calculation` (`Id`, `Tanggal`, `Customer`, `Customer_code`, `Dia_nominal`, `Length_nominal`, `Quantity`, `Saga_code`, `Type_screwOri`, `Dia_wire`, `Kode_wire`, `Net_weight`) VALUES
+(1, '2014-12-19', '123', 'GE90110100', 8, '20', 0, '(A)HSMH 8X20 MC3', '', 7.85, '109', 10),
+(2, '2014-12-19', '101', 'jasdlfli', 0, '', 0, 'SMP 5 X 6 GR', '', 0, '', 0),
+(3, '2014-12-26', '100', '1232', 0, '', 0, 'SNP 5X8 KZ', '', 0, '0', 0),
+(4, '2015-01-05', '102', '1234454', 0, '', 0, 'smp 5 x 7 zk', '', 0, '0', 0),
+(5, '2015-01-05', '1', 'sdsd', 0, '', 0, 'sdfds', '', 2, '', 0),
+(6, '2015-01-20', '100', 'safs', 0, '', 30000, 'sdfsd', '', 0, '62', 0),
+(7, '2015-01-09', '100', '12312', 0, '', 25000, '12321', '', 3.48, '57', 0),
+(8, '2015-01-09', '121', '323323', 0, '', 50000, '1231', '', 3.5, '58', 0),
+(9, '2015-01-20', '121', '12312', 0, '', 60000, '443t', '', 5.7, '60', 0),
+(10, '2015-01-25', '122', '5545reg', 0, '', 5000, 'eratet2', '', 9, '60', 8.4),
+(11, '2015-01-15', '102', '12212', 5, '12', 100000, 'HSMH 5 X 12 CF', '', 4.89, '57', 3.65),
+(12, '2015-05-26', '101', 'safjklasfd', 10, '30', 30000, 'smo 5 x 30 eb', 'smo', 4.8, '107', 20),
+(13, '2015-05-13', '103', 'afskldf', 5, '30', 30000, '(a)bmp 5 x 30 MC3', 'bmp', 4.9, '104', 10);
 
 -- --------------------------------------------------------
 
@@ -680,7 +683,7 @@ CREATE TABLE IF NOT EXISTS `labor` (
   `Hasilprod_per_tahun` double NOT NULL,
   `Jumlah_labor` double NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `labor`
@@ -693,7 +696,8 @@ INSERT INTO `labor` (`Id`, `Process`, `Gaji_per_year`, `Hasilprod_per_tahun`, `J
 (4, 'Cutting', 183049726, 258582, 4),
 (5, 'Slotting', 183049726, 258582, 4),
 (6, 'FQ', 3055710540, 4089370, 72),
-(7, 'Packing', 1755718962, 4035107, 37);
+(7, 'Packing', 1755718962, 4035107, 37),
+(8, 'Straightening', 194638865, 0, 5);
 
 -- --------------------------------------------------------
 
@@ -741,7 +745,7 @@ INSERT INTO `machine_cutting` (`Kode_mchncutt`, `Dia_nominal`, `Length_range`, `
 
 CREATE TABLE IF NOT EXISTS `machine_heading` (
   `Kode_mchnhead` int(1) NOT NULL AUTO_INCREMENT,
-  `Gol_mchn_head` enum('Heading 1 die','Bolt Former 2 dies','Rivet Former 2 dies','Bolt Former 4 dies') NOT NULL,
+  `Gol_mchn_head` enum('Heading 1 die','Heading 2 dies','Heading 4 dies') NOT NULL,
   `Dia_nominal` double NOT NULL,
   `Length_range` varchar(20) NOT NULL,
   `Mchn_heading` varchar(20) NOT NULL,
@@ -782,25 +786,23 @@ INSERT INTO `machine_heading` (`Kode_mchnhead`, `Gol_mchn_head`, `Dia_nominal`, 
 (15, 'Heading 1 die', 10, '20 - 150', 'ZH 30152', 524062940, 5458989, 58, 23, 13910400, 48720, 1120560, 58, 649925, 1.03, 10800, 8.4),
 (16, 'Heading 1 die', 10, '25 - 300', 'ZH 40305', 1743099601, 18157288, 60, 23, 13910400, 50400, 1159200, 50, 579600, 1, 10800, 31.33),
 (17, 'Heading 1 die', 12, '25 - 300', 'ZH 40305', 1743099601, 18157288, 60, 23, 13910400, 50400, 1159200, 50, 579600, 1, 10800, 31.33),
-(18, 'Bolt Former 2 dies', 3, '4 - 20', 'MT 1115', 302459057, 3150615, 50, 23, 1159200, 42000, 966000, 45, 434700, 1.2, 10800, 7.25),
-(19, 'Bolt Former 2 dies', 4, '4 - 20', 'MT 1115', 302459057, 3150615, 50, 23, 13910400, 42000, 966000, 45, 434700, 1.2, 10800, 7.25),
-(20, 'Bolt Former 2 dies', 5, '4 - 20', 'MT 1115', 302459057, 3150615, 50, 23, 13910400, 42000, 966000, 45, 434700, 1.2, 10800, 7.25),
-(21, 'Bolt Former 2 dies', 6, '10 - 60', 'MT 1125', 491323192, 5117950, 60, 23, 13910400, 50400, 1159200, 60, 695520, 1, 10800, 7.36),
-(22, 'Bolt Former 2 dies', 8, '10 - 60', 'MT 1125', 491323192, 5117950, 60, 23, 13910400, 50400, 1159200, 60, 695520, 1, 10800, 7.36),
-(23, 'Bolt Former 4 dies', 3, '10 - 50', 'CBF 64 S', 893200000, 9304167, 240, 23, 13910400, 201600, 4636800, 50, 2318400, 0.25, 10800, 4.01),
-(24, 'Bolt Former 4 dies', 4, '10 - 50', 'CBF 64 S', 893200000, 9304167, 240, 23, 13910400, 201600, 4636800, 50, 2318400, 0.25, 10800, 4.01),
-(25, 'Bolt Former 4 dies', 5, '10 - 70', 'CBF 64 S', 893200000, 9304167, 240, 23, 13910400, 201600, 4636800, 50, 2318400, 0.25, 10800, 4.01),
-(26, 'Bolt Former 4 dies', 5, '15 - 75', 'CBF 84 S', 1335710000, 13913646, 120, 23, 13910400, 100800, 2318400, 50, 1159200, 0.5, 10800, 12),
-(27, 'Bolt Former 4 dies', 6, '10 - 70', 'CBF 64 S', 893200000, 9304167, 240, 23, 13910400, 201600, 4636800, 50, 2318400, 0.25, 10800, 4.01),
-(28, 'Bolt Former 4 dies', 6, '15 - 75', 'CBF 84 S', 1335710000, 13913646, 120, 23, 13910400, 100800, 2318400, 50, 1159200, 0.5, 10800, 12),
-(29, 'Bolt Former 4 dies', 6, '15 - 100', 'CBF 104L', 2082142600, 21688985, 120, 23, 13910400, 100800, 2318400, 50, 1159200, 0.5, 10800, 18.71),
-(30, 'Bolt Former 4 dies', 8, '25 - 100', 'CBF 134L', 2043840000, 21290000, 120, 23, 13910400, 100800, 2318400, 50, 1159200, 0.5, 10800, 18.37),
-(31, 'Bolt Former 4 dies', 10, '15 - 100', 'CBF 104L', 2082142600, 21688985, 120, 23, 13910400, 100800, 2318400, 50, 1159200, 0.5, 10800, 18.71),
-(32, 'Bolt Former 4 dies', 14, '60 - 200', 'CBF 164L', 5273400000, 54931250, 120, 23, 13910400, 100800, 2318400, 50, 1159200, 0.5, 10800, 47.39),
-(33, 'Rivet Former 2 dies', 2.6, '4 - 20', 'MT 1115', 302459057, 3150615, 50, 23, 13910400, 42000, 966000, 61, 589260, 1.2, 10800, 5.35),
-(34, 'Rivet Former 2 dies', 3, '4 - 20', 'MT 1115', 302459057, 3150615, 50, 23, 13910400, 42000, 966000, 61, 589260, 1.2, 10800, 5.35),
-(35, 'Rivet Former 2 dies', 4, '4 - 20', 'MT 1115', 302459057, 3150615, 50, 23, 13910400, 42000, 966000, 61, 589260, 1.2, 10800, 5.35),
-(36, 'Bolt Former 4 dies', 12, '25 - 150', 'CBF 134L', 2043840000, 21290000, 120, 23, 13910400, 100800, 2318400, 50, 1159200, 0.5, 10800, 18.37);
+(18, 'Heading 2 dies', 3, '4 - 20', 'MT 1115', 302459057, 3150615, 50, 23, 1159200, 42000, 966000, 45, 434700, 1.2, 10800, 7.25),
+(19, 'Heading 2 dies', 4, '4 - 20', 'MT 1115', 302459057, 3150615, 50, 23, 13910400, 42000, 966000, 45, 434700, 1.2, 10800, 7.25),
+(20, 'Heading 2 dies', 5, '4 - 20', 'MT 1115', 302459057, 3150615, 50, 23, 13910400, 42000, 966000, 45, 434700, 1.2, 10800, 7.25),
+(21, 'Heading 2 dies', 6, '10 - 60', 'MT 1125', 491323192, 5117950, 60, 23, 13910400, 50400, 1159200, 60, 695520, 1, 10800, 7.36),
+(22, 'Heading 2 dies', 8, '10 - 60', 'MT 1125', 491323192, 5117950, 60, 23, 13910400, 50400, 1159200, 60, 695520, 1, 10800, 7.36),
+(23, 'Heading 4 dies', 3, '10 - 50', 'CBF 64 S', 893200000, 9304167, 240, 23, 13910400, 201600, 4636800, 50, 2318400, 0.25, 10800, 4.01),
+(24, 'Heading 4 dies', 4, '10 - 50', 'CBF 64 S', 893200000, 9304167, 240, 23, 13910400, 201600, 4636800, 50, 2318400, 0.25, 10800, 4.01),
+(25, 'Heading 4 dies', 5, '10 - 70', 'CBF 64 S', 893200000, 9304167, 240, 23, 13910400, 201600, 4636800, 50, 2318400, 0.25, 10800, 4.01),
+(26, 'Heading 4 dies', 5, '15 - 75', 'CBF 84 S', 1335710000, 13913646, 120, 23, 13910400, 100800, 2318400, 50, 1159200, 0.5, 10800, 12),
+(27, 'Heading 4 dies', 6, '10 - 70', 'CBF 64 S', 893200000, 9304167, 240, 23, 13910400, 201600, 4636800, 50, 2318400, 0.25, 10800, 4.01),
+(28, 'Heading 4 dies', 6, '15 - 75', 'CBF 84 S', 1335710000, 13913646, 120, 23, 13910400, 100800, 2318400, 50, 1159200, 0.5, 10800, 12),
+(29, 'Heading 4 dies', 6, '15 - 100', 'CBF 104L', 2082142600, 21688985, 120, 23, 13910400, 100800, 2318400, 50, 1159200, 0.5, 10800, 18.71),
+(30, 'Heading 4 dies', 8, '25 - 100', 'CBF 134L', 2043840000, 21290000, 120, 23, 13910400, 100800, 2318400, 50, 1159200, 0.5, 10800, 18.37),
+(31, 'Heading 4 dies', 10, '15 - 100', 'CBF 104L', 2082142600, 21688985, 120, 23, 13910400, 100800, 2318400, 50, 1159200, 0.5, 10800, 18.71),
+(32, 'Heading 4 dies', 14, '60 - 200', 'CBF 164L', 5273400000, 54931250, 120, 23, 13910400, 100800, 2318400, 50, 1159200, 0.5, 10800, 47.39),
+(33, 'Heading 2 dies', 2.6, '4 - 20', 'MT 1115', 302459057, 3150615, 50, 23, 13910400, 42000, 966000, 61, 589260, 1.2, 10800, 5.35),
+(36, 'Heading 4 dies', 12, '25 - 150', 'CBF 134L', 2043840000, 21290000, 120, 23, 13910400, 100800, 2318400, 50, 1159200, 0.5, 10800, 18.37);
 
 -- --------------------------------------------------------
 
@@ -954,7 +956,16 @@ CREATE TABLE IF NOT EXISTS `machine_straightening` (
   `Dandori_time` double NOT NULL,
   `Straightening_depr_cost` double NOT NULL,
   PRIMARY KEY (`Kode_mchnstraighten`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `machine_straightening`
+--
+
+INSERT INTO `machine_straightening` (`Kode_mchnstraighten`, `Dia_nominal`, `Length_range`, `Mchn_straightening`, `Mchn_price`, `Depr_per_month`, `Output_per_min`, `Working_time`, `Working_time_sec`, `Output_per_day`, `Output_per_month`, `Productivity_ratio`, `Prod_plan_month`, `Cycle_time`, `Dandori_time`, `Straightening_depr_cost`) VALUES
+(1, 10, '10 - 290', 'CK-500', 382600000, 3985417, 1, 23, 1159200, 840, 19320, 85, 16422, 60, 3600, 242.69),
+(2, 12, '10 - 290', 'CK-500', 382600000, 3985417, 1, 23, 1159200, 840, 19320, 85, 16422, 60, 3600, 242.69),
+(3, 14, '10 - 290', 'CK-500', 382600000, 3985417, 1, 23, 1159200, 840, 19320, 85, 16422, 60, 3600, 242.69);
 
 -- --------------------------------------------------------
 
@@ -1014,7 +1025,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
   `iconCls` varchar(255) NOT NULL,
   `type` enum('dialog','messager','tabs','window') NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=41 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=42 ;
 
 --
 -- Dumping data for table `menu`
@@ -1058,7 +1069,8 @@ INSERT INTO `menu` (`id`, `name`, `parentId`, `uri`, `allowed`, `iconCls`, `type
 (37, 'Rolling Category', 19, 'master/tools/rollingcat', '+1+2+', 'icon-master', 'tabs'),
 (38, 'Plating', 15, 'master/process/plating', '+1+2+', 'icon-master', 'tabs'),
 (39, 'Labor', 15, 'master/process/labor', '+1+2+', 'icon-master', 'tabs'),
-(40, 'Turret', 15, 'master/process/turret', '+1+2+', 'icon-master', 'tabs');
+(40, 'Turret', 15, 'master/process/turret', '+1+2+', 'icon-master', 'dialog'),
+(41, 'Utility', 15, 'master/process/utility', '+1+2+', 'icon-master', 'tabs');
 
 -- --------------------------------------------------------
 
@@ -1129,15 +1141,16 @@ INSERT INTO `plating` (`Id`, `Kode_Supp`, `Name`, `Price`, `Currency`, `Tgl_upda
 
 CREATE TABLE IF NOT EXISTS `sesdata` (
   `Scrap` int(1) NOT NULL,
-  `Exch_rate` double NOT NULL
+  `Exch_rate` double NOT NULL,
+  `Profit_rate` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sesdata`
 --
 
-INSERT INTO `sesdata` (`Scrap`, `Exch_rate`) VALUES
-(5, 11915);
+INSERT INTO `sesdata` (`Scrap`, `Exch_rate`, `Profit_rate`) VALUES
+(5, 11915, 19);
 
 -- --------------------------------------------------------
 
@@ -1524,6 +1537,62 @@ INSERT INTO `tools_heading1` (`Id`, `Category`, `Diameter`, `Min_panjang`, `Max_
 (184, 'SUS TAPPING SCREW', 5, 22, 50, 7.47, 'IDR', '2010-01-02', 'YES'),
 (185, 'SUS TAPPING SCREW', 6, 6, 21, 11.74, 'IDR', '2010-01-02', 'YES'),
 (186, 'SUS TAPPING SCREW', 6, 22, 56, 11.74, 'IDR', '2010-01-02', 'YES');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tools_heading2`
+--
+
+CREATE TABLE IF NOT EXISTS `tools_heading2` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Type_screw` varchar(20) NOT NULL,
+  `Diameter_nominal` varchar(10) NOT NULL,
+  `HD_Price` double NOT NULL,
+  `HD_Lifetime` double NOT NULL,
+  `HDI_Price` double NOT NULL,
+  `HDI_Lifetime` double NOT NULL,
+  `HDP_Price` double NOT NULL,
+  `HDP_Lifetime` double NOT NULL,
+  `HDC_Price` double NOT NULL,
+  `HDC_Lifetime` double NOT NULL,
+  `HR_Price` double NOT NULL,
+  `HR_Lifetime` double NOT NULL,
+  `S_Price` double NOT NULL,
+  `S_Lifetime` double NOT NULL,
+  `SP_Price` double NOT NULL,
+  `SP_Lifetime` double NOT NULL,
+  `SC_Price` double NOT NULL,
+  `SC_Lifetime` double NOT NULL,
+  `SB_Price` double NOT NULL,
+  `SB_Lifetime` double NOT NULL,
+  `CD_Price` double NOT NULL,
+  `CD_Lifetime` double NOT NULL,
+  `CK_Price` double NOT NULL,
+  `CK_Lifetime` double NOT NULL,
+  `P_Price` double NOT NULL,
+  `P_Lifetime` double NOT NULL,
+  `SPu_Price` double NOT NULL,
+  `SPu_Lifetime` double NOT NULL,
+  `PP_Price` double NOT NULL,
+  `PP_Lifetime` double NOT NULL,
+  `PC_Price` double NOT NULL,
+  `PC_Lifetime` double NOT NULL,
+  `Price_pcs` double NOT NULL,
+  `Currency` enum('USD','IDR') NOT NULL,
+  `Tgl_update` date NOT NULL,
+  `Active` enum('YES','NO') NOT NULL DEFAULT 'YES',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `tools_heading2`
+--
+
+INSERT INTO `tools_heading2` (`Id`, `Type_screw`, `Diameter_nominal`, `HD_Price`, `HD_Lifetime`, `HDI_Price`, `HDI_Lifetime`, `HDP_Price`, `HDP_Lifetime`, `HDC_Price`, `HDC_Lifetime`, `HR_Price`, `HR_Lifetime`, `S_Price`, `S_Lifetime`, `SP_Price`, `SP_Lifetime`, `SC_Price`, `SC_Lifetime`, `SB_Price`, `SB_Lifetime`, `CD_Price`, `CD_Lifetime`, `CK_Price`, `CK_Lifetime`, `P_Price`, `P_Lifetime`, `SPu_Price`, `SPu_Lifetime`, `PP_Price`, `PP_Lifetime`, `PC_Price`, `PC_Lifetime`, `Price_pcs`, `Currency`, `Tgl_update`, `Active`) VALUES
+(1, 'UMS', '5', 0, 1, 192.66, 500000, 4.08, 200000, 216.3, 800000, 229.75, 30000, 69.19, 700000, 3.12, 100000, 14.16, 2000000, 7.16, 2000000, 33.2, 4000000, 38.35, 5000000, 55.24, 3000000, 18.51, 20000, 12.51, 10000, 25.25, 2000000, 0.010699, 'USD', '2015-06-04', 'YES'),
+(2, 'RVF', '5', 99.28, 2000000, 0, 1, 2.16, 200000, 0, 1, 0, 1, 69.19, 700000, 0, 1, 14.16, 2000000, 7.16, 2000000, 19.47, 4000000, 37.6, 5000000, 119, 3000000, 0, 1, 0, 1, 13.91, 2000000, 0.000229, 'USD', '2015-06-05', 'YES'),
+(3, 'RVK', '5', 141.36, 2000000, 0, 1, 4.74, 200000, 0, 1, 0, 1, 69.19, 700000, 0, 1, 14.16, 2000000, 7.16, 2000000, 33.2, 4000000, 38.35, 5000000, 119, 3000000, 0, 1, 0, 1, 13.91, 2000000, 0.000266, 'USD', '2015-06-05', 'YES');
 
 -- --------------------------------------------------------
 
@@ -1933,7 +2002,7 @@ CREATE TABLE IF NOT EXISTS `turret` (
 --
 
 INSERT INTO `turret` (`Gaji`, `Estimasi`, `Working_day`, `Working_hour`) VALUES
-(3250000, 50, 20, 8);
+(2812190, 50, 20, 8);
 
 -- --------------------------------------------------------
 
@@ -1984,6 +2053,28 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`id`, `name`, `username`, `password`, `level`) VALUES
 (1, 'Janki', 'admin', '202cb962ac59075b964b07152d234b70', '+1+'),
 (2, 'Desi', 'desi', '250cf8b51c773f3f8dc8b4be867a9a02', '+2+');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `utility`
+--
+
+CREATE TABLE IF NOT EXISTS `utility` (
+  `Id` int(1) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(20) NOT NULL,
+  `Biaya_per_year` double NOT NULL,
+  `Hasilprod_per_tahun` double NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `utility`
+--
+
+INSERT INTO `utility` (`Id`, `Name`, `Biaya_per_year`, `Hasilprod_per_tahun`) VALUES
+(1, 'Electricity', 4388889792, 3916428),
+(2, 'Factory Exp', 3858628003, 3916428);
 
 -- --------------------------------------------------------
 

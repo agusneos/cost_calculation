@@ -127,7 +127,7 @@ class Calculation extends CI_Controller {
         $query = $this->record->getSesData();        
         foreach ($query->result() as $data)
         {
-            echo json_encode(array('Scrap'=>$data->Scrap,'Exch_rate'=>$data->Exch_rate));
+            echo json_encode(array('Scrap'=>$data->Scrap,'Exch_rate'=>$data->Exch_rate,'Profit_rate'=>$data->Profit_rate));
         }
     }
     
@@ -141,8 +141,9 @@ class Calculation extends CI_Controller {
         
         $Scrap      = addslashes($_POST['Scrap']);
         $Exch_rate  = addslashes($_POST['Exch_rate']);
+        $Profit_rate  = addslashes($_POST['Profit_rate']);
         
-        if($this->record->updateSesData($Scrap, $Exch_rate))
+        if($this->record->updateSesData($Scrap, $Exch_rate, $Profit_rate))
         {
             echo json_encode(array('success'=>true));
         }
@@ -289,10 +290,23 @@ class Calculation extends CI_Controller {
         $query = $this->record->getCategory($typescr, $gol_mchn, $dia, $length);        
         foreach ($query->result() as $data)
         {
-            echo json_encode(array('Category'=>$data->Category, 'htc'=>$data->Cost));
+            echo json_encode(array('Category'=>$data->Category, 'htc'=>$data->Cost, 'Currency'=>$data->Currency));
         }
     }
-    
+    function getHeading2()
+    {
+        $auth       = new Auth();
+        $auth->restrict();        
+        if(!isset($_POST))	
+            show_404();
+        $typescrhead2        = addslashes($_POST['typescrhead2']);
+        $dianom2             = addslashes($_POST['dianom2']);               
+        $query = $this->record->getHeading2($typescrhead2, $dianom2);        
+        foreach ($query->result() as $data)
+        {
+            echo json_encode(array('htc2'=>$data->Price_pcs, 'Currency'=>$data->Currency));
+        }
+    }
     function getCategory2()
     {
         $auth       = new Auth();
@@ -304,13 +318,13 @@ class Calculation extends CI_Controller {
         $typescr2        = addslashes($_POST['typescr2']);
         $dia2            = addslashes($_POST['dia2']);
         $length2         = addslashes($_POST['length2']);
-        
+            
         $query = $this->record->getCategory2($typescr2, $dia2, $length2);        
         foreach ($query->result() as $data)
         {
             echo json_encode(array('Category2'=>$data->Category2, 'rtc'=>$data->Cost));
         }
-    }
+    }  
     function getCutting()
     {
         $auth       = new Auth();
@@ -377,10 +391,101 @@ class Calculation extends CI_Controller {
         $query = $this->record->getGaji($proses);        
         foreach ($query->result() as $data)
         {
-            echo json_encode(array('Id'=>$data->Id,'gpy'=>$data->Gaji_per_year,'jl'=>$data->Jumlah_labor));
+            echo json_encode(array('Id'=>$data->Id,'gpy'=>$data->Gaji_per_year, 'hppy' =>$data->Hasilprod_per_tahun, 'jl'=>$data->Jumlah_labor));
         }
     }
+    function getGajiTurret()
+    {
+        $auth       = new Auth();
+        $auth->restrict();
+        
+        if(!isset($_POST))	
+          show_404();
+        
+        $query = $this->record->getGajiTurret();        
+        foreach ($query->result() as $data)
+        {
+            echo json_encode(array('gaji'=>$data->Gaji,'estimasi'=>$data->Estimasi,'working_day'=>$data->Working_day,'working_hour'=>$data->Working_hour));
+        }
+    }
+    function getBiaya()
+    {
+        $auth       = new Auth();
+        $auth->restrict();
+        
+        if(!isset($_POST))	
+          show_404();
+        
+        $proses            = addslashes($_POST['proses']);
+
+        
+        $query = $this->record->getBiaya($proses);        
+        foreach ($query->result() as $data)
+        {
+            echo json_encode(array('Id'=>$data->Id,'bpy'=>$data->Biaya_per_year, 'hppy' =>$data->Hasilprod_per_tahun));
+        }
+    }
+    function getFurnace()
+    {
+        $auth       = new Auth();
+        $auth->restrict();
+        
+        if(!isset($_POST))	
+          show_404();
+                   
+        echo $this->record->getFurnace();
     
+    }
+    function getPlating()
+    {
+        $auth       = new Auth();
+        $auth->restrict();
+        
+        if(!isset($_POST))	
+          show_404();
+                   
+        echo $this->record->getPlating();
+    
+    }
+    function getBaking()
+    {
+        $auth       = new Auth();
+        $auth->restrict();
+        
+        if(!isset($_POST))	
+          show_404();
+        
+        $proses            = addslashes($_POST['proses']);
+
+        
+        $query = $this->record->getBaking($proses);        
+        foreach ($query->result() as $data)
+        {
+            echo json_encode(array('Id'=>$data->Id,'Kode_Supp'=>$data->Kode_Supp,'Name'=>$data->Name,'Price'=>$data->Price,'Currency'=>$data->Currency));
+        }
+    } 
+    function getKode_assembly()
+    {
+        $auth       = new Auth();
+        $auth->restrict();
+        
+        if(!isset($_POST))	
+          show_404();
+                   
+        echo $this->record->getKode_assembly();
+    
+    }
+    function getCoating()
+    {
+        $auth       = new Auth();
+        $auth->restrict();
+        
+        if(!isset($_POST))	
+          show_404();
+                   
+        echo $this->record->getCoating();
+    
+    }
 }
 /* End of file calculation.php */
 /* Location: ./application/controllers/transaksi/calculation.php */

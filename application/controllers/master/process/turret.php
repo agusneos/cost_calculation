@@ -13,12 +13,24 @@ class Turret extends CI_Controller {
          // mencegah user yang belum login untuk mengakses halaman ini
         $auth->restrict();
         
-        if (isset($_GET['grid'])) 
-            echo $this->record->index();        
-         else 
-            $this->load->view('master/process/v_turret');        
+        $this->load->view('master/process/v_turret');        
     } 
     
+    
+    function getTurret()
+    {
+        $auth       = new Auth();
+        $auth->restrict();
+        
+        if(!isset($_POST))	
+            show_404();
+        
+        $query = $this->record->getTurret();        
+        foreach ($query->result() as $data)
+        {
+            echo json_encode(array('Gaji'=>$data->Gaji,'Estimasi'=>$data->Estimasi,'Working_day'=>$data->Working_day,'Working_hour'=>$data->Working_hour));
+        }
+    }
     function update()
     {
         $auth   = new Auth();
@@ -26,8 +38,13 @@ class Turret extends CI_Controller {
         
         if(!isset($_POST))	
             show_404();
-
-        if($this->record->update()
+        
+        $Gaji      = addslashes($_POST['Gaji']);
+        $Estimasi  = addslashes($_POST['Estimasi']);
+        $Working_day = addslashes($_POST['Working_day']);
+        $Working_hour = addslashes($_POST['Working_hour']);
+        
+        if($this->record->update($Gaji,$Estimasi,$Working_day,$Working_hour))
         {
             echo json_encode(array('success'=>true));
         }

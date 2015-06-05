@@ -16,12 +16,19 @@ class M_calculation extends CI_Model
     static $machine_pressing        = 'machine_pressing';
     static $tools_headingcat        = 'tools_headingcat';
     static $tools_heading1          = 'tools_heading1';
+    static $tools_heading2          = 'tools_heading2';
     static $tools_rollingcat        = 'tools_rollingcat';
     static $tools_rolling           = 'tools_rolling';   
     static $tools_cutting           = 'tools_cutting';
     static $tools_slotting          = 'tools_slotting';   
     static $tools_trimming          = 'tools_trimming';
     static $labor                   = 'labor';
+    static $turret                  = 'turret';
+    static $furnace                 = 'furnace';
+    static $plating                 = 'plating';
+    static $assembly                = 'assembly';
+    static $coating                 = 'coating';
+    static $utility                 = 'utility';
     
     public function __construct() {
         parent::__construct();
@@ -104,12 +111,13 @@ class M_calculation extends CI_Model
             'Customer'=>$this->input->post('Customer',true),
             'Customer_code'=>$this->input->post('Customer_code',true),
             'Saga_code'=>$this->input->post('Saga_code',true),
+            'Type_screwOri'=>$this->input->post('Type_screwOri',true),
             'Dia_nominal'=>$this->input->post('Dia_nominal',true),
             'Length_nominal'=>$this->input->post('Length_nominal',true),
             'Quantity'=>$this->input->post('Quantity',true),
             'Dia_wire'=>$this->input->post('Dia_wire',true),
             'Kode_wire'=>$this->input->post('Kode_wire',true),
-            'Net_weight'=>$this->input->post('Net_weight',true)
+            'Net_weight'=>$this->input->post('Net_weight',true)           
         ));
     }
     
@@ -121,6 +129,7 @@ class M_calculation extends CI_Model
             'Customer'=>$this->input->post('Customer',true),
             'Customer_code'=>$this->input->post('Customer_code',true),
             'Saga_code'=>$this->input->post('Saga_code',true),
+            'Type_screwOri'=>$this->input->post('Type_screwOri',true),
             'Dia_nominal'=>$this->input->post('Dia_nominal',true),
             'Length_nominal'=>$this->input->post('Length_nominal',true),
             'Quantity'=>$this->input->post('Quantity',true),
@@ -201,22 +210,23 @@ class M_calculation extends CI_Model
     
     function getSesData()
     {        
-        $this->db->select('Scrap, Exch_rate');
+        $this->db->select('Scrap, Exch_rate, Profit_rate');
         return $this->db->get(self::$sesdata); 
     }
     
-    function updateSesData($Scrap, $Exch_rate)
+    function updateSesData($Scrap, $Exch_rate, $Profit_rate)
     {
         return $this->db->update(self::$sesdata,array(
             'Scrap'=>$Scrap,
-            'Exch_rate'=>$Exch_rate
+            'Exch_rate'=>$Exch_rate,
+            'Profit_rate'=>$Profit_rate   
         ));
     }
 
     function getWasher1()
     {
         $this->db->select('Id, Name, Weight, Price, Currency');   
-        $this->db->where('Active', 'YES');
+        $this->db->where('Active', 'YES');     
         $this->db->order_by('Name', 'ASC');
         $query  = $this->db->get(self::$washer);
                    
@@ -347,9 +357,7 @@ class M_calculation extends CI_Model
     }
     function getCategory($typescr, $gol_mchn, $dia, $length)
     {
-        if ($gol_mchn == 'Heading 1 die')
-        {
-            $this->db->select('Category, Cost');
+            $this->db->select('Category, Cost, Currency');
             $this->db->where('Category  = (SELECT Category FROM '.self::$tools_headingcat.
                                 ' WHERE Type_screw = "'.$typescr.'")', NULL, FALSE)
                      ->where('Diameter', $dia)
@@ -357,26 +365,18 @@ class M_calculation extends CI_Model
                      ->where($length.'<= Max_panjang', NULL, FALSE)
                      ->where('Active', 'YES');
             return $this->db->get(self::$tools_heading1);
-        }
-        if (($gol_mchn == 'Bolt Former 2 dies'))
+        
+    }
+    function getHeading2($typescrhead2, $dianom2)
         {
-            $this->db->select('Category');
-            $this->db->where('Type_screw', $typescr);                 
-            return $this->db->get(self::$tools_headingcat);
-        }
-        if (($gol_mchn == 'Rivet Former 2 dies'))
-        {
-            $this->db->select('Category');
-            $this->db->where('Type_screw', $typescr);                 
-            return $this->db->get(self::$tools_headingcat);
-        }
-        if (($gol_mchn == 'Bolt Former 4 dies'))
-        {
-            $this->db->select('Category');
-            $this->db->where('Type_screw', $typescr);                 
-            return $this->db->get(self::$tools_headingcat);
+            $this->db->select('Price_pcs, Currency');
+            $this->db->where('Type_screw', $typescrhead2)
+                     ->where('Diameter_nominal', $dianom2)
+                     ->where('Active', 'YES');
+            return $this->db->get(self::$tools_heading2);
         }
     }
+    
     function getCategory2($typescr2, $dia2, $length2)
     {
             $this->db->select('Category2, Cost');
@@ -417,12 +417,85 @@ class M_calculation extends CI_Model
         }
       function getGaji($proses)
         {
-            $this->db->select('Id, Gaji_per_year, Jumlah_labor');
+            $this->db->select('Id, Gaji_per_year, Hasilprod_per_tahun, Jumlah_labor');
             $this->db->where('Process', $proses);
             return $this->db->get(self::$labor);
-        }  
-        
-}
+        }
+     function getGajiTurret()
+        {
+            $this->db->select('Gaji, Estimasi, Working_day, Working_hour');
+            return $this->db->get(self::$turret);
+        }
+        function getBiaya($proses)
+        {
+            $this->db->select('Id, Biaya_per_year, Hasilprod_per_tahun');
+            $this->db->where('Name', $proses);
+            return $this->db->get(self::$utility);
+        } 
+     function getFurnace()
+        {
+            $this->db->select('Id, Kode_Supp, Name, Price, Currency');
+            $this->db->where('Active', 'YES');
+            
+            $query  = $this->db->get(self::$furnace);
+                   
+            $data = array();
+            foreach ( $query->result() as $row )
+            {
+               array_push($data, $row); 
+            }       
+            return json_encode($data);
+        }
+       function getPlating()
+        {
+            $this->db->select('Id, Kode_Supp, Name, Price, Currency');
+            $this->db->where('Active', 'YES');
+            
+            $query  = $this->db->get(self::$plating);
+                   
+            $data = array();
+            foreach ( $query->result() as $row )
+            {
+               array_push($data, $row); 
+            }       
+            return json_encode($data);
+        }
+        function getBaking($proses)
+        {
+            $this->db->select('Id, Kode_Supp, Name, Price, Currency');
+            $this->db->where('Name', $proses);
+            return $this->db->get(self::$plating);
+        } 
+        function getKode_assembly()
+        {
+            $this->db->select('Id, Name, Price');
+            $this->db->where('Active', 'YES');
+            
+            $query  = $this->db->get(self::$assembly);
+                   
+            $data = array();
+            foreach ( $query->result() as $row )
+            {
+               array_push($data, $row); 
+            }       
+            return json_encode($data);
+        }
+        function getCoating()
+        {
+            $this->db->select('Id, Kode_Supp, Name, Price, Currency');
+            $this->db->where('Active', 'YES');
+            
+            $query  = $this->db->get(self::$coating);
+                   
+            $data = array();
+            foreach ( $query->result() as $row )
+            {
+               array_push($data, $row); 
+            }       
+            return json_encode($data);
+        }
+
+
     
 
     

@@ -27,8 +27,8 @@
 </script>
     
 <!-- Data Grid -->
-<table id="grid-master_heading2"
-    data-options="pageSize:30, rownumbers:true, singleSelect:true, fit:true, fitColumns:false, toolbar:toolbar_master_heading2">
+<table id="grid-master_heading4"
+    data-options="pageSize:30, rownumbers:true, singleSelect:true, fit:true, fitColumns:false, toolbar:toolbar_master_heading4">
     <thead>
         <tr>
             <th data-options="field:'ck',checkbox:true" ></th>
@@ -67,6 +67,8 @@
             <th data-options="field:'PC_Lifetime'"         width="100" align="center" formatter="price2" sortable="true" >PC Lifetime</th>
             <th data-options="field:'PB_Price'"            width="100" align="center" formatter="price" sortable="true" >PB Price</th>
             <th data-options="field:'PB_Lifetime'"         width="100" align="center" formatter="price2" sortable="true" >PB Lifetime</th>
+            <th data-options="field:'TR_Price'"            width="100" align="center" formatter="price" sortable="true" >TR Price</th>
+            <th data-options="field:'TR_Lifetime'"         width="100" align="center" formatter="price2" sortable="true" >TR Lifetime</th>
             <th data-options="field:'SSCoak_Price'"        width="100" align="center" formatter="price" sortable="true" >SS Coak Price</th>
             <th data-options="field:'SSCoak_Lifetime'"     width="100" align="center" formatter="price2" sortable="true" >SS Coak Lifetime</th>
             <th data-options="field:'SSNoCoak_Price'"      width="100" align="center" formatter="price" sortable="true" >SS No Coak Price</th>
@@ -80,26 +82,26 @@
 </table>
 
 <script type="text/javascript">
-    var toolbar_master_heading2 = [{
+    var toolbar_master_heading4 = [{
         text:'New',
         iconCls:'icon-new_file',
-        handler:function(){masterheading2Create();}
+        handler:function(){masterheading4Create();}
     },{
         text:'Edit',
         iconCls:'icon-edit',
-        handler:function(){masterheading2Update();}
+        handler:function(){masterheading4Update();}
     },{
         text:'Delete',
         iconCls:'icon-cancel',
-        handler:function(){masterheading2Hapus();}
+        handler:function(){masterheading4Hapus();}
     },{
         text:'Refresh',
         iconCls:'icon-reload',
-        handler:function(){$('#grid-master_heading2').datagrid('reload');}
+        handler:function(){$('#grid-master_heading4').datagrid('reload');}
     }];
     
-    $('#grid-master_heading2').datagrid({view:scrollview,remoteFilter:true,
-        url:'<?php echo site_url('master/tools/heading2/index'); ?>?grid=true'})
+    $('#grid-master_heading4').datagrid({view:scrollview,remoteFilter:true,
+        url:'<?php echo site_url('master/tools/heading4/index'); ?>?grid=true'})
         .datagrid('enableFilter');
 	
 	function price(value,row,index)
@@ -111,10 +113,10 @@
         return accounting.formatMoney(value, "", 0, ",", ".");
     }
         
-    function masterheading2Create() {
-        $('#dlg-master_heading2').dialog({modal: true}).dialog('open').dialog('setTitle','Tambah Data');
-        $('#fm-master_heading2').form('clear');
-        url = '<?php echo site_url('master/tools/heading2/create'); ?>';
+    function masterheading4Create() {
+        $('#dlg-master_heading4').dialog({modal: true}).dialog('open').dialog('setTitle','Tambah Data');
+        $('#fm-master_heading4').form('clear');
+        url = '<?php echo site_url('master/tools/heading4/create'); ?>';
         
         $('#SSNoCoak_Lifetime').numberbox('textbox').keypress(function(e) {
             if (e.keyCode == 13) {
@@ -150,6 +152,8 @@
                 var pcl = $('#PC_Lifetime').numberbox('getValue');
                 var pbp = $('#PB_Price').numberbox('getValue');
                 var pbl = $('#PB_Lifetime').numberbox('getValue');
+                var trp = $('#TR_Price').numberbox('getValue');
+                var trl = $('#TR_Lifetime').numberbox('getValue');
                 var sscp = $('#SSCoak_Price').numberbox('getValue');
                 var sscl = $('#SSCoak_Lifetime').numberbox('getValue');
                 var ssncp = $('#SSNoCoak_Price').numberbox('getValue');
@@ -157,19 +161,19 @@
                 var ppcs = eval(hdp/hdl)+ eval(hdip/hdil)+ eval(hdpp/hdpl)+eval(hdcp/hdcl)+
                            eval(hrp/hrl)+eval(sp/sl)+eval(spp/spl)+eval(scp/scl)+
                            eval(sbp/sbl)+eval(cdp/cdl)+eval(ckp/ckl)+eval(pp/pl)+
-                           eval(spup/spul)+eval(ppp/ppl)+eval(pcp/pcl)
-                           + eval(pbp/pbl)+eval(sscp/sscl)+eval(ssncp/ssncl);    
+                           eval(spup/spul)+eval(ppp/ppl)+eval(pcp/pcl)+
+                           eval(pbp/pbl)+ eval(trp/trl)+eval(sscp/sscl)+eval(ssncp/ssncl);  
             $('#Price_pcs').numberbox('setValue', ppcs); 
             }
         });
     }
     
-    function masterheading2Update() {
-        var row = $('#grid-master_heading2').datagrid('getSelected');
+    function masterheading4Update() {
+        var row = $('#grid-master_heading4').datagrid('getSelected');
         if(row){
-            $('#dlg-master_heading2').dialog({modal: true}).dialog('open').dialog('setTitle','Edit Data');
-            $('#fm-master_heading2').form('load',row);
-            url = '<?php echo site_url('master/tools/heading2/update'); ?>/' + row.Id;            
+            $('#dlg-master_heading4').dialog({modal: true}).dialog('open').dialog('setTitle','Edit Data');
+            $('#fm-master_heading4').form('load',row);
+            url = '<?php echo site_url('master/tools/heading4/update'); ?>/' + row.Id;            
         }
         else
         {
@@ -177,8 +181,8 @@
         }
     }
     
-    function masterheading2Save(){
-        $('#fm-master_heading2').form('submit',{
+    function masterheading4Save(){
+        $('#fm-master_heading4').form('submit',{
             url: url,
             onSubmit: function(){
                 return $(this).form('validate');
@@ -186,8 +190,8 @@
             success: function(result){
                 var result = eval('('+result+')');
                 if(result.success){
-                    $('#dlg-master_heading2').dialog('close');
-                    $('#grid-master_heading2').datagrid('reload');
+                    $('#dlg-master_heading4').dialog('close');
+                    $('#grid-master_heading4').datagrid('reload');
                     $.messager.show({
                         title: 'Info',
                         msg: 'Input Data Berhasil'
@@ -203,14 +207,14 @@
     }
     
     
-    function masterheading2Hapus(){
-        var row = $('#grid-master_heading2').datagrid('getSelected');
+    function masterheading4Hapus(){
+        var row = $('#grid-master_heading4').datagrid('getSelected');
         if (row){
-            $.messager.confirm('Konfirmasi','Anda yakin ingin menghapus heading2 '+row.Name+' ?',function(r){
+            $.messager.confirm('Konfirmasi','Anda yakin ingin menghapus heading4 '+row.Name+' ?',function(r){
                 if (r){
-                    $.post('<?php echo site_url('master/tools/heading2/delete'); ?>',{Id:row.Id},function(result){
+                    $.post('<?php echo site_url('master/tools/heading4/delete'); ?>',{Id:row.Id},function(result){
                         if (result.success){
-                            $('#grid-master_heading2').datagrid('reload');
+                            $('#grid-master_heading4').datagrid('reload');
                             $.messager.show({
                                 title: 'Info',
                                 msg: 'Hapus Data Berhasil'
@@ -234,11 +238,11 @@
 </script>
 
 <style type="text/css">
-    #fm-master_heading2{
+    #fm-master_heading4{
         margin:0;
         padding:10px 30px;
     }
-     #fm-master_heading2-edit{
+     #fm-master_heading4-edit{
         margin:0;
         padding:10px 30px;
     }
@@ -258,8 +262,8 @@
     }
 </style>
 
-<div id="dlg-master_heading2" class="easyui-dialog" style="width:550px; height:550px; padding: 10px 20px" closed="true" buttons="#dlg-buttons-master_heading2">
-    <form id="fm-master_heading2" method="post" novalidate>        
+<div id="dlg-master_heading4" class="easyui-dialog" style="width:550px; height:550px; padding: 10px 20px" closed="true" buttons="#dlg-buttons-master_heading4">
+    <form id="fm-master_heading4" method="post" novalidate>        
         <div class="fitem">
             <label for="type">Type Screw</label>
             <input type="text" id="Type_screw" name="Type_screw" class="easyui-textbox" required="true"/>
@@ -349,6 +353,11 @@
             <input type="text" id="PB_Lifetime" name="PB_Lifetime" class="easyui-numberbox" data-options="prompt:'Lifetime', groupSeparator:',',decimalSeparator:'.', precision:0" required="true"/>
          </div>
         <div class="fitem">
+            <label for="type">Trimming</label>
+            <input type="text" id="TR_Price" name="TR_Price" class="easyui-numberbox" data-options="prompt:'Price', groupSeparator:',',decimalSeparator:'.', precision:6" required="true"/>
+            <input type="text" id="TR_Lifetime" name="TR_Lifetime" class="easyui-numberbox" data-options="prompt:'Lifetime', groupSeparator:',',decimalSeparator:'.', precision:0" required="true"/>
+         </div>
+        <div class="fitem">
             <label for="type">SS Coak</label>
             <input type="text" id="SSCoak_Price" name="SSCoak_Price" class="easyui-numberbox" data-options="prompt:'Price', groupSeparator:',',decimalSeparator:'.', precision:6" required="true"/>
             <input type="text" id="SSCoak_Lifetime" name="SSCoak_Lifetime" class="easyui-numberbox" data-options="prompt:'Lifetime', groupSeparator:',',decimalSeparator:'.', precision:0" required="true"/>
@@ -365,7 +374,7 @@
         <div class="fitem">
             <label for="type">Currency</label>
             <input id="Currency" name="Currency" class="easyui-combobox" data-options=" 
-            url:'<?php echo site_url('master/tools/heading2/enumCurrency'); ?>',
+            url:'<?php echo site_url('master/tools/heading4/enumCurrency'); ?>',
                 method:'get', valueField:'data', textField:'data', panelHeight:'auto'" required="true"/>
         </div>
         <div class="fitem">
@@ -376,10 +385,10 @@
 </div>
 
 <!-- Dialog Button -->
-<div id="dlg-buttons-master_heading2">
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-ok" onclick="masterheading2Save()">Simpan</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-master_heading2').dialog('close')">Batal</a>
+<div id="dlg-buttons-master_heading4">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-ok" onclick="masterheading4Save()">Simpan</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-master_heading4').dialog('close')">Batal</a>
 </div>
 
-<!-- End of file v_heading2.php -->
-<!-- Location: ./application/views/master/tools/v_heading2.php -->
+<!-- End of file v_heading4.php -->
+<!-- Location: ./application/views/master/tools/v_heading4.php -->

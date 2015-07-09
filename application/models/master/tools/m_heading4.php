@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
  
-class M_heading2 extends CI_Model
+class M_heading4 extends CI_Model
 {    
-    static $table = 'tools_heading2';
+    static $table = 'tools_heading4';
      
     public function __construct() {
         parent::__construct();
@@ -109,6 +109,8 @@ class M_heading2 extends CI_Model
         $PC_Lifetime = $this->input->post('PC_Lifetime',true);
         $PB_Price  = $this->input->post('PB_Price',true);
         $PB_Lifetime = $this->input->post('PB_Lifetime',true);
+        $TR_Price  = $this->input->post('TR_Price',true);
+        $TR_Lifetime = $this->input->post('TR_Lifetime',true);
         $SSCoak_Price  = $this->input->post('SSCoak_Price',true);
         $SSCoak_Lifetime = $this->input->post('SSCoak_Lifetime',true);
         $SSNoCoak_Price  = $this->input->post('SSNoCoak_Price',true);
@@ -167,6 +169,8 @@ class M_heading2 extends CI_Model
                     'PC_Lifetime' => $PC_Lifetime,
                     'PB_Price' => $PB_Price,
                     'PB_Lifetime' => $PB_Lifetime,
+                    'TR_Price' => $TR_Price,
+                    'TR_Lifetime' => $TR_Lifetime,
                     'SSCoak_Price' => $SSCoak_Price,
                     'SSCoak_Lifetime' => $SSCoak_Lifetime,
                     'SSNoCoak_Price' => $SSNoCoak_Price,
@@ -217,13 +221,15 @@ class M_heading2 extends CI_Model
                     'PP_Price' => $PP_Price,
                     'PP_Lifetime' => $PP_Lifetime,
                     'PC_Price' => $PC_Price,
+                    'PC_Lifetime' => $PC_Lifetime,
                     'PB_Price' => $PB_Price,
                     'PB_Lifetime' => $PB_Lifetime,
+                    'TR_Price' => $TR_Price,
+                    'TR_Lifetime' => $TR_Lifetime,
                     'SSCoak_Price' => $SSCoak_Price,
                     'SSCoak_Lifetime' => $SSCoak_Lifetime,
                     'SSNoCoak_Price' => $SSNoCoak_Price,
                     'SSNoCoak_Lifetime' => $SSNoCoak_Lifetime,
-                    'PC_Lifetime' => $PC_Lifetime,
                     'Price_pcs'	=> $Price_pcs,
                     'Currency'	=> $Currency,
                     'Tgl_update'=> $Tgl_update      
@@ -274,6 +280,8 @@ class M_heading2 extends CI_Model
             'PC_Lifetime' =>$this->input->post('PC_Lifetime',true),
             'PB_Price' =>$this->input->post('PB_Price',true),
             'PB_Lifetime' =>$this->input->post('PB_Lifetime',true),
+            'TR_Price' =>$this->input->post('TR_Price',true),
+            'TR_Lifetime' =>$this->input->post('TR_Lifetime',true),
             'SSCoak_Price' =>$this->input->post('SSCoak_Price',true),
             'SSCoak_Lifetime' =>$this->input->post('SSCoak_Lifetime',true),
             'SSNoCoak_Price' =>$this->input->post('SSNoCoak_Price',true),
@@ -297,5 +305,5 @@ class M_heading2 extends CI_Model
     
 }
 
-/* End of file m_heading2.php */
-/* Location: ./application/models/master/tools/m_heading2.php */
+/* End of file m_heading4.php */
+/* Location: ./application/models/master/tools/m_heading4.php */

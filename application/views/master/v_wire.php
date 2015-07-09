@@ -72,6 +72,16 @@
         url:'<?php echo site_url('master/wire/index'); ?>?grid=true'})
         .datagrid('enableFilter');
     
+    function price(value,row,index)
+    { 
+        return accounting.formatMoney(value, "", 3, ",", ".");
+    }
+    
+    function price2(value,row,index)
+    { 
+        return accounting.formatMoney(value, "", 2, ",", ".");
+    }
+    
     function masterwireCreate() {
         $('#dlg-master_wire').dialog({modal: true}).dialog('open').dialog('setTitle','Tambah Data');
         $('#fm-master_wire').form('clear');
@@ -303,11 +313,11 @@
         </div>
         <div class="fitem">
             <label for="type">Min Diameter</label>
-            <input type="text" id="Min_dia" name="Min_dia" class="easyui-numberbox" required="true"/> 
+            <input type="text" id="Min_dia" name="Min_dia" class="easyui-numberbox" data-options="precision:2,groupSeparator:',',decimalSeparator:'.'" required="true"/> 
         </div>
         <div class="fitem">
             <label for="type">Max Diameter</label>
-            <input type="text" id="Max_dia" name="Max_dia" class="easyui-numberbox" required="true"/> 
+            <input type="text" id="Max_dia" name="Max_dia" class="easyui-numberbox" data-options="precision:2,groupSeparator:',',decimalSeparator:'.'" required="true"/> 
         </div>
         <div class="fitem">
             <label for="type">Type Wire</label>
@@ -323,7 +333,7 @@
         </div>
         <div class="fitem">
             <label for="type">Price</label>
-            <input type="text" id="Price" name="Price" class="easyui-textbox" required="true"/> 
+            <input type="text" id="Price" name="Price" class="easyui-textbox" data-options="precision:3,groupSeparator:',',decimalSeparator:'.'" required="true"/> 
         </div>
         <div class="fitem">
             <label for="type">Currency</label>

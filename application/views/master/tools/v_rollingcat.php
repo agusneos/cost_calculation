@@ -175,7 +175,7 @@
     <form id="fm-master_rollingcat" method="post" novalidate>        
         <div class="fitem">
             <label for="type">Category</label>
-            <input type="text" id="Category" name="Category" class="easyui-textbox" required="true"/>
+            <input type="text" id="Category2" name="Category2" class="easyui-textbox" required="true"/>
         </div>
         <div class="fitem">
             <label for="type">Type Screw</label>
@@ -194,7 +194,7 @@
     <form id="fm-master_rollingcat-edit" method="post" novalidate>        
         <div class="fitem">
             <label for="type">Category</label>
-            <input type="text" id="Category" name="Category" class="easyui-textbox" required="true"/>
+            <input type="text" id="Category2" name="Category2" class="easyui-textbox" required="true"/>
         </div>
         <div class="fitem">
             <label for="type">Type Screw</label>

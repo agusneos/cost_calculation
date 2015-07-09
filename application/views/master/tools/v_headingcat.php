@@ -9,7 +9,7 @@
         <tr>
             <th data-options="field:'ck',checkbox:true" ></th>
             <th data-options="field:'Id'"                   width="100" align="center" sortable="true">Kode Category</th>
-            <th data-options="field:'Category'"             width="300" halign="center" align="left" sortable="true">Category</th>
+            <th data-options="field:'Category1'"             width="300" halign="center" align="left" sortable="true">Category</th>
             <th data-options="field:'Type_screw'"           width="300" halign="center" align="left" sortable="true">Type Screw</th>
         </tr>
     </thead>
@@ -175,7 +175,7 @@
     <form id="fm-master_headingcat" method="post" novalidate>        
         <div class="fitem">
             <label for="type">Category</label>
-            <input type="text" id="Category" name="Category" class="easyui-textbox" required="true"/>
+            <input type="text" id="Category1" name="Category1" class="easyui-textbox" required="true"/>
         </div>
         <div class="fitem">
             <label for="type">Type Screw</label>
@@ -194,7 +194,7 @@
     <form id="fm-master_headingcat-edit" method="post" novalidate>        
         <div class="fitem">
             <label for="type">Category</label>
-            <input type="text" id="Category" name="Category" class="easyui-textbox" required="true"/>
+            <input type="text" id="Category1" name="Category1" class="easyui-textbox" required="true"/>
         </div>
         <div class="fitem">
             <label for="type">Type Screw</label>

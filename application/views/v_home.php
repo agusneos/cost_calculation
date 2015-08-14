@@ -15,14 +15,6 @@
         <form id="ff" class="easyui-form" method="post" data-options="novalidate:true">
             <table cellpadding="5">
                 <tr>
-                    <td>Exchange Rate:</td>
-                    <td><input class="easyui-numberbox" type="Exch_rate" name="Exch_rate" data-options="required:true"></input></td>
-                </tr>
-                <tr>
-                    <td>Scrap(%):</td>
-                    <td><input class="easyui-numberbox" type="Scrap" name="Scrap" data-options="required:true"></input></td>
-                </tr>
-                <tr>
                     <td>Subject:</td>
                     <td><input class="easyui-textbox" type="text" name="subject" data-options="required:true"></input></td>
                 </tr>

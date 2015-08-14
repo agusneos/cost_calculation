@@ -26,16 +26,16 @@
     });
 </script>
 
-<table id="grid-transaksi_calculation"
-       data-options="pageSize:50, rownumbers:true, singleSelect:true, fit:true, fitColumns:false, toolbar:toolbar_transaksi_calculation,
+<table id="grid-transaksi_calculationAppMktStaff"
+       data-options="pageSize:50, rownumbers:true, singleSelect:true, fit:true, fitColumns:false, toolbar:toolbar_transaksi_calculationAppMktStaff,
                 rowStyler: function(index,row){
-                    if (row.Approval_Acc_Mgr == ''){
+                    if (row.Approval_Mkt_Staff == ''){
                         return 'background-color:#6293BB;color:black;font-weight:bold;';
                     }
-                    else if (row.Approval_Acc_Mgr == 'NG'){
+                    else if (row.Approval_Mkt_Staff == 'NG'){
                         return 'background-color:orange;color:black;font-weight:bold;';
                     }
-                    else if (row.Approval_Mkt_Staff == 'NG'){
+                     else if (row.Approval_Mkt_Mgr == 'NG'){
                         return 'background-color:red;color:black;font-weight:bold;';
                     }
                 }">
@@ -180,49 +180,37 @@
             <th data-options="field:'Profit_cost_summary'"      width="100" align="center" sortable="true">Profit cost</th>
             <th data-options="field:'Total_cost_summary'"       width="100" align="center" sortable="true">Total Price</th>
             <th data-options="field:'Price_per_kg'"             width="100" align="center" sortable="true">Price per kg</th>
-            <th data-options="field:'Note_Acc_Staff'"           width="200" align="center" sortable="true">Message Staff</th>
-            <th data-options="field:'Approval_Acc_Mgr'"         width="100" align="center" sortable="true">Approval Mgr</th>
-            <th data-options="field:'Note_Acc_Mgr'"             width="200" align="center" sortable="true">Message Mgr</th>
-            <th data-options="field:'Approval_Mkt_Staff'"       width="100" align="center" sortable="true">Approval Mkt</th>
-            <th data-options="field:'Note_Mkt_Staff'"           width="200" align="center" sortable="true">Message Mkt</th>
+            <th data-options="field:'Approval_Mkt_Staff'"       width="100" align="center" sortable="true">Approval</th>
+            <th data-options="field:'Note_Mkt_Staff'"           width="200" align="center" sortable="true">Message</th>
+            <th data-options="field:'Id_Mkt_Staff'"             width="200" align="center" sortable="true">User</th>
+            <th data-options="field:'Approval_Mkt_Mgr'"         width="100" align="center" sortable="true">Approval Mgr</th>
+            <th data-options="field:'Note_Mkt_Mgr'"             width="200" align="center" sortable="true">Message</th>
         </tr>
     </thead>
 </table>
 
 <script type="text/javascript">
-    var toolbar_transaksi_calculation = [{
-            text: 'New',
+    var toolbar_transaksi_calculationAppMktStaff = [{
+            text: 'Approve',
             iconCls: 'icon-new_file',
             handler: function() {
-                transaksicalculationCreate();
+                transaksicalculationAppMktStaffApprove();
             }
         }, {
             text: 'Edit',
             iconCls: 'icon-edit',
             handler: function() {
-                transaksicalculationUpdate();
-            }
-        }, {
-            text: 'Delete',
-            iconCls: 'icon-cancel',
-            handler: function() {
-                transaksicalculationHapus();
+                transaksicalculationAppMktStaffUpdate();
             }
         }, {
             text: 'Refresh',
             iconCls: 'icon-reload',
             handler: function() {
-                $('#grid-transaksi_calculation').datagrid('reload');
-            }
-        }, {
-            text: 'Session Data',
-            iconCls: 'icon-time',
-            handler: function() {
-                transaksicalculationSesData();
+                $('#grid-transaksi_calculationAppMktStaff').datagrid('reload');
             }
         }];
-    $('#grid-transaksi_calculation').datagrid({view: scrollview, remoteFilter: true,
-        url: '<?php echo site_url('transaksi/calculation/index'); ?>?grid=true'})
+    $('#grid-transaksi_calculationAppMktStaff').datagrid({view: scrollview, remoteFilter: true,
+        url: '<?php echo site_url('transaksi/calculationAppMktStaff/index'); ?>?grid=true'})
             .datagrid('enableFilter');
 
     function price(value, row, index)
@@ -230,471 +218,13 @@
         return accounting.formatMoney(value, "", 0, ",", ".");
     }
 
-    function transaksicalculationCreate() {
-        $('#dlg-transaksi_calculation').dialog({modal: true}).dialog('open').dialog('setTitle', 'Tambah Data');
-        $('#fm-transaksi_calculation').form('clear');
-        url = '<?php echo site_url('transaksi/calculation/create'); ?>';
 
-        $('#Customer_code').textbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                $('#Saga_code').next().find('input').focus();
-            }
-        });
-
-        $('#Saga_code').textbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                $('#Type_screwOri').next().find('input').focus();
-            }
-        });
-
-        $('#Type_screwOri').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var tso = $('#Type_screwOri').textbox('getValue');
-                $('#Dia_nominal').next().find('input').focus();
-                $('#Type_screw').textbox('setValue', tso);
-                $('#Type_screw2').textbox('setValue', tso);
-            }
-        });
-
-        $('#Dia_nominal').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var dn = $('#Dia_nominal').numberbox('getValue');
-                $('#Length_nominal').next().find('input').focus();
-                $('#Dia_nominal2').numberbox('setValue', dn);
-                $('#Dia_nominal3').numberbox('setValue', dn);
-                $('#Dia_nominal4').numberbox('setValue', dn);
-                $('#Dia_nominal5').numberbox('setValue', dn);
-                $('#Dia_nominal6').numberbox('setValue', dn);
-                $('#Dia_nominal7').numberbox('setValue', dn);
-                $('#Dia_nominal8').numberbox('setValue', dn);
-                $('#Dia_nominal9').numberbox('setValue', dn);
-                $('#Dia_nominal10').numberbox('setValue', dn);
-                $('#Dia_nominal11').numberbox('setValue', dn);
-                $('#Dia_nominal12').numberbox('setValue', dn);
-                $('#Dia_nominal13').numberbox('setValue', dn);
-            }
-        });
-
-
-        $('#Length_nominal').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var ln = $('#Length_nominal').numberbox('getValue');
-                $('#Length_nominal2').numberbox('setValue', ln);
-                $('#Length_nominal3').numberbox('setValue', ln);
-                $('#Length_nominal4').numberbox('setValue', ln);
-                $('#Length_nominal5').numberbox('setValue', ln);
-                $('#Length_nominal6').numberbox('setValue', ln);
-                $('#Quantity').next().find('input').focus();
-            }
-        });
-
-        $('#Quantity').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var qty = $('#Quantity').numberbox('getValue');
-                $('#Quantity2').numberbox('setValue', qty);
-                $('#Quantity3').numberbox('setValue', qty);
-                $('#Quantity4').numberbox('setValue', qty);
-                $('#Quantity5').numberbox('setValue', qty);
-                $('#Quantity6').numberbox('setValue', qty);
-            }
-        });
-
-        $('#Dia_wire').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                $('#bta').focus();
-            }
-        });
-
-        $('#bta').keyup(function(e) {
-            if (e.keyCode == 13) {
-                diameter();
-                $('#Kode_wire').next().find('input').focus();
-            }
-        });
-        
-         $.post('<?php echo site_url('transaksi/calculation/getSesData'); ?>', function(result) {
-            $('#Exch_rate').numberbox('setValue', result.Exch_rate);
-            $('#Exch_rate_turret2').numberbox('setValue',result.Exch_rate);
-            $('#Exch_rate_furnace').numberbox('setValue',result.Exch_rate);
-            $('#Exch_rate_furnace2').numberbox('setValue',result.Exch_rate);
-            $('#Exch_rate_plating').numberbox('setValue',result.Exch_rate);
-            $('#Exch_rate_plating2').numberbox('setValue',result.Exch_rate);
-            $('#Exch_rate_coating').numberbox('setValue',result.Exch_rate);
-            $('#Profit_rate_summary').numberbox('setValue', result.Profit_rate);
-            $('#Scrap').numberbox('setValue', result.Scrap);
-        }, 'json'); //ambil session data
- 
-        $('#Net_weight').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                $('#Gross_weight').next().find('input').focus();
-                 var fw = $('#Net_weight').numberbox('getValue');
-                      $('#Finish_weight').numberbox('setValue', fw);
-            }           
-        });
-        
-        $('#Gross_weight').numberbox('textbox').keyup(function(e) {
-            if (e.keyCode == 13) {
-                var nw = $('#Net_weight').numberbox('getValue');
-                var sc = $('#Scrap').numberbox('getValue');
-                var pctsc = eval(sc) / 100;
-                var gw = (1 + eval(pctsc)) * eval(nw);
-                $('#Gross_weight').numberbox('setValue', gw);
-
-                var cur = $('#Currency').textbox('getValue');
-                var prc = $('#Price').numberbox('getValue');
-                var exc = $('#Exch_rate').numberbox('getValue');
-                if (cur == 'USD')
-                {
-                    var mc = eval(gw) * eval(prc) * eval(exc) / 1000;
-                }
-                else
-                {
-                    var mc = eval(gw) * eval(prc) / 1000;
-                }
-                $('#Material_cost').numberbox('setValue', mc);
-                $('#Material_cost_summary').numberbox('setValue', mc);
-            }
-        });
-
-        $('#Washer2_weight').numberbox('setValue', '0');
-        $('#Washer2_cost').numberbox('setValue', '0');
-        
-        
-        $('#Finish_weight').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var fw = $('#Finish_weight').numberbox('getValue');
-                      $('#Finish_weight2').numberbox('setValue', fw);
-                      $('#Finish_weight3').numberbox('setValue', fw);
-                      $('#Finish_weight4').numberbox('setValue', fw);
-                      gaji_FQ();
-                      gaji_packing();
-                      $('#Finish_weight5').numberbox('setValue', fw);
-                      biaya_listrik();
-                      biaya_factory();
-                      
-                }
-        });
-        $('#Heading_depr_cost').numberbox('setValue', 0);
-        $('#Rolling_depr_cost2').numberbox('setValue', 0);
-        $('#Cutting_depr_cost').numberbox('setValue', 0);
-        $('#Slotting_depr_cost').numberbox('setValue', 0);
-        $('#Trimming_depr_cost').numberbox('setValue', 0);
-        $('#Straightening_depr_cost').numberbox('setValue', 0);
-        $('#Pressing_depr_cost').numberbox('setValue', 0);
-        
-        $('#Pressing_depr_cost').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var hdc = $('#Heading_depr_cost').numberbox('getValue');
-                var rdc2 = $('#Rolling_depr_cost2').numberbox('getValue');
-                var cdc = $('#Cutting_depr_cost').numberbox('getValue');
-                var sdc = $('#Slotting_depr_cost').numberbox('getValue');
-                var tdc = $('#Trimming_depr_cost').numberbox('getValue');
-                var stdc = $('#Straightening_depr_cost').numberbox('getValue');
-                var pdc = $('#Pressing_depr_cost').numberbox('getValue');
-                var dcs = ((eval(hdc) + eval(rdc2) + eval(cdc)) + eval(sdc) + eval(tdc) + eval(stdc)+ eval(pdc));
-                $('#Depreciation_cost_summary').numberbox('setValue', dcs);
-            }
-        });
-
-        $('#Type_screw').textbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var gol_mchn = $('#Gol_mchn_head2').textbox('getValue');
-                if (gol_mchn == "Heading 1 die")
-                {
-                var cat = $('#Type_screw').textbox('getValue');
-                var dia = $('#Dia_nominal9').numberbox('getValue');
-                var length = $('#Length_nominal2').numberbox('getValue');
-                $.post('<?php echo site_url('transaksi/calculation/getCategory'); ?>',
-                        {typescr: cat, gol_mchn: gol_mchn, dia: dia, length: length}, function(result) {
-                    $('#Category').textbox('setValue', result.Category1);
-                    $('#Heading_tool_cost').numberbox('setValue', result.htc);
-                    $('#Heading_currency').textbox('setValue', result.Currency);
-                }, 'json');
-                }
-                else if(gol_mchn == "Heading 2 dies")
-                {
-                var item = $('#Type_screw').textbox('getValue');
-                var dianom2 = $('#Dia_nominal9').numberbox('getValue');
-                $.post('<?php echo site_url('transaksi/calculation/getHeading2'); ?>',
-                        {typescrhead2: item, dianom2: dianom2}, function(result) {
-                    $('#Heading_tool_cost').numberbox('setValue', result.htc2);
-                    $('#Heading_currency').textbox('setValue', result.Currency);
-                }, 'json');
-                }
-                else(gol_mchn == "Heading 4 dies")
-                {
-                var item4 = $('#Type_screw').textbox('getValue');
-                var dianom4 = $('#Dia_nominal9').numberbox('getValue');
-                $.post('<?php echo site_url('transaksi/calculation/getHeading4'); ?>',
-                        {typescrhead4: item4, dianom4: dianom4}, function(result) {
-                    $('#Heading_tool_cost').numberbox('setValue', result.htc4);
-                    $('#Heading_currency').textbox('setValue', result.Currency);
-                }, 'json');
-                }
-                
-                var hcurr = $('#Heading_currency').textbox('getValue');
-                var htc2 =  $('#Heading_tool_cost').numberbox('getValue');
-                var exc = $('#Exch_rate').numberbox('getValue');
-                
-                if(hcurr == "IDR")
-                {
-                $('#Heading_tool_cost2').numberbox('setValue', htc2 );
-                }
-                else {
-                $('#Heading_tool_cost2').numberbox('setValue', htc2*exc);
-                }
-            }
-        });
-
-        $('#Type_screw2').textbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var cat2 = $('#Type_screw2').textbox('getValue');
-                var dia2 = $('#Dia_nominal10').numberbox('getValue');
-                var length2 = $('#Length_nominal3').numberbox('getValue');
-                var freq = $('#Freq_mchnroll').numberbox('getValue');
-                $.post('<?php echo site_url('transaksi/calculation/getCategory2'); ?>',
-                        {typescr2: cat2, dia2: dia2, length2: length2}, function(result) {
-                    $('#Category2').textbox('setValue', result.Category2)
-                    $('#Rolling_tool_cost').numberbox('setValue', (result.rtc)*freq);
-                }, 'json');
-                $('#Rolling_tool_cost').next().focus();
-            }
-        });
-        
-        $('#Heading_tool_cost2').numberbox('setValue', 0);
-        $('#Rolling_tool_cost').numberbox('setValue', 0);
-        $('#Cutting_tool_cost').numberbox('setValue', 0);
-        $('#Slotting_tool_cost').numberbox('setValue', 0);
-        $('#Trimming_tool_cost').numberbox('setValue', 0);
-        
-        $('#Trimming_tool_cost').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var htc2 = $('#Heading_tool_cost2').numberbox('getValue');
-                var rtc = $('#Rolling_tool_cost').numberbox('getValue');
-                var ctc = $('#Cutting_tool_cost').numberbox('getValue');
-                var stc = $('#Slotting_tool_cost').numberbox('getValue');
-                var ttc = $('#Trimming_tool_cost').numberbox('getValue');
-                var tcs = ((eval(htc2) + eval(rtc) + eval(ctc)) + eval(stc) + eval(ttc));
-                $('#Tooling_cost_summary').numberbox('setValue', tcs);
-            }
-        });
-        
-        $('#Quantity2').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var gps = $('#Gaji_per_sec').numberbox('getValue');
-                var ct = $('#Cycle_time').numberbox('getValue');
-                var dt = $('#Dandori_time').numberbox('getValue');
-                var qpm = $('#Quantity2').numberbox('getValue');
-                var lch = ((eval(ct) * eval(qpm) + eval(dt)) * eval(gps) / eval(qpm));
-                $('#Labor_cost_heading').numberbox('setValue', lch);
-            }
-        });
-        $('#Quantity3').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var gpsr = $('#Gaji_per_sec2').numberbox('getValue');
-                var ctr = $('#Cycle_time2').numberbox('getValue');
-                var dtr = $('#Dandori_time2').numberbox('getValue');
-                var qpmr = $('#Quantity3').numberbox('getValue');
-                var lcr = ((eval(ctr) * eval(qpmr) + eval(dtr)) * eval(gpsr) / eval(qpmr));
-                var freq = $('#Freq_mchnroll').numberbox('getValue');
-                $('#Labor_cost_rolling').numberbox('setValue', lcr * freq);
-            }
-        });
-        $('#Quantity4').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var gpsc = $('#Gaji_per_sec3').numberbox('getValue');
-                var ctc = $('#Cycle_time3').numberbox('getValue');
-                var dtc = $('#Dandori_time3').numberbox('getValue');
-                var qpmc = $('#Quantity4').numberbox('getValue');
-                var lcc = ((eval(ctc) * eval(qpmc) + eval(dtc)) * eval(gpsc) / eval(qpmc));
-                $('#Labor_cost_cutting').numberbox('setValue', lcc);
-            }
-        });
-        $('#Quantity5').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var gpss = $('#Gaji_per_sec4').numberbox('getValue');
-                var cts = $('#Cycle_time4').numberbox('getValue');
-                var dts = $('#Dandori_time4').numberbox('getValue');
-                var qpms = $('#Quantity5').numberbox('getValue');
-                var lcs = ((eval(cts) * eval(qpms) + eval(dts)) * eval(gpss) / eval(qpms));
-                $('#Labor_cost_slotting').numberbox('setValue', lcs);
-            }
-        });
-        $('#Quantity6').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var gpst = $('#Gaji_per_sec5').numberbox('getValue');
-                var ctt = $('#Cycle_time5').numberbox('getValue');
-                var dtt = $('#Dandori_time5').numberbox('getValue');
-                var qpmt = $('#Quantity6').numberbox('getValue');
-                var lct = ((eval(ctt) * eval(qpmt) + eval(dtt)) * eval(gpst) / eval(qpmt));
-                $('#Labor_cost_trimming').numberbox('setValue', lct);
-            }
-        });
-        $('#Jumlah_shot1').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var js1 = $('#Jumlah_shot1').numberbox('getValue');
-                $.post('<?php echo site_url('transaksi/calculation/getGajiTurret'); ?>', function(result) {
-                $('#Biaya_labor1').numberbox('setValue',result.gaji/(js1* result.estimasi*result.working_day*result.working_hour*60/100));
-                }, 'json');
-              $('#Proses2').next().focus();  
-            }
-        });
-        $('#Jumlah_shot2').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var js1 = $('#Jumlah_shot2').numberbox('getValue');
-                $.post('<?php echo site_url('transaksi/calculation/getGajiTurret'); ?>', function(result) {
-                $('#Biaya_labor2').numberbox('setValue',result.gaji/(js1* result.estimasi*result.working_day*result.working_hour*60/100));
-                }, 'json');
-              $('#Proses3').next().focus();  
-            }
-        });
-        $('#Jumlah_shot3').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var js1 = $('#Jumlah_shot3').numberbox('getValue');
-                $.post('<?php echo site_url('transaksi/calculation/getGajiTurret'); ?>', function(result) {
-                $('#Biaya_labor3').numberbox('setValue',result.gaji/(js1* result.estimasi*result.working_day*result.working_hour*60/100));
-                }, 'json');
-              $('#Proses4').next().focus();  
-            }
-        });
-        $('#Jumlah_shot4').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var js1 = $('#Jumlah_shot4').numberbox('getValue');
-                $.post('<?php echo site_url('transaksi/calculation/getGajiTurret'); ?>', function(result) {
-                $('#Biaya_labor4').numberbox('setValue',result.gaji/(js1* result.estimasi*result.working_day*result.working_hour*60/100));
-                }, 'json');
-              $('#Proses5').next().focus();  
-            }
-        });
-        $('#Jumlah_shot5').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var js1 = $('#Jumlah_shot5').numberbox('getValue');
-                $.post('<?php echo site_url('transaksi/calculation/getGajiTurret'); ?>', function(result) {
-                $('#Biaya_labor5').numberbox('setValue',result.gaji/(js1* result.estimasi*result.working_day*result.working_hour*60/100));
-                }, 'json');  
-            }
-        });
-         $('#Gaji_per_gram_fq').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var fw = $('#Finish_weight4').numberbox('getValue');
-                var gpg =$('#Gaji_per_gram_fq').numberbox('getValue'); 
-            $('#Labor_cost_fq').numberbox('setValue', eval(gpg)*eval(fw));
-            $('#Gaji_per_gram_packing').next().focus();   
-            }
-        });
-        $('#Gaji_per_gram_packing').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var fw = $('#Finish_weight4').numberbox('getValue');
-                var gpg =$('#Gaji_per_gram_packing').numberbox('getValue'); 
-            $('#Labor_cost_packing').numberbox('setValue', eval(gpg)*eval(fw)); 
-            }
-        });
-        $('#Biaya_per_gram_elc').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var fw = $('#Finish_weight5').numberbox('getValue');
-                var bpg =$('#Biaya_per_gram_elc').numberbox('getValue'); 
-            $('#Electricity_cost').numberbox('setValue', eval(bpg)*eval(fw));
-            $('#Biaya_per_gram_fexp').next().focus();   
-            }
-        });
-        $('#Biaya_per_gram_fexp').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var fw = $('#Finish_weight5').numberbox('getValue');
-                var bpg =$('#Biaya_per_gram_fexp').numberbox('getValue'); 
-            $('#Factory_cost').numberbox('setValue', eval(bpg)*eval(fw)); 
-            }
-        });
-        
-        $('#Labor_cost_heading').numberbox('setValue', 0);
-        $('#Labor_cost_rolling').numberbox('setValue', 0);
-        $('#Labor_cost_cutting').numberbox('setValue', 0);
-        $('#Labor_cost_slotting').numberbox('setValue', 0);
-        $('#Labor_cost_trimming').numberbox('setValue', 0);
-        $('#Labor_cost_straightening').numberbox('setValue', 0);
-        $('#Biaya_labor1').numberbox('setValue', 0);
-        $('#Biaya_labor2').numberbox('setValue', 0);
-        $('#Biaya_labor3').numberbox('setValue', 0);
-        $('#Biaya_labor4').numberbox('setValue', 0);
-        $('#Biaya_labor5').numberbox('setValue', 0);
-        $('#Turret2_cost').numberbox('setValue', 0);
-        $('#Labor_cost_fq').numberbox('setValue', 0);
-        $('#Labor_cost_packing').numberbox('setValue', 0);
-        $('#Electricity_cost').numberbox('setValue', 0);
-        $('#Factory_cost').numberbox('setValue', 0);
-        $('#Furnace_cost').numberbox('setValue', 0);
-        $('#Furnace2_cost').numberbox('setValue', 0);
-        $('#Plating_cost').numberbox('setValue', 0);
-        $('#Baking_cost').numberbox('setValue', 0);
-        $('#Cuci_cost').numberbox('setValue', 0);
-        $('#Assembly_cost').numberbox('setValue', 0);
-        $('#Plating2_cost').numberbox('setValue', 0);
-        $('#Coating_cost').numberbox('setValue', 0);
-                
-         $('#Coating_cost').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var hlc = $('#Labor_cost_heading').numberbox('getValue');
-                var rlc =$('#Labor_cost_rolling').numberbox('getValue');
-                var clc = $('#Labor_cost_cutting').numberbox('getValue');
-                var slc =$('#Labor_cost_slotting').numberbox('getValue');
-                var tlc = $('#Labor_cost_trimming').numberbox('getValue');
-                var stlc =$('#Labor_cost_straightening').numberbox('getValue');
-                var turlc1 = $('#Biaya_labor1').numberbox('getValue');
-                var turlc2 =$('#Biaya_labor2').numberbox('getValue');
-                var turlc3 = $('#Biaya_labor3').numberbox('getValue');
-                var turlc4 =$('#Biaya_labor4').numberbox('getValue');
-                var turlc5 = $('#Biaya_labor5').numberbox('getValue');
-                var turc2 = $('#Turret2_cost').numberbox('getValue');
-                var fqlc = $('#Labor_cost_fq').numberbox('getValue');
-                var plc = $('#Labor_cost_packing').numberbox('getValue');
-                var bl =$('#Electricity_cost').numberbox('getValue');
-                var bf = $('#Factory_cost').numberbox('getValue');
-                var fc=$('#Furnace_cost').numberbox('getValue');
-                var fc2=$('#Furnace2_cost').numberbox('getValue');
-                var pc = $('#Plating_cost').numberbox('getValue');
-                var bc=$('#Baking_cost').numberbox('getValue');
-                var ccc=$('#Cuci_cost').numberbox('getValue');
-                var ac = $('#Assembly_cost').numberbox('getValue');
-                var pc2 = $('#Plating2_cost').numberbox('getValue');
-                var cc=$('#Coating_cost').numberbox('getValue');
-                var pcsum=eval(hlc)+ eval(rlc)+ eval(clc)+eval(slc)+eval(tlc)+eval(stlc)+eval(turlc1)+eval(turlc2)+eval(turlc3)+eval(turlc4)+eval(turlc5)+eval(turc2)+eval(fqlc)+eval(plc)+eval(bl)+eval(bf)+eval(fc)+eval(fc2)+eval(pc)+eval(pc2)+eval(bc)+eval(ccc)+eval(ac)+eval(cc);    
-           
-            $('#Processing_cost_summary').numberbox('setValue', pcsum); 
-            }
-        });
-        
-        $('#Material_cost_summary').numberbox('setValue', 0);
-        $('#Washer_total_cost_summary').numberbox('setValue', 0);
-        $('#Processing_cost_summary').numberbox('setValue', 0);
-        $('#Tooling_cost_summary').numberbox('setValue', 0);
-        $('#Depreciation_cost_summary').numberbox('setValue', 0);
-        $('#Profit_cost_summary').numberbox('setValue', 0);
-        
-        $('#Profit_rate_summary').numberbox('textbox').keypress(function(e) {
-            if (e.keyCode == 13) {
-                var mcs = $('#Material_cost_summary').numberbox('getValue');
-                var wtcs =$('#Washer_total_cost_summary').numberbox('getValue');
-                var pcs = $('#Processing_cost_summary').numberbox('getValue');
-                var tcs =$('#Tooling_cost_summary').numberbox('getValue');
-                var dcsum = $('#Depreciation_cost_summary').numberbox('getValue');
-                var prs =$('#Profit_rate_summary').numberbox('getValue');
-                var prcs = eval(prs/100)*(eval(mcs)+eval(wtcs)+eval(pcs)+eval(tcs));
-                var tcsum =eval(prcs)+eval(mcs)+eval(wtcs)+eval(pcs)+eval(tcs)+eval(dcsum);
-                var nw = $('#Net_weight').numberbox('getValue');
-                var ppkg = eval(1000/eval(nw))*eval(tcsum);
-            $('#Profit_cost_summary').numberbox('setValue', prcs);
-            $('#Total_cost_summary').numberbox('setValue', tcsum);
-            $('#Price_per_kg').numberbox('setValue', ppkg);
-            }
-        });
-    }
-    
-
-    function transaksicalculationUpdate() {
-        var row = $('#grid-transaksi_calculation').datagrid('getSelected');
+    function transaksicalculationAppMktStaffUpdate() {
+        var row = $('#grid-transaksi_calculationAppMktStaff').datagrid('getSelected');
         if (row) {
-            $('#dlg-transaksi_calculation').dialog({modal: true}).dialog('open').dialog('setTitle', 'Edit Data');
-            $('#fm-transaksi_calculation').form('load', row);
-            url = '<?php echo site_url('transaksi/calculation/update'); ?>/' + row.Id;
+            $('#dlg-transaksi_calculationAppMktStaff').dialog({modal: true}).dialog('open').dialog('setTitle', 'Edit Data');
+            $('#fm-transaksi_calculationAppMktStaff').form('load', row);
+            url = '<?php echo site_url('transaksi/calculationAppMktStaff/update'); ?>/' + row.Id;
          $('#Customer_code').textbox('textbox').keypress(function(e) {
             if (e.keyCode == 13) {
                 $('#Saga_code').next().find('input').focus();
@@ -913,12 +443,12 @@
                     var plac = eval(fw3) * eval(prcpla)/1000 ;
                 }
                 $('#Plating_cost').numberbox('setValue',plac);
-                
-                $('#Exch_rate_plating2').numberbox('setValue',exc);
+            
+            $('#Exch_rate_plating2').numberbox('setValue',exc);
                 var curpla2 = $('#Currency_plating2').textbox('getValue');
                 var prcpla2 = $('#Price_plating2').numberbox('getValue');
                 var excpla2 = $('#Exch_rate_plating2').numberbox('getValue');
-                if (curpla2 == 'USD')
+                if (curtur2 == 'USD')
                 {
                     var pla2c = eval(prcpla2) * eval(excpla2);
                 }
@@ -926,8 +456,8 @@
                 {
                     var pla2c = eval(prcpla2) ;
                 }
-                $('Plating2_cost').numberbox('setValue',pla2c);
-                 
+                $('#Plating2_cost').numberbox('setValue',pla2c);
+                
             $('#Exch_rate_coating').numberbox('setValue',exc);
                 var curcoat = $('#Currency_coating').textbox('getValue');
                 var prccoat = $('#Price_coating').numberbox('getValue');
@@ -1032,7 +562,7 @@
                 var cat = $('#Type_screw').textbox('getValue');
                 var dia = $('#Dia_nominal9').numberbox('getValue');
                 var length = $('#Length_nominal2').numberbox('getValue');
-                $.post('<?php echo site_url('transaksi/calculation/getCategory'); ?>',
+                $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getCategory'); ?>',
                         {typescr: cat, gol_mchn: gol_mchn, dia: dia, length: length}, function(result) {
                     $('#Category').textbox('setValue', result.Category1);
                     $('#Heading_tool_cost').numberbox('setValue', result.htc);
@@ -1043,7 +573,7 @@
                 {
                 var item = $('#Type_screw').textbox('getValue');
                 var dianom2 = $('#Dia_nominal9').numberbox('getValue');
-                $.post('<?php echo site_url('transaksi/calculation/getHeading2'); ?>',
+                $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getHeading2'); ?>',
                         {typescrhead2: item, dianom2: dianom2}, function(result) {
                     $('#Heading_tool_cost').numberbox('setValue', result.htc2);
                     $('#Heading_currency').textbox('setValue', result.Currency);
@@ -1053,7 +583,7 @@
                 {
                 var item4 = $('#Type_screw').textbox('getValue');
                 var dianom4 = $('#Dia_nominal9').numberbox('getValue');
-                $.post('<?php echo site_url('transaksi/calculation/getHeading4'); ?>',
+                $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getHeading4'); ?>',
                         {typescrhead4: item4, dianom4: dianom4}, function(result) {
                     $('#Heading_tool_cost').numberbox('setValue', result.htc4);
                     $('#Heading_currency').textbox('setValue', result.Currency);
@@ -1083,7 +613,7 @@
                 var dia2 = $('#Dia_nominal10').numberbox('getValue');
                 var length2 = $('#Length_nominal3').numberbox('getValue');
                 var freq = $('#Freq_mchnroll').numberbox('getValue');
-                $.post('<?php echo site_url('transaksi/calculation/getCategory2'); ?>',
+                $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getCategory2'); ?>',
                         {typescr2: cat2, dia2: dia2, length2: length2}, function(result) {
                     $('#Category2').textbox('setValue', result.Category2)
                     $('#Rolling_tool_cost').numberbox('setValue', (result.rtc)*freq);
@@ -1108,7 +638,7 @@
         var kmh = $('#Kode_mchnhead').textbox('getValue');
                 $('#Heading_machine').textbox('setValue', kmh);
                        
-        $.post('<?php echo site_url('transaksi/calculation/getDataHeading'); ?>',
+        $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getDataHeading'); ?>',
                         {kode_mesin: kmh}, function(result) {
                     $('#Dandori_time').numberbox('setValue', result.Dandori);
                     $('#Cycle_time').numberbox('setValue', result.ct);
@@ -1130,7 +660,7 @@
         var kmr = $('#Kode_mchnroll').textbox('getValue');
                 $('#Rolling_machine').textbox('setValue', kmr);
                        
-        $.post('<?php echo site_url('transaksi/calculation/getDataRolling'); ?>',
+        $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getDataRolling'); ?>',
                         {kode_mesin2: kmr}, function(result) {
                     $('#Dandori_time2').numberbox('setValue', result.Dandori2);
                     $('#Cycle_time2').numberbox('setValue', result.ct2);
@@ -1153,7 +683,7 @@
         var kmc = $('#Kode_mchncutt').textbox('getValue');
                 $('#Cutting_machine').textbox('setValue', kmc);
                        
-        $.post('<?php echo site_url('transaksi/calculation/getDataCutting'); ?>',
+        $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getDataCutting'); ?>',
                         {kode_mesin3: kmc}, function(result) {
                     $('#Dandori_time3').numberbox('setValue', result.Dandori3);
                     $('#Cycle_time3').numberbox('setValue', result.ct3);
@@ -1174,7 +704,7 @@
         var kms = $('#Kode_mchnslott').textbox('getValue');
                 $('#Slotting_machine').textbox('setValue', kms);
                        
-        $.post('<?php echo site_url('transaksi/calculation/getDataSlotting'); ?>',
+        $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getDataSlotting'); ?>',
                         {kode_mesin4: kms}, function(result) {
                     $('#Dandori_time4').numberbox('setValue', result.Dandori4);
                     $('#Cycle_time4').numberbox('setValue', result.ct4);
@@ -1195,7 +725,7 @@
         var kmt = $('#Kode_mchntrimm').textbox('getValue');
                 $('#Trimming_machine').textbox('setValue', kmt);
                        
-        $.post('<?php echo site_url('transaksi/calculation/getDataTrimming'); ?>',
+        $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getDataTrimming'); ?>',
                         {kode_mesin5: kmt}, function(result) {
                     $('#Dandori_time5').numberbox('setValue', result.Dandori5);
                     $('#Cycle_time5').numberbox('setValue', result.ct5);
@@ -1217,7 +747,7 @@
         $('#Jumlah_shot1').numberbox('textbox').keypress(function(e) {
             if (e.keyCode == 13) {
                 var js1 = $('#Jumlah_shot1').numberbox('getValue');
-                $.post('<?php echo site_url('transaksi/calculation/getGajiTurret'); ?>', function(result) {
+                $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getGajiTurret'); ?>', function(result) {
                 $('#Biaya_labor1').numberbox('setValue',result.gaji/(js1* result.estimasi*result.working_day*result.working_hour*60/100));
                 }, 'json');
               $('#Proses2').next().focus();  
@@ -1226,7 +756,7 @@
         $('#Jumlah_shot2').numberbox('textbox').keypress(function(e) {
             if (e.keyCode == 13) {
                 var js1 = $('#Jumlah_shot2').numberbox('getValue');
-                $.post('<?php echo site_url('transaksi/calculation/getGajiTurret'); ?>', function(result) {
+                $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getGajiTurret'); ?>', function(result) {
                 $('#Biaya_labor2').numberbox('setValue',result.gaji/(js1* result.estimasi*result.working_day*result.working_hour*60/100));
                 }, 'json');
               $('#Proses3').next().focus();  
@@ -1235,7 +765,7 @@
         $('#Jumlah_shot3').numberbox('textbox').keypress(function(e) {
             if (e.keyCode == 13) {
                 var js1 = $('#Jumlah_shot3').numberbox('getValue');
-                $.post('<?php echo site_url('transaksi/calculation/getGajiTurret'); ?>', function(result) {
+                $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getGajiTurret'); ?>', function(result) {
                 $('#Biaya_labor3').numberbox('setValue',result.gaji/(js1* result.estimasi*result.working_day*result.working_hour*60/100));
                 }, 'json');
               $('#Proses4').next().focus();  
@@ -1244,7 +774,7 @@
         $('#Jumlah_shot4').numberbox('textbox').keypress(function(e) {
             if (e.keyCode == 13) {
                 var js1 = $('#Jumlah_shot4').numberbox('getValue');
-                $.post('<?php echo site_url('transaksi/calculation/getGajiTurret'); ?>', function(result) {
+                $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getGajiTurret'); ?>', function(result) {
                 $('#Biaya_labor4').numberbox('setValue',result.gaji/(js1* result.estimasi*result.working_day*result.working_hour*60/100));
                 }, 'json');
               $('#Proses5').next().focus();  
@@ -1253,7 +783,7 @@
         $('#Jumlah_shot5').numberbox('textbox').keypress(function(e) {
             if (e.keyCode == 13) {
                 var js1 = $('#Jumlah_shot5').numberbox('getValue');
-                $.post('<?php echo site_url('transaksi/calculation/getGajiTurret'); ?>', function(result) {
+                $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getGajiTurret'); ?>', function(result) {
                 $('#Biaya_labor5').numberbox('setValue',result.gaji/(js1* result.estimasi*result.working_day*result.working_hour*60/100));
                 }, 'json');  
             }
@@ -1349,80 +879,36 @@
             $.messager.alert('Info', 'Data belum dipilih !', 'info');
         }
     }
-    function transaksicalculationSave() {
-        $('#fm-transaksi_calculation').form('submit', {
-            url: url,
-            onSubmit: function() {
-                return $(this).form('validate');
-            },
-            success: function(result) {
-                var result = eval('(' + result + ')');
-                if (result.success) {
-                    $('#dlg-transaksi_calculation').dialog('close');
-                    $('#grid-transaksi_calculation').datagrid('reload');
-                    $.messager.show({
-                        title: 'Info',
-                        msg: 'Input Data Berhasil'
-                    });
-                } else {
-                    $.messager.show({
-                        title: 'Error',
-                        msg: 'Input Data Gagal'
-                    });
-                }
-            }
-        });
-    }
-
-    function transaksicalculationHapus() {
-        var row = $('#grid-transaksi_calculation').datagrid('getSelected');
+    
+    function transaksicalculationAppMktStaffApprove() {
+        var row = $('#grid-transaksi_calculationAppMktStaff').datagrid('getSelected');
         if (row) {
-            $.messager.confirm('Konfirmasi', 'Anda yakin ingin menghapus calculation ' + row.Name + ' ?', function(r) {
-                if (r) {
-                    $.post('<?php echo site_url('transaksi/calculation/delete'); ?>', {Id: row.Id}, function(result) {
-                        if (result.success) {
-                            $('#grid-transaksi_calculation').datagrid('reload');
-                            $.messager.show({
-                                title: 'Info',
-                                msg: 'Hapus Data Berhasil'
-                            });
-                        } else {
-                            $.messager.show({
-                                title: 'Error',
-                                msg: 'Hapus Data Gagal'
-                            });
-                        }
-                    }, 'json');
-                }
-            });
-        }
+      
+        $('#dlg-transaksi_calculationAppMktStaffApprove').dialog({modal: true}).dialog('open').dialog('setTitle', 'Approve Calculation');
+            $('#fm-transaksi_calculationAppMktStaffApprove').form('load', row);
+               
+            url = '<?php echo site_url('transaksi/calculationAppMktStaff/approve'); ?>/' + row.Id;
+        }              
         else
         {
             $.messager.alert('Info', 'Data belum dipilih !', 'info');
-        }
+        }  
+        
     }
-
-    function transaksicalculationSesData()
-    {
-        $('#dlg-transaksi_calculation_sesdata').dialog({modal: true}).dialog('open').dialog('setTitle', 'Ubah Session Data');
-        $('#fm-transaksi_calculation_sesdata').form('clear');
-        $.post('<?php echo site_url('transaksi/calculation/getSesData'); ?>', function(result) {
-            $('#ScrapSesData').numberbox('setValue', result.Scrap);
-            $('#Exch_rateSesData').numberbox('setValue', result.Exch_rate);
-            $('#Profit_rateSesData').numberbox('setValue', result.Profit_rate);
-        }, 'json');
-    }
-
-    function transaksicalculationSesDataSave()
-    {
-        var ScrapSesData = $('#ScrapSesData').numberbox('getValue');
-        var Exch_rateSesData = $('#Exch_rateSesData').numberbox('getValue');
-        var Profit_rateSesData = $('#Profit_rateSesData').numberbox('getValue');
-
-        $.post('<?php echo site_url('transaksi/calculation/updateSesData'); ?>', {Scrap: ScrapSesData, Exch_rate: Exch_rateSesData, Profit_rate: Profit_rateSesData}, function(result) {
+    
+    function transaksicalculationAppMktStaffApproveSave() 
+    {   
+        var row = $('#grid-transaksi_calculationAppMktStaff').datagrid('getSelected');
+        var idrow = row.Id;
+        var ams = $('#Approval_Mkt_Staff').combobox('getValue');
+        var nms = $('#Note_Mkt_Staff').textbox('getValue');   
+        
+        $.post('<?php echo site_url('transaksi/calculationAppMktStaff/approveSave'); ?>', {Id:idrow, Approval_Mkt_Staff: ams, Note_Mkt_Staff: nms}, function(result) {
             if (result.success)
             {
-                $('#dlg-transaksi_calculation_sesdata').dialog('close');
+                $('#dlg-transaksi_calculationAppMktStaffApprove').dialog('close');
+                $('#grid-transaksi_calculationAppMktStaff').datagrid('reload');
+
                 $.messager.show({
                     title: 'Info',
                     msg: 'Ubah Data Berhasil'
@@ -1438,6 +924,7 @@
         }, 'json');
     }
 
+    
     function diameter()
     {
         var dia = $('#Dia_wire').textbox('getValue');
@@ -1446,7 +933,7 @@
             panelWidth: 300,
             idField: 'wId',
             textField: 'Grade',
-            url: '<?php echo site_url('transaksi/calculation/getWireCode'); ?>/' + eval(dia),
+            url: '<?php echo site_url('transaksi/calculationAppMktStaff/getWireCode'); ?>/' + eval(dia),
             columns: [[
                     {field: 'wId', title: 'Id', width: 50},
                     {field: 'Kode_Supp', title: 'Kode Supplier', width: 75},
@@ -1473,7 +960,7 @@
             panelWidth: 300,
             idField: 'Kode_mchnhead',
             textField: 'Mchn_heading',
-            url: '<?php echo site_url('transaksi/calculation/getHeadMchncode'); ?>/' + gd,
+            url: '<?php echo site_url('transaksi/calculationAppMktStaff/getHeadMchncode'); ?>/' + gd,
             columns: [[
                     {field: 'Kode_mchnhead', title: 'Kode Mesin', width: 80},
                     {field: 'Length_range', title: 'Length Range', width: 80},
@@ -1504,7 +991,7 @@
             panelWidth: 300,
             idField: 'Kode_mchnroll',
             textField: 'Mchn_rolling',
-            url: '<?php echo site_url('transaksi/calculation/getRollMchncode'); ?>/' + gd2,
+            url: '<?php echo site_url('transaksi/calculationAppMktStaff/getRollMchncode'); ?>/' + gd2,
             columns: [[
                     {field: 'Kode_mchnroll', title: 'Kode Mesin', width: 80},
                     {field: 'Length_range', title: 'Length Range', width: 80},
@@ -1533,7 +1020,7 @@
             panelWidth: 300,
             idField: 'Kode_mchncutt',
             textField: 'Mchn_cutting',
-            url: '<?php echo site_url('transaksi/calculation/getCuttMchncode'); ?>/' + dnom4,
+            url: '<?php echo site_url('transaksi/calculationAppMktStaff/getCuttMchncode'); ?>/' + dnom4,
             columns: [[
                     {field: 'Kode_mchncutt', title: 'Kode Mesin', width: 80},
                     {field: 'Length_range', title: 'Length Range', width: 80},
@@ -1560,7 +1047,7 @@
             panelWidth: 300,
             idField: 'Kode_mchnslott',
             textField: 'Mchn_slotting',
-            url: '<?php echo site_url('transaksi/calculation/getSlottMchncode'); ?>/' + dnom5,
+            url: '<?php echo site_url('transaksi/calculationAppMktStaff/getSlottMchncode'); ?>/' + dnom5,
             columns: [[
                     {field: 'Kode_mchnslott', title: 'Kode Mesin', width: 80},
                     {field: 'Length_range', title: 'Length Range', width: 80},
@@ -1587,7 +1074,7 @@
             panelWidth: 300,
             idField: 'Kode_mchntrimm',
             textField: 'Mchn_trimming',
-            url: '<?php echo site_url('transaksi/calculation/getTrimmMchncode'); ?>/' + dnom6,
+            url: '<?php echo site_url('transaksi/calculationAppMktStaff/getTrimmMchncode'); ?>/' + dnom6,
             columns: [[
                     {field: 'Kode_mchntrimm', title: 'Kode Mesin', width: 80},
                     {field: 'Length_range', title: 'Length Range', width: 80},
@@ -1614,7 +1101,7 @@
             panelWidth: 300,
             idField: 'Kode_mchnstraighten',
             textField: 'Mchn_straightening',
-            url: '<?php echo site_url('transaksi/calculation/getstraightenMchncode'); ?>/' + dnom7,
+            url: '<?php echo site_url('transaksi/calculationAppMktStaff/getstraightenMchncode'); ?>/' + dnom7,
             columns: [[
                     {field: 'Kode_mchnstraighten', title: 'Kode Mesin', width: 80},
                     {field: 'Length_range', title: 'Length Range', width: 80},
@@ -1641,7 +1128,7 @@
             panelWidth: 300,
             idField: 'Kode_mchnpress',
             textField: 'Mchn_pressing',
-            url: '<?php echo site_url('transaksi/calculation/getPressMchncode'); ?>/' + dnom8,
+            url: '<?php echo site_url('transaksi/calculationAppMktStaff/getPressMchncode'); ?>/' + dnom8,
             columns: [[
                     {field: 'Kode_mchnpress', title: 'Kode Mesin', width: 80},
                     {field: 'Length_range', title: 'Length Range', width: 80},
@@ -1659,7 +1146,7 @@
     {
         var dia3 = $('#Dia_nominal').numberbox('getValue');
         var length3 = $('#Length_nominal').numberbox('getValue');
-        $.post('<?php echo site_url('transaksi/calculation/getCutting'); ?>',
+        $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getCutting'); ?>',
                 {dia3: dia3, length3: length3}, function(result) {
             $('#Cutting_tool_cost').numberbox('setValue', result.ctc);
         }, 'json');
@@ -1668,7 +1155,7 @@
     {
         var dia4 = $('#Dia_nominal').numberbox('getValue');
         var length4 = $('#Length_nominal').numberbox('getValue');
-        $.post('<?php echo site_url('transaksi/calculation/getSlotting'); ?>',
+        $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getSlotting'); ?>',
                 {dia4: dia4, length4: length4}, function(result) {
             $('#Slotting_tool_cost').numberbox('setValue', result.stc);
         }, 'json');
@@ -1677,7 +1164,7 @@
     {
         var dia5 = $('#Dia_nominal').numberbox('getValue');
         var length5 = $('#Length_nominal').numberbox('getValue');
-        $.post('<?php echo site_url('transaksi/calculation/getTrimming'); ?>',
+        $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getTrimming'); ?>',
                 {dia5: dia5, length5: length5}, function(result) {
             $('#Trimming_tool_cost').numberbox('setValue', result.ttc);
         }, 'json');
@@ -1686,7 +1173,7 @@
     {
         var proses = 'Heading';
         var wtsh = $('#Working_time_sec').numberbox('getValue');
-        $.post('<?php echo site_url('transaksi/calculation/getGaji'); ?>',
+        $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getGaji'); ?>',
                 {proses: proses}, function(result) {
             $('#Gaji_per_sec').numberbox('setValue', (result.gpy) / (wtsh * result.jl));
         }, 'json');
@@ -1695,7 +1182,7 @@
     {
         var proses = 'Rolling';
         var wtsr = $('#Working_time_sec2').numberbox('getValue');
-        $.post('<?php echo site_url('transaksi/calculation/getGaji'); ?>',
+        $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getGaji'); ?>',
                 {proses: proses}, function(result) {
             $('#Gaji_per_sec2').numberbox('setValue', (result.gpy) / (wtsr * result.jl));
         }, 'json');
@@ -1704,7 +1191,7 @@
     {
         var proses = 'Cutting';
         var wtsc = $('#Working_time_sec3').numberbox('getValue');
-        $.post('<?php echo site_url('transaksi/calculation/getGaji'); ?>',
+        $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getGaji'); ?>',
                 {proses: proses}, function(result) {
             $('#Gaji_per_sec3').numberbox('setValue', (result.gpy) / (wtsc * result.jl));
         }, 'json');
@@ -1713,7 +1200,7 @@
     {
         var proses = 'Slotting';
         var wtss = $('#Working_time_sec4').numberbox('getValue');
-        $.post('<?php echo site_url('transaksi/calculation/getGaji'); ?>',
+        $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getGaji'); ?>',
                 {proses: proses}, function(result) {
             $('#Gaji_per_sec4').numberbox('setValue', (result.gpy) / (wtss * result.jl));
         }, 'json');
@@ -1722,7 +1209,7 @@
     {
         var proses = 'Trimming';
         var wtst = $('#Working_time_sec5').numberbox('getValue');
-        $.post('<?php echo site_url('transaksi/calculation/getGaji'); ?>',
+        $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getGaji'); ?>',
                 {proses: proses}, function(result) {
             $('#Gaji_per_sec5').numberbox('setValue', (result.gpy) / (wtst * result.jl));
         }, 'json');
@@ -1731,7 +1218,7 @@
     {
         var proses = 'Straightening';
         var wtsst = $('#Working_time_sec6').numberbox('getValue');
-        $.post('<?php echo site_url('transaksi/calculation/getGaji'); ?>',
+        $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getGaji'); ?>',
                 {proses: proses}, function(result) {
             $('#Gaji_per_sec6').numberbox('setValue', (result.gpy) / (wtsst*result.jl));
         }, 'json');
@@ -1741,7 +1228,7 @@
     {
         var proses = 'FQ';
         var fw = $('#Finish_weight4').numberbox('getValue');
-        $.post('<?php echo site_url('transaksi/calculation/getGaji'); ?>',
+        $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getGaji'); ?>',
                 {proses: proses}, function(result) {
             $('#Gaji_per_gram_fq').numberbox('setValue', (result.gpy) / (result.hppy * 1000));
         }, 'json');
@@ -1750,7 +1237,7 @@
     {
         var proses = 'Packing';
         var fw = $('#Finish_weight4').numberbox('getValue');
-        $.post('<?php echo site_url('transaksi/calculation/getGaji'); ?>',
+        $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getGaji'); ?>',
                 {proses: proses}, function(result) {
             $('#Gaji_per_gram_packing').numberbox('setValue', (result.gpy) / (result.hppy * 1000));
         }, 'json');
@@ -1759,7 +1246,7 @@
     {
         var proses = 'Electricity';
         var fw = $('#Finish_weight5').numberbox('getValue');
-        $.post('<?php echo site_url('transaksi/calculation/getBiaya'); ?>',
+        $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getBiaya'); ?>',
                 {proses: proses}, function(result) {
             $('#Biaya_per_gram_elc').numberbox('setValue', (result.bpy) / (result.hppy * 1000));
         }, 'json');
@@ -1768,7 +1255,7 @@
     {
         var proses = 'Factory Exp';
         var fw = $('#Finish_weight5').numberbox('getValue');
-        $.post('<?php echo site_url('transaksi/calculation/getBiaya'); ?>',
+        $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getBiaya'); ?>',
                 {proses: proses}, function(result) {
             $('#Biaya_per_gram_fexp').numberbox('setValue', (result.bpy) / (result.hppy * 1000));
         }, 'json');
@@ -1805,7 +1292,7 @@
     {
         var proses = 'Baking';
         var fw = $('#Finish_weight3').numberbox('getValue');
-        $.post('<?php echo site_url('transaksi/calculation/getBaking'); ?>',
+        $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getBaking'); ?>',
                 {proses: proses}, function(result) {
             $('#Baking_cost').numberbox('setValue', (fw*result.Price) / 1000);
         }, 'json');    
@@ -1814,7 +1301,7 @@
     {
         var proses = 'Cuci';
         var fw = $('#Finish_weight3').numberbox('getValue');
-        $.post('<?php echo site_url('transaksi/calculation/getCuci'); ?>',
+        $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getCuci'); ?>',
                 {proses: proses}, function(result) {
             $('#Cuci_cost').numberbox('setValue', (fw*result.Price) / 1000);
         }, 'json');    
@@ -1825,7 +1312,7 @@
             panelWidth: 200,
             idField: 'Id',
             textField: 'Name',
-            url: '<?php echo site_url('transaksi/calculation/getKode_assembly'); ?>/',
+            url: '<?php echo site_url('transaksi/calculationAppMktStaff/getKode_assembly'); ?>/',
             columns: [[
                     {field: 'Id', title: 'Kode Assembly', width: 100},
                     {field: 'Name', title: 'Proses Assembly', width: 100}
@@ -1906,8 +1393,8 @@
 </style>
 
 <!-- ----------- -->
-<div id="dlg-transaksi_calculation" class="easyui-dialog" style="width:600px; height:550px;" closed="true" buttons="#dlg-buttons-transaksi_calculation">
-    <form id="fm-transaksi_calculation" method="post" novalidate>        
+<div id="dlg-transaksi_calculationAppMktStaff" class="easyui-dialog" style="width:600px; height:550px;" closed="true" buttons="#dlg-buttons-transaksi_calculationAppMktStaff">
+    <form id="fm-transaksi_calculationAppMktStaff" method="post" novalidate>        
         <div class="easyui-tabs" style="width:545px;height:510px">
             <div title="About" style="padding:10px">
                 <div class="fitem">
@@ -1917,7 +1404,7 @@
                 <div class="fitem">
                     <label for="type">Customer</label>
                     <input id="Customer" name="Customer" class="easyui-combobox"  data-options="
-                           url:'<?php echo site_url('transaksi/calculation/getCustomer'); ?>',
+                           url:'<?php echo site_url('transaksi/calculationAppMktStaff/getCustomer'); ?>',
                            method:'get', valueField:'Id', textField:'Name', panelHeight:200" style="width:300px;" required="true"/> 
                 </div>
                 <div class="fitem">
@@ -1992,7 +1479,7 @@
                 <div class="fitem">
                     <label for="type">Washer1</label>
                     <input id="Washer1" name="Washer1" class="easyui-combobox"  data-options="
-                           url:'<?php echo site_url('transaksi/calculation/getWasher1'); ?>',
+                           url:'<?php echo site_url('transaksi/calculationAppMktStaff/getWasher1'); ?>',
                            method:'get', valueField:'Id', textField:'Name', panelHeight:200,
                            onSelect: function(r){
                            $('#Washer1_weight').numberbox('setValue', r.Weight);
@@ -2039,7 +1526,7 @@
                 <div class="fitem">
                     <label for="type">Washer2</label>
                     <input id="Washer2" name="Washer2" class="easyui-combobox"  data-options="
-                           url:'<?php echo site_url('transaksi/calculation/getWasher2'); ?>',
+                           url:'<?php echo site_url('transaksi/calculationAppMktStaff/getWasher2'); ?>',
                            method:'get', valueField:'Id', textField:'Name', panelHeight:200,
                            onSelect: function(r){
                            $('#Washer2_weight').numberbox('setValue', r.Weight);
@@ -2099,7 +1586,7 @@
                         <div class="fitem">
                             <label for="type">Golongan Mesin</label>
                             <input id="Gol_mchn_head" name="Gol_mchn_head" class="easyui-combobox" data-options=" 
-                                   url:'<?php echo site_url('transaksi/calculation/enumGolmesinhead'); ?>',
+                                   url:'<?php echo site_url('transaksi/calculationAppMktStaff/enumGolmesinhead'); ?>',
                                    method:'get', valueField:'data', textField:'data', panelHeight:'auto', 
                                    onSelect: function(z1){
                                    diameternom();                               
@@ -2124,7 +1611,7 @@
                         <div class="fitem">
                             <label for="type">Golongan Mesin</label>
                             <input id="Gol_mchn_roll" name="Gol_mchn_roll" class="easyui-combobox" data-options=" 
-                                   url:'<?php echo site_url('transaksi/calculation/enumGolmesinroll'); ?>',
+                                   url:'<?php echo site_url('transaksi/calculationAppMktStaff/enumGolmesinroll'); ?>',
                                    method:'get', valueField:'data', textField:'data', panelHeight:'auto', 
                                    onSelect: function(z2){
                                    diameternomroll();
@@ -2298,7 +1785,7 @@
                                     });
                                     $('#Kode_mchnstraighten').next().find('input').focus();
                                     diameternomstraighten();
-                                    $.post('<?php echo site_url('transaksi/calculation/getGajiStraightening'); ?>', function(result) {
+                                    $.post('<?php echo site_url('transaksi/calculationAppMktStaff/getGajiStraightening'); ?>', function(result) {
                                     $('#Labor_cost_straightening').numberbox('setValue',result.gaji/(result.estimasi*result.working_day*result.working_hour*60/100));
                                     }, 'json'); 
                                     }
@@ -2774,7 +2261,7 @@
                                 panelWidth  : 250,
                                 idField     : 'Id',
                                 textField   : 'Name',
-                                url         : '<?php echo site_url('transaksi/calculation/getTurret2'); ?>',
+                                url         : '<?php echo site_url('transaksi/calculationAppMktStaff/getTurret2'); ?>',
                                 columns     : [[
                                     {field: 'Id',           title: 'Id',            width: 40},
                                     {field: 'Kode_Supp',    title: 'Kode Supp',     width: 70},
@@ -2860,7 +2347,7 @@
                                 panelWidth  : 200,
                                 idField     : 'Id',
                                 textField   : 'Name',
-                                url         : '<?php echo site_url('transaksi/calculation/getFurnace'); ?>',
+                                url         : '<?php echo site_url('transaksi/calculationAppMktStaff/getFurnace'); ?>',
                                 columns     : [[
                                     {field: 'Id',           title: 'Id',            width: 40},
                                     {field: 'Kode_Supp',    title: 'Kode Supp',     width: 70},
@@ -2904,7 +2391,7 @@
                                 panelWidth  : 250,
                                 idField     : 'Id',
                                 textField   : 'Name',
-                                url         : '<?php echo site_url('transaksi/calculation/getFurnace2'); ?>',
+                                url         : '<?php echo site_url('transaksi/calculationAppMktStaff/getFurnace2'); ?>',
                                 columns     : [[
                                     {field: 'Id',           title: 'Id',            width: 40},
                                     {field: 'Kode_Supp',    title: 'Kode Supp',     width: 70},
@@ -2944,7 +2431,7 @@
                                 panelWidth  : 220,
                                 idField     : 'Id',
                                 textField   : 'Name',
-                                url         : '<?php echo site_url('transaksi/calculation/getPlating'); ?>',
+                                url         : '<?php echo site_url('transaksi/calculationAppMktStaff/getPlating'); ?>',
                                 columns     : [[
                                     {field: 'Id',           title: 'Id',            width: 40},
                                     {field: 'Kode_Supp',    title: 'Kode Supp',     width: 70},
@@ -3101,7 +2588,7 @@
                                 panelWidth  : 250,
                                 idField     : 'Id',
                                 textField   : 'Name',
-                                url         : '<?php echo site_url('transaksi/calculation/getCoating'); ?>',
+                                url         : '<?php echo site_url('transaksi/calculationAppMktStaff/getCoating'); ?>',
                                 columns     : [[
                                     {field: 'Id',           title: 'Id',            width: 40},
                                     {field: 'Kode_Supp',    title: 'Kode Supp',     width: 70},
@@ -3173,10 +2660,6 @@
                        <label for="type"><b>Price per kg wire</b></label>
                        <input type="text" id="Price_per_kg" name="Price_per_kg" class="easyui-numberbox" data-options="precision:0,groupSeparator:'.',decimalSeparator:',', readonly: true" />
                 </div>
-                <div class="fitem">
-                       <label for="type">Message </label>
-                       <input type="text" id="Note_Acc_Staff" name="Note_Acc_Staff" class="easyui-textbox" data-options="multiline:true" style="width:300px;height:100px" />
-                </div> 
             </div>
         </div>
     </form>
@@ -3185,35 +2668,38 @@
 
 
 <!-- Dialog Button -->
-<div id="dlg-buttons-transaksi_calculation">
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-ok" onclick="transaksicalculationSave()">Simpan</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-transaksi_calculation').dialog('close')">Batal</a>
+<div id="dlg-buttons-transaksi_calculationAppMktStaff">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-transaksi_calculationAppMktStaff').dialog('close')">Batal</a>
 </div>
 
-<!-- Dialog Session Data -->`
-<div id="dlg-transaksi_calculation_sesdata" class="easyui-dialog" style="width:400px; height:200px; padding: 10px 20px" closed="true" buttons="#dlg-buttons-transaksi_calculation_sesdata">
-    <form id="fm-transaksi_calculation_sesdata" method="post" novalidate>
-        <div class="fitem">
-            <label for="type">Scrap</label>
-            <input id="ScrapSesData" name="ScrapSesData" class="easyui-numberbox" required="true"/>
-        </div>
-        <div class="fitem">
-            <label for="type">Exch. Rate</label>
-            <input id="Exch_rateSesData" name="Exch_rateSesData" class="easyui-numberbox" required="true"/>
-        </div>
-        <div class="fitem">
-            <label for="type">Adm and Profit Rate</label>
-            <input id="Profit_rateSesData" name="Profit_rateSesData" class="easyui-numberbox" required="true"/>
-        </div>
+<!-- ----------- -->
+<div id="dlg-transaksi_calculationAppMktStaffApprove" class="easyui-dialog" style="width:350px; height:250px;" closed="true" buttons="#dlg-buttons-transaksi_calculationAppMktStaffApprove">
+    <form id="fm-transaksi_calculationAppMktStaffApprove" method="post" novalidate>        
+     <div class="fitem">
+             <label for="type">Approval?</label>
+             <input id="Approval_Mkt_Staff" name="Approval_Mkt_Staff" class="easyui-combobox" data-options=" 
+                                   url:'<?php echo site_url('transaksi/calculationAppMktStaff/enumCalculationAppMktStaff'); ?>',
+                                   method:'get', valueField:'data', textField:'data', panelHeight:'auto', 
+                                   onSelect: function(z){                                                  
+                                   $('#Note_Mkt_Staff').next().find('input').focus();  
+                                   }" style="width:160px;"/>  
+     </div>
+             
+     <div class="fitem">
+             <label for="type">Message </label>
+             <input type="text" id="Note_Mkt_Staff" name="Note_Mkt_Staff" class="easyui-textbox" data-options="multiline:true" style="width:300px;height:100px" />
+     </div> 
     </form>
 </div>
 
-<!-- Dialog Button Session Data -->
-<div id="dlg-buttons-transaksi_calculation_sesdata">
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-ok" onclick="transaksicalculationSesDataSave()">Simpan</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-transaksi_calculation_sesdata').dialog('close')">Batal</a>
+
+
+<!-- Dialog Button -->
+<div id="dlg-buttons-transaksi_calculationAppMktStaffApprove">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-ok" onclick="transaksicalculationAppMktStaffApproveSave()">Simpan</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="width:75" iconCls="icon-cancel" onclick="javascript:$('#dlg-transaksi_calculationAppMktStaffApprove').dialog('close')">Batal</a>    
 </div>
 
-<!-- End of file v_calculation.php -->
-<!-- Location: ./application/views/transaksi/v_calculation.php -->       
+<!-- End of file v_calculationAppMktStaff.php -->
+<!-- Location: ./application/views/transaksi/v_calculationAppMktStaff.php -->       
 

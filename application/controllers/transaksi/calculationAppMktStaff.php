@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Calculation extends CI_Controller {
+class CalculationAppMktStaff extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('transaksi/m_calculation','record');
+        $this->load->model('transaksi/m_calculationAppMktStaff','record');
     }
     
     function index()
@@ -16,27 +16,10 @@ class Calculation extends CI_Controller {
         if (isset($_GET['grid'])) 
             echo $this->record->index();        
          else 
-            $this->load->view('transaksi/v_calculation');
+            $this->load->view('transaksi/v_calculationAppMktStaff');
 	}
     
-    function create()
-    {
-        $auth   = new Auth();
-        $auth->restrict();
         
-        if(!isset($_POST))	
-            show_404();
-
-        if($this->record->create())
-        {
-            echo json_encode(array('success'=>true));
-        }
-        else
-        {
-            echo json_encode(array('success'=>false));
-        }
-    }     
-    
     function update($Id=null)
     {
         $auth   = new Auth();
@@ -55,25 +38,7 @@ class Calculation extends CI_Controller {
         }
     }
         
-    function delete()
-    {
-        $auth   = new Auth();
-        $auth->restrict();
         
-        if(!isset($_POST))	
-            show_404();
-
-        $Id = addslashes($_POST['Id']);
-        if($this->record->delete($Id))
-        {
-            echo json_encode(array('success'=>true));
-        }
-        else
-        {
-            echo json_encode(array('success'=>false));
-        }
-    }
-    
     function getSupplier()
     {
         $auth   = new Auth();
@@ -116,44 +81,7 @@ class Calculation extends CI_Controller {
         echo $this->record->getWireCode($dia);
     }
     
-    function getSesData()
-    {
-        $auth       = new Auth();
-        $auth->restrict();
-        
-        if(!isset($_POST))	
-            show_404();
-        
-        $query = $this->record->getSesData();        
-        foreach ($query->result() as $data)
-        {
-            echo json_encode(array('Scrap'=>$data->Scrap,'Exch_rate'=>$data->Exch_rate,'Profit_rate'=>$data->Profit_rate));
-        }
-    }
-    
-    function updateSesData()
-    {
-        $auth       = new Auth();
-        $auth->restrict();
-        
-        if(!isset($_POST))	
-            show_404();
-        
-        $Scrap      = addslashes($_POST['Scrap']);
-        $Exch_rate  = addslashes($_POST['Exch_rate']);
-        $Profit_rate  = addslashes($_POST['Profit_rate']);
-        
-        if($this->record->updateSesData($Scrap, $Exch_rate, $Profit_rate))
-        {
-            echo json_encode(array('success'=>true));
-        }
-        else
-        {
-            echo json_encode(array('success'=>false));
-        }
-    }
-    
-     function getWasher1()
+    function getWasher1()
     {
         $auth   = new Auth();
         $auth->restrict();
@@ -627,17 +555,50 @@ class Calculation extends CI_Controller {
         echo $this->record->getTurret2();
     
     }
-    function getPlating2()
+    function approve($Id=null)
     {
         $auth       = new Auth();
         $auth->restrict();
         
         if(!isset($_POST))	
-          show_404();
-                   
-        echo $this->record->getPlating2();
+            show_404();
+        
+        $query = $this->record->approve($Id);        
+        foreach ($query->result() as $data)
+        {
+            echo json_encode(array('Approval_Mkt_Staff'=>$data->Approval_Mkt_Staff,'Note_Mkt_Staff'=>$data->Note_Mkt_Staff));
+        }
+    }
     
+    function approveSave()
+    {
+        $auth   = new Auth();
+        $auth->restrict();
+        
+        if(!isset($_POST))	
+            show_404();
+        
+        $User                   = $this->session->userdata('nama');
+        $Id                     = $this->input->post('Id',true);
+        $Approval_Mkt_Staff     = $this->input->post('Approval_Mkt_Staff',true);
+        $Note_Mkt_Staff         = $this->input->post('Note_Mkt_Staff',true);
+          
+        if($this->record->approveSave($Id, $Approval_Mkt_Staff, $Note_Mkt_Staff, $User))
+        {
+            echo json_encode(array('success'=>true));
+        }
+        else
+        {
+            echo json_encode(array('success'=>false));
+        }
+    }
+    function enumCalculationAppMktStaff()
+    {
+        $auth   = new Auth();
+        $auth->restrict();
+        
+        echo $this->record->enumField('Approval_Mkt_Staff');
     }
 }
-/* End of file calculation.php */
-/* Location: ./application/controllers/transaksi/calculation.php */
+/* End of file calculationAppMktStaff.php */
+/* Location: ./application/controllers/transaksi/calculationAppMktStaff.php */
